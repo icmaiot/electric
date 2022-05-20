@@ -1,0 +1,24 @@
+<div class="home card card-shadow h-100 d-flex mx-5 mb-5">
+  <div class="card-body-custom">
+    <div class="card-empresa">
+      <div class="row-empresa">
+        <div class="logo-empresa">
+          <img style="width: 50%" [src]="imgURL" alt="Empresa">
+        </div>
+        <div class="info-empresa">
+          <div class="info-texto"> {{cia.nombre}} </div>
+          <div class="info-texto"> {{cia.razon}} </div>
+          <div class="info-texto"> {{cia.eslogan }} </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-cards">
+      <div class="cards-row">
+        <div class="item-container {{card.class}}" routerLink="{{card.function}}" *ngFor="let card of homeCards">
+          <i class="material-icons"> {{ card.icon }} </i>
+          <div> {{ card.text }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

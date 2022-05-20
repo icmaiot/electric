@@ -1,0 +1,50 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-bottom: none; width: 20%">Codigo </th>
+                        <th scope="col" style="border-bottom: none; width: 60%">Descripcion de fallas</th>
+                        <th scope="col" style="border-bottom: none; width: 20%"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                <input type="text" class="form-control" id="codigo_falla" nombre="codigo_falla" formControlName="codigo_falla">
+                            </div>
+                            <div class="invalid-feedback" *ngIf="submitted && f.codigo_falla.errors" >
+                                <div *ngIf="f.codigo_falla.errors.required">Codigo Requerido</div>
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                <input type="text" class="form-control" id="descripcion_falla" nombre="descripcion_falla" formControlName="descripcion_falla">
+                            </div>
+                            <div  class="invalid-feedback" *ngIf="submitted && f.descripcion_falla.errors">
+                                <div *ngIf="f.descripcion_falla.errors.required">La descripción es requerida</div>
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                <button type="submit" class="btn btn-primary" >Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Start boton eliminar-->
+                    <tr *ngFor="let lf of litafalla">
+                        <td>{{lf.codigo_falla| titlecase}}</td>
+                        <td>{{lf.descripcion_falla | titlecase}}</td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar"
+                                (click)="delete(lf)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                    <!--Finish boton eliminar-->
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

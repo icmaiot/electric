@@ -1,0 +1,44 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()">
+        <div class="table-responsive-sm px-4">
+            <form [formGroup]="form" (ngSubmit)="saveData()">
+                <table class="table table-sm table hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="border-bottom: none; width: 60%">Codigo - Descripcion de las fallas</th>
+                            <th scope="col" style="border-bottom: none; width: 40%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <!--Start selecionar opcion-->
+                    <tr>
+                        <td>
+                            <select class="form-control" id="id_falla" nombre="id_falla" formControlName="id_falla" [ngClass]=" { 'is-invalid' : submitted && f.id_falla.errors } " text="hola">
+                                <option disabled>Seleccionar tipo de falla</option>
+                                <option *ngFor="let Ff of lopciones" [value]="Ff.id_falla "> {{Ff.codigo_falla }} - {{ Ff.descripcion_falla | titlecase}}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="submitted && f.id_falla.errors">
+                                <div *ngIf="f.id_falla.errors.required">
+                                    Seleccione una opcion
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" >Guardar</button>
+                        </td>
+                    </tr>
+                     <br>
+                    <!--Finish selecionar opcion-->
+                    <tr *ngFor="let Fa of fallasg">
+                        <td>{{ Fa.Evento_registro.codigo_falla   | titlecase}}</td>
+                        <td>{{ Fa.Evento_registro.descripcion_falla | titlecase}}</td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar" (click)="delete(Fa)">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+</dialog-component>

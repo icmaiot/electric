@@ -1,0 +1,142 @@
+<div class="mt-3">
+    <app-header-table [search]="false" [renderButton]="false" [titleHeader]="'Programa de produccion'"
+        [titleSelect]="'Buscar ..'" (buttonOutput)="null" (searchOutput)="null" [listNav]="listNav">
+    </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+    <div class="card-header">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+            <div class="col-md-2">
+                <label for="idlineaprod" class="form-label">Linea de producción</label>
+                <select class="form-control " id="idlineaprod" nombre="idlineaprod" formControlName="idlineaprod">
+                    <option *ngFor="let li of maq" [value]="li.idmaquina">{{li.maquina}}
+                    </option>
+                </select>
+            </div>
+        <!--     <div class="col-md-3">
+                <label for="idturnoprodlinea" class="form-label">Turno</label>
+                <select class="form-control" id="idturnoprodlinea" nombre="idturnoprodlinea"
+                    formControlName="idturnoprodlinea"
+                    [ngClass]="{ 'is-invalid': submitted && f.idturnoprodlinea.errors }">
+                    <option *ngFor="let tr of selectturno" [value]="tr.idturdesc">{{tr.descansos}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f.idturnoprodlinea.errors" class="invalid-feedback">
+                    <div *ngIf="f.idturnoprodlinea.errors.required">El Turno es requerido</div>
+                </div>
+            </div> -->
+            <div class="col-md-2">
+                <label for="idskunow" class="form-label">Sku</label>
+                <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow">
+                    <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="cant" class="form-label">Cantidad</label>
+                <input type="number" class="form-control" id="cant" nombre="cant" formControlName="cant"
+                    [ngClass]="{ 'is-invalid': submitted && f.cant.errors }">
+                <div *ngIf="submitted && f.cant.errors" class="invalid-feedback">
+                    <div *ngIf="f.cant.errors.required">La Cantidad es requerida</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="tipoprod" class="form-label">Tipo</label>
+                <select class="form-control " id="tipoprod" nombre="tipoprod" formControlName="tipoprod">
+                    <option *ngFor="let tp of tipos" [value]="tp.tipo">{{tp.tipo}}
+                    </option>
+                </select>
+            </div>
+            <!--  <div class="col-md-2">
+                <label for="idskunext" class="form-label">Siguiente SKU</label>
+                <select class="form-control " id="idskunext" nombre="idskunext" formControlName="idskunext">
+                    <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
+                    </option>
+                </select>
+            </div> -->
+            <div style="align-self: flex-end;" class="col-md-1 mt-4">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+        
+    </div>
+    <div style="padding: 0rem 2.75rem">
+        <form class="div-flex" [formGroup]="formFilter">
+            <div class="">
+                <select class="form-control select-filter" id="idLinea" nombre="idLinea" (change)="getFiltro()"
+                    formControlName="idLinea">
+                    <option disabled hidden value="-1" [selected]="true">Ver lineas</option>
+                    <option *ngFor="let obj of filterArray2" [value]="obj.idlineaprod">{{obj.maquina}}
+                    </option>
+                </select>
+            </div>
+            <div class="">
+                <select class="form-control select-filter" id="idProducto" nombre="idProducto" (change)="getFiltro()"
+                    formControlName="idProducto">
+                    <option disabled hidden value="-1" [selected]="true">Ver productos</option>
+                    <option *ngFor="let obj of filterArray" [value]="obj.idskunow">{{obj.producto}}
+                    </option>
+                </select>
+            </div>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros"
+                (click)="limpiarFiltro()"><i class="material-icons">filter_list</i></a>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-lg px-4">
+            <table class="table table-hover">
+                
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-bottom: none;" class="table-td" data-toggle="tooltip"
+                            data-placement="top" title="Lineas de producción">Línea</th>
+                        <th scope="col" class="table-td">Turno</th>
+                        <th scope="col" class="table-td" data-toggle="tooltip" data-placement="top"
+                            title="SKU: Identificador del producto">Sku</th>
+                        <th scope="col" class="table-td" data-toggle="tooltip" data-placement="top"
+                            title="Descripción del producto">Producto</th>
+                        <th scope="col" class="table-td">Cantidad</th>
+                        <th scope="col" class="table-td" data-toggle="tooltip" data-placement="top"
+                            title="Tipo de producción de la Línea">Tipo</th>
+                        <th scope="col" class="table-td" data-toggle="tooltip" data-placement="top"
+                            title="Tiempo de carga en horas">Duración</th>
+                        <th scope="col" class="table-td">Lote</th>
+                        <th scope="col" class="table-td" data-toggle="tooltip" data-placement="top"
+                            title="Estado en el que se encuentra la Línea">Estado</th>
+                        <th scope="col" class="table-td">SKU siguiente</th>
+                        <th scope="col" class="table-td">Acción</th>
+                        <th scope="col" style="width:5%" class="table-td"></th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let obj of progprodlineapa">
+                    <tr >
+                        <td>{{obj.maquina }}</td>
+                        <td>{{obj.turno }}</td>
+                        <td>{{obj.producto }}</td>
+                        <td>{{obj.desc_producto }}</td>
+                        <td>{{obj.cant }}</td>
+                        <td>{{obj.tipoprod}}</td>
+                        <td>{{obj.treal}}</td>
+                        <td>{{obj.idprogprodlinea}}</td>
+                        <td>{{obj.slinea}}</td>
+                        <td>{{obj.producto2}}</td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar"
+                                (click)="editProgprodlinea(obj)"><i class="material-icons icon">create</i></a>
+                            <a *ngIf="obj.statprodlinea==0 || obj.statprodlinea==3" class="btn" data-toggle="tooltip"
+                                data-placement="top" title="Eliminar " (click)="delete(obj.idprogprodlinea)"><i
+                                    class="material-icons icon">delete</i></a>
+
+                        </td>
+                        <td>
+                            <a *ngIf="obj.statprodlinea<3" class="btn btn-primary status-button" data-toggle="tooltip"
+                                data-placement="top" title="Registros"
+                                [routerLink]="['/programa-de-produccion',obj.idprogprodlinea]"
+                                target="_blank">Ingresar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

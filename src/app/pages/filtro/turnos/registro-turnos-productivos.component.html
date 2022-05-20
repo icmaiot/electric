@@ -1,0 +1,83 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="false" [titleHeader]="'Programa de produccion'" [titleSelect]="false"
+    (buttonOutput)="false" (searchOutput)="false" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+  <div class="card-header">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+      <div class="col-md-2">
+        <label for="turno" class="form-label">Nombre del turno</label>
+        <input type="text" class="form-control" id="turno" nombre="turno" formControlName="turno"
+          [ngClass]="{ 'is-invalid': submitted && f.turno.errors }">
+        <div *ngIf="submitted && f.turno.errors" class="invalid-feedback">
+          <div *ngIf="f.turno.errors.required">Nombre del turno es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="numturno" class="form-label">Número del turno</label>
+        <input type="number" class="form-control" id="numturno" nombre="numturno" formControlName="numturno"
+          [ngClass]="{ 'is-invalid': submitted && f.numturno.errors }">
+        <div *ngIf="submitted && f.numturno.errors" class="invalid-feedback">
+          <div *ngIf="f.numturno.errors.required">Numero del turno es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="inicturno" class="form-label">Hora de inicio del turno</label>
+        <input type="time" class="form-control" id="inicturno" nombre="inicturno" formControlName="inicturno"
+          [ngClass]="{ 'is-invalid': submitted && f.inicturno.errors }">
+        <div *ngIf="submitted && f.inicturno.errors" class="invalid-feedback">
+          <div *ngIf="f.inicturno.errors.required">Hora de inicio del turno es requerida</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="finturno" class="form-label">Hora de fin del turno</label>
+        <input type="time" class="form-control" id="finturno" nombre="finturno" formControlName="finturno"
+          [ngClass]="{ 'is-invalid': submitted && f.finturno.errors }">
+        <div *ngIf="submitted && f.finturno.errors" class="invalid-feedback">
+          <div *ngIf="f.finturno.errors.required">Hora de din del turno descanso es requerida</div>
+        </div>
+      </div>
+
+      <div class="col-md-1 mt-4">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive-lg px-4">
+      <table class="table table-hover">
+        <thead>
+            <th scope="col" class="table-td">Nombre del turno</th>
+            <th scope="col" class="table-td">Número del turno</th>
+            <th scope="col" class="table-td">Hora de inicio del turno</th>
+            <th scope="col" class="table-td">Hora de fin del turno</th>
+            <th scope="col" class="table-td s"></th>
+            <th scope="col" class="table-td s"></th>
+            <th scope="col" class="table-td s"></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of listaturnos">
+            <td>{{obj.turno}}</td>
+            <td>{{obj.numturno}}</td>
+            <td>{{obj.inicturno}}</td>
+            <td>{{obj.finturno}}</td>
+            <td>
+              <a class="btn status-button" data-toggle="tooltip" data-placement="top" title="Editar"
+                (click)="update(obj)"><i class="material-icons icon">create</i></a>
+            </td>
+            <td>
+              <a class="btn status-button" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+            </td>
+            <td>
+              <button class="btn" class="btn btn-primary status-button" data-toggle="tooltip" data-placement="top"
+                title="Registros" target="_blank" [routerLink]="['/RegistroTurnosProductivos',obj.idturno]">Registrar
+                descansos</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

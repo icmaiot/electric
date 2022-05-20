@@ -1,0 +1,49 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="false" [titleHeader]="'Programa de produccion'" [titleSelect]="false"
+    (buttonOutput)="false" (searchOutput)="false" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+  <div class="card-header">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+      <div class="col-md-2">
+        <label for="serialrmt" class="form-label">Serial del módulo</label>
+        <input type="text" class="form-control" id="serialrmt" nombre="serialrmt" formControlName="serialrmt"
+          [ngClass]="{ 'is-invalid': submitted && f.serialrmt.errors }">
+        <div *ngIf="submitted && f.serialrmt.errors" class="invalid-feedback">
+          <div *ngIf="f.serialrmt.errors.required">Serial RMT es requerido</div>
+        </div>
+      </div>
+      <div class="col left">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive-lg px-4">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="table-td">Serial del módulo</th>
+            <th scope="col" class="table-td">Ciclos operativos</th>
+            <th scope="col" class="table-td">Horas operativas</th>
+            <th scope="col" class="table-td">Fecha del ultimo Reset</th>
+            <th scope="col" class="table-td s"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of modulormt">
+            <td>{{obj.serialrmt}}</td>
+            <td>{{obj.ciclormt}}</td>
+            <td>{{obj.segrmt}}</td>
+            <td>{{obj.fereset | date:'medium' }}</td>
+            <td>
+              <a class="btn status-button" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

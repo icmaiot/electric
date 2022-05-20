@@ -1,0 +1,136 @@
+<div class="grafica-sensor mx-5">
+  <div class="div-flex">
+    <div class="c row">
+      <filter-by [filterBy]="filterByMachine" (selectionFilter)="filterSelected($event)"></filter-by>
+        <form [formGroup]="graficaForm" (ngSubmit)="onSubmit()">
+          <!--Equipo-->
+          <div class="c row" [hidden]="filterByMachine != 1">
+            <label for="maquina">Equipo:</label>
+              <select class="form-control select-filter" id="maquina" formControlName="maquina" (change)="getDatosGrafica(true)"
+                [ngClass]="{ 'is-invalid': submitted && f.maquina.errors }">
+                <option value="">Seleccionar equipo</option>
+                <option value="-1">Todos los equipos</option>
+                <option *ngFor="let m of maquinas" [value]="m.idmaquina">{{m.maquina}} </option>
+              </select>
+            <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
+                <div *ngIf="f.maquina.errors.required">Equipo es requerido</div>
+            </div>
+          </div>
+          <!--Area-->
+          <div class="c row" [hidden]="filterByMachine != 2">
+            <label for="area">Área</label>
+              <select class="form-control select-filter" id="area" formControlName="area" (change)="getDatosGrafica(true)"
+                [ngClass]="{ 'is-invalid': submitted && f.area.errors }">
+                  <option value="">Seleccionar área</option>
+                  <option *ngFor="let a of areas" [value]="a.idarea" [disabled]="false">{{a.area | titlecase}}</option>
+              </select>
+            <div *ngIf="submitted && f.area.errors" class="invalid-feedback">
+              <div *ngIf="f.area.errors.required">Área es requerida</div>
+            </div>
+          </div>
+          <!--TipoEquipo-->
+          <div class="c row" [hidden]="filterByMachine !=3">
+            <label for="tipo">Tipo de Equipo</label>
+              <select class="form-control select-filter" id="tipo" formControlName="tipo" (change)="getDatosGrafica(true)"
+                [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+                  <option value="">Seleccionar tipo</option>
+                  <option *ngFor="let t of tipoEquipos" [value]="t.idtipo" [disabled]="false">{{t.tipoequipo | titlecase}}</option>
+              </select>
+            <div *ngIf="submitted && f.tipo.errors" class="invalid-feedback">
+              <div *ngIf="f.tipo.errors.required">Tipo de equipo es requerido</div>
+            </div>
+          </div>
+        </form>
+    </div>       
+  </div>
+<div class="grafica-sensor-row">
+<!-- SIDE BAR -->
+<!-- CARDS SECTION -->
+<div class="cards-section">
+  <div class="col">
+    <card-title [title]="'Tabla de estados' ">
+      <!-- <div id="chartdiv" style="width: 100%; height: 500px"></div>-->
+      <div class="table-responsive-lg px-4">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" style="border-top: none;" class="table-td"></th>
+              <th scope="col" style="border-top: none;" class="table-td">Status Proceso</th>
+              <th scope="col" style="border-top: none;" class="table-td">Numero de partes</th>
+              <th scope="col" style="border-top: none;" class="table-td">Cantidad producida</th>
+              <th scope="col" style="border-top: none;" class="table-td">Operario</th>
+              <!--Operando & Paros-->
+              <th scope="col" style="border-top: none; width: 15rem;" class="table-td">Status Produccion</th>
+              <!--Operando & Paros-->
+             <!-- <th scope="col" style="border-top: none;" class="table-td">Operando</th>
+              <th scope="col" style="border-top: none;" class="table-td">En Paro</th>-->
+              <!--<th scope="col" style="border-top: none;" class="table-td">Stand by</th>-->
+              <th scope="col" style="border-top: none;" class="table-td">Servicio</th>
+              <th scope="col" style="border-top: none;" class="table-td">Materiales</th>
+              <th scope="col" style="border-top: none;" class="table-td">Ingeniería</th>
+              <th scope="col" style="border-top: none;" class="table-td">Producción</th>
+              <th scope="col" style="border-top: none;" class="table-td">Calidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of dataChart">
+              <td>{{obj.MAQUINA }}</td>
+              <td >
+                  <img *ngIf="obj.P_Operando === 1" class="material-icons" style="width: 2.25rem; " [src]="urlOperando" alt="Mantenimiento">
+                  <img *ngIf="obj.P_En_Paro === 0" class="material-icons" style="width: 2.55rem;  " [src]="urlEnparo" alt="Mantenimiento">
+              </td>
+              <td>{{obj.Npartes}}</td>
+              <td>{{obj.Cantpro}}</td>
+              <td>{{obj.Operario}}</td>
+              <!--Operando & Paros-->
+              <td>
+                  <img *ngIf="obj.Operando === 1" class="material-icons" style="width: 2.25rem; " [src]="urlOperando" alt="Mantenimiento">
+                  <img *ngIf="obj.En_Paro === 1" class="material-icons" style="width: 2.55rem; " [src]="urlEnparo" alt="Mantenimiento">
+              </td>
+              <!--Operando & Paros-->
+             <!-- <td><img *ngIf="obj.Operando === 1" class="material-icons" style="width: 2rem;" [src]="urlOperando"
+                  alt="Mantenimiento"></td>
+              <td><img *ngIf="obj.En_Paro === 1" class="material-icons" style="width: 3rem;" [src]="urlEnparo"
+                  alt="Mantenimiento"></td>-->
+              <!--<td></td>-->
+              <td><img *ngIf="obj.Servicio === 1" class="material-icons" style="width: 2rem;"
+                  [src]="urlMantenimiento" alt="Mantenimiento">
+                <a *ngIf="obj.Sera === 1" class="material-icons at" style="width: 2rem; font-size: 12px;">ATENCIÓN</a>
+                <img *ngIf="obj.Serp === 1" class="material-icons paro" style="width: 2rem;" [src]="urlEnparo"
+                  alt="Mantenimiento">
+              </td>
+              <td><img *ngIf="obj.Materiales === 1" class="material-icons" style="width: 2rem;"
+                  [src]="urlMateriales" alt="Mantenimiento">
+                <a *ngIf="obj.Mata === 1" class="material-icons at" style="width: 2rem; font-size: 12px;" >ATENCIÓN</a>
+                <img *ngIf="obj.Matp === 1" class="material-icons  paro" style="width: 2rem;" [src]="urlEnparo"
+                  alt="Mantenimiento">
+              </td>
+              <td><img *ngIf="obj.Ingenieria === 1" class="material-icons" style="width: 2rem;"
+                  [src]="urlIngenieria" alt="Mantenimiento">
+                <a *ngIf="obj.Inga === 1" class="material-icons at" style="width: 2rem; font-size: 12px;">ATENCIÓN</a>
+                <img *ngIf="obj.Ingp === 1" class="material-icons paro" style="width: 2rem;" [src]="urlEnparo"
+                  alt="Mantenimiento">
+              </td>
+              <td><img *ngIf="obj.Produccion === 1" class="material-icons" style="width: 2rem;"
+                  [src]="urlProduccion" alt="Mantenimiento">
+                <a *ngIf="obj.Proda === 1" class="material-icons at" style="width: 2rem; font-size: 12px;">ATENCIÓN</a>
+                <img *ngIf="obj.Prodp === 1" class="material-icons paro" style="width: 2rem;" [src]="urlEnparo"
+                  alt="Mantenimiento">
+              </td>
+              <td><img *ngIf="obj.Calidad === 1" class="material-icons" style="width: 2rem;" [src]="urlCalidad"
+                  alt="Mantenimiento">
+                <a *ngIf="obj.Cala === 1" class="material-icons at" style="width: 2rem; font-size: 12px;">ATENCIÓN</a>
+                <img *ngIf="obj.Calp === 1" class="material-icons paro" style="width: 2rem;" [src]="urlEnparo"
+                  alt="Mantenimiento">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </card-title>
+  </div>
+</div>
+</div>
+
+<!-- SPINNER -->
+<ngx-spinner name="mySpinner"></ngx-spinner>

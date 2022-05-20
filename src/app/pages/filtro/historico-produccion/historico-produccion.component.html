@@ -1,0 +1,392 @@
+<div class="mt-3">
+  <app-header-table [search]="false" [renderButton]="false" [titleHeader]="'Produccion en Ejecución'"
+    [titleSelect]="'Buscar...'" (buttonOutput)="null" (searchOutput)="null" [listNav]="listNav">
+  </app-header-table>
+</div>
+<script lang="javascript" src="dist/xlsx.bundle.js"></script>
+<div class="card-body">
+  <div class="  mx-5">
+    <form class="div-flex" [formGroup]="formFilter">
+      <div class="c">
+        <select class="form-control select-filter" id="idskunow" nombre="idskunow" (change)="getHistorico()" (change)="filtroTm()"  (change)="filtroScrap()" (change)="filtroDefectos()"
+          formControlName="idskunow">
+          <option disabled hidden value="-1" [selected]="true">Sku del Producto</option>
+          <option *ngFor="let obj of FilterArray" [value]="obj.idskunow">{{obj.producto}}
+          </option>
+        </select>
+      </div>
+      <div class="c">
+        <select class="form-control select-filter" id="turnosel" nombre="turnosel" (change)="getHistorico()" (change)="filtroTm()"  (change)="filtroScrap()" (change)="filtroDefectos()"
+          formControlName="turnosel">
+          <option disabled hidden value="-1" [selected]="true">Turno</option>
+          <option *ngFor="let obj of FilterArray2" [value]="obj.idturnoprodlinea">{{obj.turno}}
+          </option>
+        </select>
+      </div>
+      <div class="c row">
+        <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
+          (change)="getHistorico()" (change)="filtroTm()"  (change)="filtroScrap()" (change)="filtroDefectos()" />
+      </div>
+      <div class="c row">
+        <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
+          [(max)]="maxDate" (change)="getHistorico()" (change)="filtroTm()"  (change)="filtroScrap()" (change)="filtroDefectos()" />
+      </div>
+      <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
+          class="material-icons">filter_list</i></a>
+      <button class="btn btn-success c" (click)="exportAsExcel()">
+        <i class="material-icons cloud">cloud_download</i><a> Excel </a>
+      </button>
+    </form>
+  </div>
+  <div>
+    <div *ngFor="let lote of historico">
+      <div class="moduloI card mb-2 mx-5">
+        <div class="table-responsive-lg px-4">
+          <table class="table table-hover">
+            <thead>
+              <tr id="th">
+                <th scope="col">Lote</th>
+                <th scope="col">Linea de producción</th>
+                <th scope="col">Turno</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Producción programada</th>
+                <th scope="col">Producción real</th>
+                <th scope="col">Defectos</th>
+                <th scope="col">Scrap</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{lote.idprogprodlinea }}</td>
+                <td>{{lote.maquina }}</td>
+                <td>{{lote.turno }}</td>
+                <td>{{lote.producto }}</td>
+                <td>{{lote.cant }}</td>
+                <td>{{lote.cantproducida }}</td>
+                <td>{{lote.defectosfinal }}</td>
+                <td>{{lote.scrapfinal }}</td>
+              </tr>
+            </tbody>
+
+            <thead>
+              <tr id="th">
+                <th scope="col">Tipo de producción</th>
+                <th scope="col">Tiempo muerto en horas</th>
+                <th scope="col">Eficiencia</th>
+                <th scope="col">Disponibilidad</th>
+                <th scope="col">Rendimiento</th>
+                <th scope="col">Calidad</th>
+                <th scope="col">OEE del proceso</th>
+                <th scope="col">OEE global del proceso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{lote.tipoprod }}</td>
+                <td>{{lote.tmuertosuma}}</td>
+                <td>{{lote.eficienciafinal | percent }}</td>
+                <td>{{lote.percent_disponibilidad | percent }}</td>
+                <td>{{lote.percent_rendimiento | percent }}</td>
+                <td>{{lote.percent_calidad | percent }}</td>
+                <td>{{lote.oee_proceso | percent }}</td>
+                <td>{{lote.oee_global | percent }}</td>
+              </tr>
+            </tbody>
+
+            <thead>
+              <tr id="th">
+                <th scope="col">Inicio de preparación</th>
+                <th scope="col">Inicio de producción</th>
+                <th scope="col">Termino de producción</th>
+                <th scope="col">Tiempo de preparación</th>
+                <th scope="col">Tiempo de producción</th>
+                <th scope="col">Tiempo total</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{lote.fechaprep | date: 'medium' }}</td>
+                <td>{{lote.fechaprod | date: 'medium' }}</td>
+                <td>{{lote.fechater | date: 'medium' }}</td>
+                <td>{{lote.durprep }}</td>
+                <td>{{lote.durprod }}</td>
+                <td>{{lote.durtot }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="btn-group" role="group"> 
+        <a class="btn btn-success cc" (click)="exportAsExcelFile(lote.idprogprodlinea)"> <i
+            class="material-icons cloud">cloud_download</i>Descargar</a>
+        <a class="btn btn-primary cc" [routerLink]="['/programa-de-produccion',lote.idprogprodlinea]"
+          target="_blank">Editar</a>
+          </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style=" display: none;">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="filtro_tm" class="table table-hover">
+        <thead class="table-dark">
+          <tr id="th">
+            <th scope="col">Id</th>
+            <th scope="col">Inicio del paro</th>
+            <th scope="col">Finalización del paro</th>
+            <th scope="col">Duración del paro</th>
+            <th scope="col">Evento</th>
+            <th scope="col">Subcausa</th>
+            <th scope="col">Información</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ftm of filtro_tm">
+            <td>{{ftm.id}}</td>
+            <td>{{ftm.paroi | date: 'medium' }}</td>
+            <td>{{ftm.parof | date: 'medium' }}</td>
+            <td>{{ftm.duracion_paro }}</td>
+            <td>{{ftm.evento }}</td>
+            <td>{{ftm.Descfalla }}</td>
+            <td>{{ftm.inf }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style=" display: none;">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="filtro_scrap" class="table table-hover">
+        <thead class="table-dark">
+          <tr id="th">
+            <th scope="col">Id</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Lote</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Registra</th>
+            <th scope="col">Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fs of filtro_scrap">
+            <td>{{fs.id}}</td>
+            <td>{{fs.cantidad }}</td>
+            <td>{{fs.lote }}</td>
+            <td>{{fs.fecha }}</td>
+            <td>{{fs.descripcion_scrap }}</td>
+            <td>{{fs.username }} {{fs.lastname}}</td>
+            <td>{{fs.regname }} {{fs.reglastname}}</td>
+            <td>{{fs.tipo }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style=" display: none;">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="filtro_defectos" class="table table-hover">
+        <thead class="table-dark">
+          <tr id="th">
+            <th scope="col">Id</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Lote</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Registra</th>
+            <th scope="col">Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fd of filtro_defectos">
+            <td>{{fd.id}}</td>
+            <td>{{fd.cantidad }}</td>
+            <td>{{fd.lote }}</td>
+            <td>{{fd.fecha }}</td>
+            <td>{{fd.descripcion_defecto }}</td>
+            <td>{{fd.username }} {{fd.lastname}}</td>
+            <td>{{fd.regname }} {{fd.reglastname}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style=" display: none;">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="ex" class="table table-hover">
+        <thead class="table-dark">
+          <tr id="th">
+            <th scope="col">Lote</th>
+            <th scope="col">Linea de producción</th>
+            <th scope="col">Turno</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Producción programada</th>
+            <th scope="col">Producción real</th>
+            <th scope="col">Defectos</th>
+            <th scope="col">Scrap</th>
+            <th scope="col">Tipo de producción</th>
+            <th scope="col">Tiempo muerto en horas</th>
+            <th scope="col">Eficiencia</th>
+            <th scope="col">Disponibilidad</th>
+            <th scope="col">Rendimiento</th>
+            <th scope="col">Calidad</th>
+            <th scope="col">OEE del proceso</th>
+            <th scope="col">OEE global del proceso</th>
+            <th scope="col">Inicio de preparación</th>
+            <th scope="col">Inicio de producción</th>
+            <th scope="col">Termino de producción</th>
+            <th scope="col">Tiempo de preparación</th>
+            <th scope="col">Tiempo de producción</th>
+            <th scope="col">Tiempo total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lote of historico">
+            <td>{{lote.idprogprodlinea }}</td>
+            <td>{{lote.maquina }}</td>
+            <td>{{lote.turno }}</td>
+            <td>{{lote.producto }}</td>
+            <td>{{lote.cant }}</td>
+            <td>{{lote.cantproducida }}</td>
+            <td>{{lote.defectosfinal }}</td>
+            <td>{{lote.scrapfinal }}</td>
+            <td>{{lote.tipoprod }}</td>
+            <td>{{lote.tmuertosuma}}</td>
+            <td>{{lote.eficienciafinal | percent }}</td>
+            <td>{{lote.percent_disponibilidad | percent }}</td>
+            <td>{{lote.percent_rendimiento | percent }}</td>
+            <td>{{lote.percent_calidad | percent }}</td>
+            <td>{{lote.oee_proceso | percent }}</td>
+            <td>{{lote.oee_global | percent }}</td>
+            <td>{{lote.fechaprep  }}</td>
+            <td>{{lote.fechaprod }}</td>
+            <td>{{lote.fechater  }}</td>
+            <td>{{lote.durprep }}</td>
+            <td>{{lote.durprod }}</td>
+            <td>{{lote.durtot }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style="display: none; ">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="excel" class="table table-hover">
+        <thead>
+          <tr id="th">
+            <th scope="col" style="width: 10%">Distancia</th>
+            <th scope="col" style="width: 10%">Velocidad</th>
+            <th scope="col" style="width: 10%">Fecha</th>
+            <th scope="col" style="width: 10%">Codigo</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let ph of produccionhistorico">
+          <tr>
+            <td>{{ph.distancia }}</td>
+            <td>{{ph.velocidad }}</td>
+            <td>{{ph.fecha }}</td>
+            <td>{{ph.code_bar}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div style="display: none; ">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="excel2" class="table table-hover">
+        <thead>
+          <tr id="th">
+            <th scope="col" style="width: 10%">Paro Incial</th>
+            <th scope="col" style="width: 10%">Paro Final</th>
+            <th scope="col" style="width: 10%">Duración Paro</th>
+            <th scope="col" style="width: 10%">Evento</th>
+            <th scope="col" style="width: 20%">Causa Evento</th>
+            <th scope="col" style="width: 30%">Información</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let tm of tiempomuerto">
+          <tr>
+            <td>{{tm.paroi }}</td>
+            <td>{{tm.parof }}</td>
+            <td>{{tm.duracion_paro}}</td>
+            <td>{{tm.event}}</td>
+            <td>{{tm.Descfalla}}</td>
+            <td>{{tm.inf}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div style="display: none; ">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="excel3" class="table table-hover">
+        <thead>
+          <tr>
+            <th class="scope" style="border-top:none;"><label>Cantidad</label></th>
+            <th class="scope" style="border-top:none;"><label>Tipo de defecto</label></th>
+            <th class="scope" style="border-top:none;"><label>Genera el defecto</label></th>
+            <th class="scope" style="border-top:none;"><label>Registra</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pz of pieza">
+            <td>{{pz.cantdef | number}}</td>
+            <td>{{pz.Registrodefecto.descripcion_defecto }}</td>
+            <td>{{pz.Usuario.username + ' ' + pz.Usuario.Username_last}}</td>
+            <td>{{pz.usreg.username + ' ' + pz.usreg.Username_last}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div style=" display: none;">
+  <div class="moduloI card mb-2 mx-5">
+    <div class="table-responsive-lg px-4">
+      <table id="excel4" class="table table-hover">
+        <thead>
+          <tr>
+            <th class="scope" style="border-top:none;"><label>Cantidad</label></th>
+            <th class="scope" style="border-top:none;"><label>Tipo de scrap</label></th>
+            <th class="scope" style="border-top:none;"><label>Genera el scrap</label></th>
+            <th class="scope" style="border-top:none;"><label>Registra</label></th>
+            <th class="scope" style="border-top:none;"><label>Tipo de Registro</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sr of scrap">
+            <td>{{sr.cantscrap | number}}</td>
+            <td>{{sr.Registroscrap.descripcion_scrap }}</td>
+            <td>{{sr.Usuario.username + ' ' + sr.Usuario.Username_last}}</td>
+            <td>{{sr.usregs.username + ' ' + sr.usregs.Username_last}}</td>
+            <td>{{sr.idtipo_scrap}}</td>
+            <td>
+              <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(sr)"><i
+                  class="material-icons">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

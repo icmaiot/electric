@@ -1,0 +1,39 @@
+<card-title [title]="''" [styleClass]="'true'">
+  <div class="card-header">
+    <app-header-table [titleHeader]="'Sensores'" [titleSelect]="'Buscar sensor..'" (buttonOutput)="addSensor()"
+      (searchOutput)="onSearchChange($event)">
+    </app-header-table>
+  </div>
+  <div class="table-responsive-lg px-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Sensor</th>
+          <th scope="col">Equipo</th>
+          <th scope="col">Color</th>
+          <th scope="col">Intermitente</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of sensores">
+          <td>{{s.sensor}}</td>
+          <td>{{s.Maquina.maquina | titlecase}}</td>
+          <td>{{s.Color.color}}</td>
+          <td>{{s.intermitente}}</td>
+          <td>{{s.tipo}}</td>
+          <td>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="updateSensor(s)"><i
+                class="material-icons">create</i></a>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(s.idsensor)"><i
+                class="material-icons">delete</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    <span class="badge badge-light">Total: {{total}}</span>
+  </div>
+</card-title>

@@ -1,0 +1,99 @@
+@import '../../../../assets/variables.scss';
+
+.reg {  
+    text-align: center;
+  font-size: 18px;
+  width: -webkit-fill-available;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.tot {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.t {
+  text-align: center;
+  font-size: 20px;
+  // font-weight: bolder;
+  margin-right: 10px;
+}
+
+label {
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.modulo {
+  margin-top: 5rem;
+}
+
+.footer {
+  text-align: center;
+}
+
+.div-flex {
+  display: flex;
+  justify-content: flex-end;
+
+  .form-control:focus {
+    border-color: none !important;
+  }
+}
+
+.select-filter {
+  border: none !important;
+  max-width: 150px;
+}
+
+.btn-group-vertical {
+
+  min-height: 40px;
+  position: absolute;
+  bottom: 0;
+}
+
+.table-td {
+  font-size: 15px;
+  padding-right: .35rem;
+  padding-left: .30rem;
+  width: .50rem;
+}
+
+.icon {
+  padding: 0 !important;
+  font-size: 19px;
+}
+
+.status-button {
+  padding: 0 !important;
+}
+
+.widget-chart-content{
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.widget-numbers {
+  font-weight: bold;
+  font-size: 2.5rem;
+  display: block;
+  line-height: 1;
+  margin: 1rem auto;
+}
+
+.estado{
+  float: right;
+}
+

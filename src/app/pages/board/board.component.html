@@ -1,0 +1,241 @@
+<img *ngIf="vel" class="paro img" src="../../../assets/img/PARONO.png">
+<a *ngIf="desc" class="desc img2">DESCANSO <br> {{tid}} minutos </a>
+<a *ngIf="actv" class="desc img2" style="align-items: center;">EN PREPARACIÓN</a>
+<div class="dark">
+  <div class="navbar-brand">
+    <a><img class=""  [routerLink]="['/home']" [src]="urlMidas" alt="Midas"></a>
+  </div>
+  <div class="row">
+    <div class="card-body">
+      <div class="row" style="text-align: center;">
+
+        <div class="col-sm-5 col-md-5 col-xl-5">
+          <div class="card-hover-shadow-2x mb-3 counter-box">
+            <div class="widget-chart-content">
+              <div class="widget-subheading tit">
+                CALIDAD
+              </div>
+              <div class="widget-numbers">
+                <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdiv'">
+                  <div id="chartdiv" style="width: 100%; height: 300px"></div>
+                </app-productos-en-produccion>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-xl-2">
+          <div class="card-hover-shadow-2x mb-3 counter-box">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                <h2 class="red"> {{maquina}} </h2>
+              </div>
+              <div class="widget-numbers">
+                <p style="margin-bottom: 0rem"> Tiempo de paro actual </p>
+                <h2 style="color: red" class="red"> {{paro}} </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      
+      <div class="col-sm-5 col-md-5 col-xl-5">
+        <div class="card-hover-shadow-2x mb-3 counter-box">
+          <div class="widget-chart-content">
+            <div class="widget-subheading tit">
+              OEE
+            </div>
+            <div class="widget-numbers">
+              <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdivtwo'">
+                <div id="chartdivtwo" style="width: 100%; height: 300px"></div>
+              </app-productos-en-produccion>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="text-align: center; margin-top: 3rem;">
+      <div class="col-sm-4 col-md-4 col-xl-4">
+        <div class="card-hover-shadow-2x mb-3 counter-box">
+          <div class="widget-chart-content">
+            <div class="widget-subheading tit">
+              ACTUAL
+              <p class="tit">(PIEZAS) </p>
+            </div>
+            <div class="widget-numbers" *ngFor="let obj of board">
+              <p [ngStyle]="{'color': (obj.distan - obj.prodesp < 0) ? 'red' : '#00ff00'}" class="dataEnc distan red">
+                {{obj.distan}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-xl-4" *ngFor="let obj of board">
+        <div class="card-hover-shadow-2x mb-3 counter-box">
+          <div class="widget-chart-content">
+            <div class="widget-subheading tit">
+              ESTIMADA
+              <p class="tit">(PIEZAS) </p> 
+            </div>
+            <div class="widget-numbers">
+              <p [ngStyle]="{'color': '#00ff00'}" class="dataEnc red">{{obj.prodesp}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-xl-4">
+        <div class="card-hover-shadow-2x mb-3 counter-box">
+          <div class="widget-chart-content">
+            <div class="widget-subheading tit">
+              DELTA
+              <p class="tit">(DIFERENCIA DE PIEZAS) </p>
+            </div>
+            <div class="widget-numbers" *ngFor="let obj of board">
+              <p [ngStyle]="{'color': (obj.delta > 0) ? 'red' : '#00ff00'}" class="dataEnc red">{{obj.delta}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let obj of board"> </div>
+  </div>
+</div>
+<footer class="card-footer cardfoot">
+  <section *ngFor="let obj of board">
+    <div class="row" style="text-align: center;">
+      <div class="col " style="border-right: #dee2e6 solid 1px;">
+        <div class="widget-chart-content">
+          <div class="widget-subheading foot">
+            SKU EN PRODUCCIÓN
+          </div>
+          <div class="widget-numbers ">
+            {{ obj.skuactual }}
+          </div>
+        </div>
+      </div>
+      <div class="col" style="border-right: #dee2e6 solid 1px;">
+        <div class="widget-chart-content">
+          <div class="widget-subheading foot">
+            PIEZAS PROGRAMADAS
+          </div>
+          <div class="widget-numbers">
+            {{ obj.cantprod }}
+          </div>
+        </div>
+      </div>
+      <div class="col" style="border-right: #dee2e6 solid 1px;">
+        <div class="widget-chart-content">
+          <div class="widget-subheading foot">
+            VELOCIDAD DE LÍNEA
+          </div>
+          <div class="widget-numbers">
+            {{ obj.veloc }} pieza/hr
+          </div>
+        </div>
+      </div>
+      <div class="col" style="border-right: #dee2e6 solid 1px;">
+        <div class="widget-chart-content">
+          <div class="widget-subheading foot">
+            SIGUIENTE SKU
+          </div>
+          <div class="widget-numbers">
+            {{ obj.skusig }}
+          </div>
+        </div>
+      </div>
+      <div class="col" style="border-right: #dee2e6 solid 1px;">
+        <div class="widget-chart-content">
+          <div class="widget-subheading foot">
+            TIEMPO MUERTO TOTAL
+          </div>
+          <div class="widget-numbers">
+            {{ obj.tmuerto }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</footer>
+</div>
+
+
+<!--<img *ngIf="vel" class="paro img" src="../../../assets/img/PARONO.png">
+<a *ngIf="desc" class="desc img2">DESCANSO <br> {{tid}} minutos </a>
+<a *ngIf="actv" class="desc img2" style="align-items: center;">EN PREPARACIÓN</a>
+<div class="row header">
+  <div class="col-10 Head">
+    <h1>PERFORMANCE BOARD</h1>
+  </div>
+  <div class="col-2 black">
+    <a class="navbar-brand"><img class="" [src]="urlMidas" alt="Midas"></a>
+  </div>
+</div>
+<div class="container">
+  <div class="row infoEncoder">
+    <table>
+      <tr>
+        <th>
+          <h2>CALIDAD</h2>
+          <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdiv'">
+            <div id="chartdiv" style="width: 100%; height: 300px"></div>
+          </app-productos-en-produccion>
+        </th>
+        <th class="alg">
+          <h2 class="red"> {{maquina}} </h2>
+          <p style="margin-bottom: 0rem"> Tiempo de paro actual </p>
+          <h2 style="color: red" class="red"> {{paro}} </h2>
+        </th>
+        <th>
+          <h2> OEE</h2>
+          <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdivtwo'">
+            <div id="chartdivtwo" style="width: 100%; height: 300px"></div>
+          </app-productos-en-produccion>
+        </th>
+      </tr>
+    </table>
+    <table class="infoEncoder" *ngFor="let obj of board">
+      <tr class="dataEnc">
+        <th>
+          <h2>PRODUCCIÓN ACTUAL (Piezas)</h2>
+        </th>
+        <th>
+          <h2>PRODUCCIÓN ESPERADA (Piezas)</h2>
+        </th>
+        <th>
+          <h2>DELTA</h2>
+        </th>
+      </tr>
+      <tr class="dataEnc">
+        <td>
+          <p [ngStyle]="{'color': (obj.distan - obj.prodesp < 0) ? 'red' : '#00ff00'}" class="dataEnc distan red">
+            {{obj.distan}}</p>
+        </td>
+        <td>
+          <p [ngStyle]="{'color': '#00ff00'}" class="dataEnc red">{{obj.prodesp}}</p>
+        </td>
+        <td>
+          <p [ngStyle]="{'color': (obj.delta > 0) ? 'red' : '#00ff00'}" class="dataEnc red">{{obj.delta}}</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row infoEncoder2">
+  </div>
+  <div class="row dataSku" *ngFor="let obj of board">
+    <table class="sku_info">
+      <tr class="sku">
+        <th>SKU EN PRODUCCIÓN</th>
+        <th>PIEZAS PROGRAMADAS</th>
+        <th>VELOCIDAD DE LÍNEA</th>
+        <th>SIGUIENTE SKU</th>
+        <th>TIEMPO MUERTO TOTAL</th>
+      </tr>
+      <tr class="sku">
+        <td>{{ obj.skuactual }}</td>
+        <td>{{ obj.cantprod }}</td>
+        <td>{{ obj.veloc }} pieza/hr</td>
+        <td>{{ obj.skusig }}</td>
+        <td>{{ obj.tmuerto }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+-->

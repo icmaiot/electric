@@ -1,0 +1,105 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th class="scope" style="border-top:none;"><label>Cantidad</label></th>
+                        <th class="scope" style="border-top:none;"><label>Tipo de scrap</label></th>
+                        <th class="scope" style="border-top:none;"><label>Genera el scrap</label></th>
+                        <th class="scope" style="border-top:none;"><label>Registra</label></th>
+                        <th class="scope" style="border-top:none;"><label>Tipo de Registro</label></th>
+                        <th class="scope" style="border-top:none;"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="number" class="form-control" id="cantscrap" nombre="cantscrap"
+                                    formControlName="cantscrap"
+                                    [ngClass]="{ 'is-invalid': submitted && f.cantscrap.errors }">
+                                <div *ngIf="submitted && f.cantscrap.errors" class="invalid-feedback">
+                                    <div *ngIf="f.cantscrap.errors.required">Cantidad de scrap es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idscrapreg" nombre="idscrapreg"
+                                    formControlName="idscrapreg"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.idscrapreg.errors }">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar scrap</option>
+                                    <option *ngFor="let d of scraps" [value]="d.idscrapreg">
+                                        {{d.Registroscrap.descripcion_scrap}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.idscrapreg.errors" class="invalid-feedback">
+                                    <div *ngIf="f.idscrapreg.errors.required">El scrap es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idusuarios" nombre="idusuarios"
+                                    formControlName="idusuarios"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarios.errors }">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
+                                    <option *ngFor="let d of usuario" [value]="d.id">
+                                        {{d.username + ' ' + d.Username_last}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.idusuarios.errors" class="invalid-feedback">
+                                    <div *ngIf="f.idusuarios.errors.required">El usuario es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idusuarioreg" nombre="idusuarioreg"
+                                    formControlName="idusuarioreg"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarioreg.errors }">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
+                                    <option *ngFor="let d of responsable" [value]="d.id">
+                                        {{d.username + ' ' + d.Username_last}}
+                                    </option>
+                                    <div *ngIf="submitted && f.idusuarioreg.errors" class="invalid-feedback">
+                                        <div *ngIf="f.idusuarioreg.errors.required">El usuario es requerido</div>
+                                    </div>
+                                </select>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idtipo_scrap" nombre="idtipo_scrap"
+                                    formControlName="idtipo_scrap">
+                                    <option disabled hidden value="-1" [selected]="true">Tipo de registro</option>
+                                    <option *ngFor="let d of tipo_scrap" [value]="d.id">
+                                        {{d.tipo}}
+                                    </option>
+                                </select>
+                            </div>
+                        </th>
+                        <th>
+                        <th>
+                            <div class="">
+                                <button type="submit" (click)="guardar()" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sr of scrap">
+                        <td>{{sr.cantscrap | number}}</td>
+                        <td>{{sr.Registroscrap.descripcion_scrap }}</td>
+                        <td>{{sr.Usuario.username + ' ' + sr.Usuario.Username_last}}</td>
+                        <td>{{sr.usregs.username + ' ' + sr.usregs.Username_last}}</td>
+                        <td>{{sr.idtipo_scrap==1 ? "Setup" : "Producción"}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(sr)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

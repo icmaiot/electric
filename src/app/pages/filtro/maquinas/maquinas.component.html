@@ -1,0 +1,152 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="false" [titleHeader]="'Programa de produccion'" [titleSelect]="false"
+    (buttonOutput)="false" (searchOutput)="false" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+  <div class="card-header">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+      <div class="col-md-1">
+        <label for="maquina" class="form-label">Equipo</label>
+        <input type="text" class="form-control" id="maquina" nombre="maquina" formControlName="maquina"
+          [ngClass]="{ 'is-invalid': submitted && f.maquina.errors }">
+        <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
+          <div *ngIf="f.maquina.errors.required">Maquina es requerida</div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="Descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="Descripcion" nombre="Descripcion" formControlName="Descripcion"
+          [ngClass]="{ 'is-invalid': submitted && f.Descripcion.errors }">
+        <div *ngIf="submitted && f.Descripcion.errors" class="invalid-feedback">
+          <div *ngIf="f.Descripcion.errors.required">Descripción es requerida</div>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <label for="idarea" class="form-label">Área</label>
+        <select class="form-control" id="idarea" nombre="idarea" formControlName="idarea"
+          [ngClass]="{ 'is-invalid': submitted && f.idarea.errors }">
+          <option *ngFor="let ar of areas" [value]="ar.idarea">{{ar.area}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.idarea.errors" class="invalid-feedback">
+          <div *ngIf="f.idarea.errors.required">Área es requerida</div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="tipoequipo" class="form-label">Tipo de equipo</label>
+        <select class="form-control" id="tipoequipo2" nombre="tipoequipo2" formControlName="tipoequipo"
+          [ngClass]="{ 'is-invalid': submitted && f.tipoequipo.errors }">
+          <option *ngFor="let te of tipoequipo" [value]="te.idtipo">{{te.tipoequipo}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.tipoequipo.errors" class="invalid-feedback">
+          <div *ngIf="f.tipoequipo.errors.required">Tipo de equipo es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="idmodulo" class="form-label">Modulo Interfaz</label>
+        <select class="form-control" id="idmodulo1" nombre="idmodulo1" formControlName="idmodulo"
+          [ngClass]="{ 'is-invalid': submitted && f.idmodulo.errors }">
+          <option hidden value="-1"> </option>
+          <option *ngFor="let mdi of moduloInlista" [value]="mdi.idmodulo">{{mdi.serial}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.idmodulo.errors" class="invalid-feedback">
+          <div *ngIf="f.idmodulo.errors.required">Modulo Interfaz es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="idrmt" class="form-label">Modulo RMT</label>
+        <select class="form-control" id="idrmt1" nombre="idrmt1" formControlName="idrmt"
+          [ngClass]="{ 'is-invalid': submitted && f.idrmt.errors }">
+          <option hidden value="-1"> </option>
+          <option *ngFor="let mdr of moduloRMTlista" [value]="mdr.idrmt">{{mdr.serialrmt}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.idrmt.errors" class="invalid-feedback">
+          <div *ngIf="f.idrmt.errors.required">Modulo RMT es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <label for="progprod" class="form-label">Programa</label>
+        <select class="form-control" id="progprod" nombre="progprod" formControlName="progprod"
+          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
+          <option *ngFor="let pp of programa" [value]="pp.id">{{pp.progprod}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
+          <div *ngIf="f.progprod.errors.required">Modulo RMT es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-1 mt-4">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <form class="div-flex" [formGroup]="formFilter">
+      <div class="">
+        <select class="form-control select-filter" id="idareaf" nombre="idareaf" (change)="getMaquinaLista()"
+          formControlName="idarea">
+          <option disabled hidden value="-1" [selected]="true">Ver Area</option>
+          <option *ngFor="let obj of filterArray" [value]="obj.idarea">{{obj.area}}
+          </option>
+        </select>
+      </div>
+      <div class="">
+        <select class="form-control select-filter" id="idtipo" nombre="idtipo" (change)="getMaquinaLista()"
+          formControlName="idtipo">
+          <option disabled hidden value="-1" [selected]="true">Ver Tipo</option>
+          <option *ngFor="let obj of filterArray2" [value]="obj.idtipo"> {{obj.tipoequipo}}
+          </option>
+        </select>
+      </div>
+      <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
+          class="material-icons">filter_list</i></a>
+    </form>
+
+    <div class="table-responsive-lg px-4">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="table-td">Equipo</th>
+            <th scope="col" class="table-td">Descripción</th>
+            <th scope="col" class="table-td">Área</th>
+            <th scope="col" class="table-td">Tipo de equipo</th>
+            <th scope="col" class="table-td">Módulo Interfaz</th>
+            <th scope="col" class="table-td">Módulo RMT</th>
+            <th scope="col" class="table-td">Programa</th>
+            <th scope="col" class="table-td"></th>
+            <th scope="col" class="table-td"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of maquinalista">
+            <td>{{obj.maquina}}</td>
+            <td>{{obj.Descripcion}}</td>
+            <td>{{obj.area }}</td>
+            <td>{{obj.tipoequipo }}</td>
+            <td>{{obj.serial }}</td>
+            <td>{{obj.serialrmt}}</td>
+            <td>{{obj.progprod}}</td>
+            <td>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar correos a la línea" (click)="email(obj)"><i
+                  class="material-icons icon">email</i></a>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(obj)"><i
+                  class="material-icons icon">create</i></a>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar"
+                (click)="delete(obj.idmaquina)"><i class="material-icons icon">delete</i></a>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Actualizar Equipo"
+                (click)="Serial(obj.idmaquina)"><i class="material-icons icon">update</i></a>
+            </td>
+            <td>
+              <a *ngIf="obj.progprod == 'Línea'||'Linea'" class="btn btn-primary status-button" data-toggle="tooltip"
+                data-placement="top" title="Registros" [routerLink]="['/board',obj.idmaquina]" target="_blank">Board</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

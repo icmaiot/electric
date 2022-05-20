@@ -1,0 +1,28 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="desc_raw">Descripción materia prima</label>
+                <input type="text" class="form-control" id="desc_raw" nombre="desc_raw" formControlName="desc_raw"
+                    [ngClass]="{ 'is-invalid': submitted && f.desc_raw.errors }">
+                <div *ngIf="submitted && f.desc_raw.errors" class="invalid-feedback">
+                    <div *ngIf="f.desc_raw.errors.required">Descripción es requerido</div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="um_raw">Unidad de Medida</label>
+                <select class="form-control" id="um_raw" nombre="um_raw" formControlName="um_raw"
+                    [ngClass]="{ 'is-invalid': submitted && f.um_raw.errors }">
+                    <option *ngFor="let um of listaUm" [value]="um.idum">{{um.um}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f.um_raw.errors" class="invalid-feedback">
+                    <div *ngIf="f.um_raw.errors.required">Um es requerido</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-secondary">{{btnText}}</button>
+        </div>
+    </form>
+</dialog-component>

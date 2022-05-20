@@ -1,0 +1,41 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-top:none;">Usuario</th>
+                        <th style="border-top:none;width: 5px;"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="usuario" nombre="usuario" formControlName="id_usuario"
+                                    [ngClass]="{ 'is-invalid': submitted && f.id_usuario.errors }">
+                                    <option class="e" *ngFor="let e of listaUsuario" [value]="e.id">
+                                        {{e.username|titlecase}} {{e.Username_last|titlecase}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.id_usuario.errors" class="invalid-feedback">
+                                    <div *ngIf="f.id_usuario.errors.required">Usuario es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <button type="submit" class="btn btn-primary" >Guardar</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let obj of lista">
+                        <td >{{obj.Usuario.username}} {{obj.Usuario.Username_last}} </td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

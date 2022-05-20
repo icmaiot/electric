@@ -1,0 +1,51 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="true" [titleHeader]="'Tipos de equipo'" [titleSelect]="'Buscar tipo..'"
+    (buttonOutput)="add()" (searchOutput)="onSearchChange($event)" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="tipo card mb-4 mx-5">
+  <div class="table-responsive-lg px-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th style="width: 40%" scope="col">Tipo Equipo</th>
+          <th style="width: 10%" scope="col">Opciones</th>
+          <th style="width: 10%" scope="col"><a (click)="Eventoasg(4)" class="btn btn-primary c">MNTOO</a></th>
+          <th style="width: 10%" scope="col"><a (click)="Eventoasg(5)" class="btn btn-primary c">MATS</a></th>
+          <th style="width: 10%" scope="col"><a (click)="Eventoasg(6)" class="btn btn-primary c">ING</a></th>
+          <th style="width: 10%" scope="col"><a (click)="Eventoasg(7)" class="btn btn-primary c">PROD</a></th>
+          <th style="width: 10%" scope="col"><a (click)="Eventoasg(8)" class="btn btn-primary c">CALIDAD</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tipos">
+          <td>{{t.tipoequipo | titlecase}}</td>
+          <td class="alig">
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(t)"><i
+                class="material-icons">create</i></a>
+            <!--<a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(t.idtipo)"><i
+                  class="material-icons">delete</i></a>-->
+            </td>
+            <td> 
+              <button (click)="Eventoc(4,t.idtipo)" value="4"><img class="material-icons" [src]="urlMantenimiento" alt="Mantenimiento"></button>
+            </td>
+            <td>     
+              <button (click)="Eventoc(5,t.idtipo)" value="5"><img class="material-icons" [src]="urlMateriales" alt="Materiales"></button> 
+            </td>
+            <td>
+              <button (click)="Eventoc(6,t.idtipo)" value="6"><img class="material-icons" [src]="urlIngenieria" alt="Ingenieria"></button>
+            </td>
+            <td>
+              <button (click)="Eventoc(7,t.idtipo)" value="7"><img class="material-icons" [src]="urlProduccion" alt="Produccion"></button>
+            </td>
+            <td>
+              <button (click)="Eventoc(8,t.idtipo)" value="8"><img class="material-icons" [src]="urlCalidad" alt="Calidad"></button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    <span class="badge badge-light">Total: {{total}}</span>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+  <div class="table-responsive-sm px-4">
+    <form [formGroup]="formFuncusu" (ngSubmit)="onSubmit()">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col" style="border-top:none;">{{this.usuario.username}}&nbsp;{{this.usuario.Username_last}}</th>
+          </tr>
+          <tr>
+            <th>
+              <div class=" ">
+                <select class="form-control" id="funcionusu" nombre="funcionusu" formControlName="funcionusu"
+                  [(ngModel)]="this.funcion" [ngClass]="{ 'is-invalid': submitted && f.funcionusu.errors }">
+                  <option *ngFor="let fun of listaFuncusu" [value]="fun.IDfuncusu">{{fun.funcusu}}</option>
+                </select>
+                <div *ngIf="submitted && f.funcionusu.errors" class="invalid-feedback">
+                  <div *ngIf="f.funcionusu.errors.required">Nombre de Funcion es requrido</div>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr *ngFor="let obj of listaFuncusu">
+                        <td>{{obj.funcusu}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+                        </td> 
+                    </tr>-->
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+</dialog-component>

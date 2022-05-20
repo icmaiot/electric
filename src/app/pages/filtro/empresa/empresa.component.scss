@@ -1,0 +1,32 @@
+@import '../../../../assets/variables.scss';
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.maquina {
+  margin-top: 3rem;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer {
+  text-align: center;
+}
+
+.search {
+  width: 20% !important;
+  margin-right: 20px;
+}
+
+.div-buttons {
+  flex: 3;
+}
+
+.toggle {
+  text-align: right;
+}

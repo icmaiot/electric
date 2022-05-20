@@ -1,0 +1,43 @@
+@import '../../../../assets/variables.scss';
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.moduloI {
+  margin-top: 3rem;
+}
+
+.footer {
+  text-align: center;
+}
+
+.div-flex {
+  display: flex;
+  justify-content: flex-end;
+
+  .form-control:focus {
+    border-color: none !important;
+  }
+}
+
+.select-filter {
+  border: none !important;
+  max-width: 150px;
+}
+
+.table-td {
+  font-size: 13px;
+  padding-right: .35rem;
+  padding-left: .30rem;
+  width: auto;
+}
+
+.icon {
+  padding: 0 !important;
+  font-size: 19px;
+}
+
+.status-button {
+  padding: 0 !important;
+}

@@ -1,0 +1,18 @@
+@import '../../../../assets/variables.scss';
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.moduloI {
+  margin-top: 3rem;
+}
+
+.footer {
+  text-align: center;
+}
+
+.left{
+  text-align: -webkit-right;
+  align-self: self-end;
+}

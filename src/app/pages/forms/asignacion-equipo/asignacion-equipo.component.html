@@ -1,0 +1,40 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-top:none;">Equipo</th>
+                        <th style="border-top:none;width: 5px;"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="equipo" nombre="equipo" formControlName="idmaquina"
+                                    [ngClass]="{ 'is-invalid': submitted && f.idmaquina.errors }">
+                                    <option *ngFor="let e of listaEquipos" [value]="e.idmaquina">{{e.maquina|titlecase}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.idmaquina.errors" class="invalid-feedback">
+                                    <div *ngIf="f.idmaquina.errors.required">Equipo es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of listaSKU">
+                        <td>{{obj.Maquina.maquina}}</td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

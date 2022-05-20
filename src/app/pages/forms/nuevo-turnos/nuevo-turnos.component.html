@@ -1,0 +1,105 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="false" [titleHeader]="'Programa de produccion'" [titleSelect]="false"
+    (buttonOutput)="false" (searchOutput)="false" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+  <div class="card-header">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+      <div class="col">
+        <label for="numdesc" class="form-label">Numero de descanso</label>
+        <input type="number" class="form-control" id="numdesc" nombre="numdesc" formControlName="numdesc"
+          [ngClass]="{ 'is-invalid': submitted && f.numdesc.errors }">
+        <div *ngIf="submitted && f.numdesc.errors" class="invalid-feedback">
+          <div *ngIf="f.numdesc.errors.required">Numero de descanso es requerido</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc1" class="form-label">Primer descanso</label>
+        <input type="time" class="form-control" id="desc1" nombre="desc1" formControlName="desc1"
+          [ngClass]="{ 'is-invalid': submitted && f.desc1.errors }">
+        <div *ngIf="submitted && f.desc1.errors" class="invalid-feedback">
+          <div *ngIf="f.desc1.errors.required">Hora de inicio primer descanso es requerida</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc1dur" class="form-label">Duración minutos</label>
+        <input type="number" class="form-control" id="desc1dur" nombre="desc1dur" formControlName="desc1dur"
+          [ngClass]="{ 'is-invalid': submitted && f.desc1dur.errors }">
+        <div *ngIf="submitted && f.desc1dur.errors" class="invalid-feedback">
+          <div *ngIf="f.desc1dur.errors.required">Duración minutos es requerido</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc2" class="form-label">Segundo descanso</label>
+        <input type="time" class="form-control" id="desc2" nombre="desc2" formControlName="desc2"
+          [ngClass]="{ 'is-invalid': submitted && f.desc2.errors }">
+        <div *ngIf="submitted && f.desc2.errors" class="invalid-feedback">
+          <div *ngIf="f.desc2.errors.required">Hora de inicio segundo descanso es requerida</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc2dur" class="form-label">Duración minutos</label>
+        <input type="number" class="form-control" id="desc2dur" nombre="desc2dur" formControlName="desc2dur"
+          [ngClass]="{ 'is-invalid': submitted && f.desc2dur.errors }">
+        <div *ngIf="submitted && f.desc2dur.errors" class="invalid-feedback">
+          <div *ngIf="f.desc2dur.errors.required">Duración minutos es requerido</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc3" class="form-label">Tercer descanso</label>
+        <input type="time" class="form-control" id="desc3" nombre="desc3" formControlName="desc3"
+          [ngClass]="{ 'is-invalid': submitted && f.desc23errors }">
+        <div *ngIf="submitted && f.desc3.errors" class="invalid-feedback">
+          <div *ngIf="f.desc3.errors.required">Hora de inicio tercer descanso es requerida</div>
+        </div>
+      </div>
+      <div class="col">
+        <label for="desc3dur" class="form-label">Duración minutos</label>
+        <input type="number" class="form-control" id="desc3dur" nombre="desc3dur" formControlName="desc3dur"
+          [ngClass]="{ 'is-invalid': submitted && f.desc3dur.errors }">
+        <div *ngIf="submitted && f.desc3dur.errors" class="invalid-feedback">
+          <div *ngIf="f.desc3dur.errors.required">Duración minutos es requerido</div>
+        </div>
+      </div>
+      <div class="col mt-4">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive-lg px-4">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="table-td">Numero de descanso</th>
+            <th scope="col" class="table-td">Primer descanso</th>
+            <th scope="col" class="table-td">Duración minutos</th>
+            <th scope="col" class="table-td">Segundo descanso</th>
+            <th scope="col" class="table-td">Duración minutos</th>
+            <th scope="col" class="table-td">Tercer descanso</th>
+            <th scope="col" class="table-td">Duración minutos</th>
+            <th scope="col" class="table-td"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of listaturnos">
+            <td>{{obj.numdesc | number}}</td>
+            <td>{{obj.desc1}}</td>
+            <td>{{obj.desc1dur}}</td>
+            <td>{{obj.desc2}}</td>
+            <td>{{obj.desc2dur}}</td>
+            <td>{{obj.desc3}}</td>
+            <td>{{obj.desc3dur}}</td>
+            <td>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(obj)"><i
+                  class="material-icons icon">create</i></a>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar"
+                (click)="delete(obj)"><i class="material-icons icon">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

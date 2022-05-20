@@ -1,0 +1,57 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+  <div class="table-responsive-sm px-4">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col" style="border-top:none; width:20%">Evento</th>
+            <th scope="col" style="border-top:none; width:30%">Causa Evento</th>
+            <th scope="col" style="border-top:none; width:40%">Información</th>
+            <th scope="col" style="border-top:none; width:10%"></th>
+          </tr>
+          <tr>
+            <td>
+              <div class="">
+                <select class="form-control" id="evento" nombre="evento" formControlName="evento"
+                  (change)="onChange($event)" [ngClass]="{ 'is-invalid': submitted && f.evento.errors }">
+                  <option *ngFor="let ev of lsevento" [value]="ev.idevento">{{ev.evento}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f.evento.errors" class="invalid-feedback">
+                  <div *ngIf="f.evento.errors.required">El evento es requerido</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="">
+                <select class="form-control" id="subcausa" nombre="subcausa" formControlName="subcausa"
+                  [ngClass]="{ 'is-invalid': submitted && f.subcausa.errors }">
+                  <option *ngFor="let evc of lseventoc" [value]="evc.IDeventofalla">{{evc.Descfalla}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f.subcausa.errors" class="invalid-feedback">
+                  <div *ngIf="f.subcausa.errors.required">La subcausa es requerida</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control texto" id="inf" nombre="inf" formControlName="inf">
+            </td>
+            <th>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </th>
+          </tr>
+        </thead>
+        <!--  <tbody>
+                    <tr *ngFor="let pro of produccion">
+                        <td>{{pro.Cantidad | number}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(pro)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody> -->
+      </table>
+    </form>
+  </div>
+</dialog-component>

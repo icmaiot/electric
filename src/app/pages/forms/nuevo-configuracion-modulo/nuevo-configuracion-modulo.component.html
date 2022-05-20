@@ -1,0 +1,89 @@
+<div class="mt-3">
+    <app-header-table [renderButton]="false" [titleHeader]="'Departamentos'" [titleSelect]="'Buscar departamento..'"
+        (buttonOutput)="addDepto()" (searchOutput)="onSearchChange($event)" [listNav]="listNav">
+    </app-header-table>
+</div>
+
+<div class="perfilConfig card mb-4 mx-5">
+    <div class="table-responsive-lg px-4">
+        <table class="table table-borderless table-sm" id="table">
+            <thead>
+                <tr>
+                    <th scope="col" rowspan="2" style="width: 5%;">Entrada</th>
+                    <th scope="col" rowspan="2" style="width: 8%;">Tipo entrada</th>
+                    <th scope="col" rowspan="2" style="width: 13%;">Evento</th>
+                    <th scope="col" rowspan="2" style="width: 10px;">Intermitente</th>
+                    <th scope="col" rowspan="1" colspan="16">Estaciones</th>
+                </tr>
+                <tr>
+                    <th *ngFor="let number of listEstacion">{{number.estacion}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let conf of lisConfiguracion; let i = index; trackBy: trackByFn;">
+                    <ng-container *ngIf="conf.show">
+                        <td>
+                            <p class="text-center">{{conf.entrada}}</p>
+                        </td>
+                        <td>
+                            <select class="custom-select" id="{{'select' + i}}"
+                                [ngClass]="{ 'is-invalid': submitted && conf.tipoentrada === '' }"
+                                (change)="onTipoEntradaChange($event.target.value,i,'tipoentrada')"
+                                [disabled]="i ==0 || i ==1 || i ==2 || i ==8 || i==9 || i==10"
+                                [(ngModel)]="conf.tipoentrada">
+                                <option value="0">HMI</option>
+                                <option value="1">PLC</option>
+                            </select>
+                            <div *ngIf="submitted && conf.tipoentrada === ''" class="invalid-feedback">
+                                <div *ngIf=" submitted && conf.tipoentrada === ''">Tipo requerido</div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="custom-select custom-select-sm" id="{{'evento' + i}}"
+                                [ngClass]="{ 'is-invalid': (submitted && conf.idevento === '' || conf.errorEvento) }"
+                                [disabled]="i ==0 || i ==1 || i ==2 || i ==8 || i==9 || i==10"
+                                (change)="onEventoChange($event.target.value,i)" [(ngModel)]="conf.idevento">
+                                <option *ngFor="let e of listEventos" [style.color]="e.color" [value]="e.idevento">
+                                    {{e.evento | titlecase}}</option>
+                            </select>
+                            <div *ngIf="(submitted && conf.idevento === '' || conf.errorEvento)"
+                                class="invalid-feedback">
+                                <div *ngIf=" conf.errorEvento">Evento Duplicado</div>
+                                <div *ngIf="submitted && conf.idevento  === ''">Evento requerido</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input class="form-check-input" type="checkbox" id="{{conf.entrada}}"
+                                    [(ngModel)]="conf.intermitente"
+                                    [disabled]="i ==0 || i ==1 || i ==2 || i ==8 || i==9 || i==10">
+                                <label class="form-check-label" for="{{conf.entrada}}">
+                                </label>
+                            </div>
+                        </td>
+                        <td *ngFor="let number of conf.listEstacion; let indexEstacion = index;">
+                            <div class="custom-control custom-checkbox">
+                                <input class="form-check-input" type="checkbox" id="{{number.id}}"
+                                    [checked]="number.checked" (change)="onEstacionChange(number,i,indexEstacion)"
+                                    [disabled]=" i ==8 || i==9 || i==10">
+                                <label class="form-check-label" for="{{number.id}}">
+                                </label>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class=" row mb-3">
+        <div class="col-8">
+            <!--<div *ngIf="(submitted && !validate || errorDuplicated)" class="alert alert-danger" role="alert">
+                {{messageError}}
+            </div>-->
+        </div>
+        <div class="col-4 float-right">
+            <button type="button" (click)="onSubmit()" class="btn btn-secondary mr-1">Guardar</button>
+            <button type="button" [routerLink]="['/perfilConfig']" class="btn btn-secondary ">Cancelar</button>
+        </div>
+    </div>
+</div>

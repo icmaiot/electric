@@ -1,0 +1,33 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="true" [titleHeader]="'Áreas'" [titleSelect]="'Buscar área..'"
+    (buttonOutput)="addArea()" (searchOutput)="onSearchChange($event)" [listNav]="listNav">
+  </app-header-table>
+</div>
+<div class="area card mb-4 mx-5">
+  <div class="table-responsive-lg px-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Área</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of areas">
+          <td>{{d.area |titlecase}}</td>
+          <td>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="updateArea(d)"><i
+                class="material-icons">create</i></a>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(d.idarea)"><i
+                class="material-icons">delete</i></a>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar equipo "
+              (click)="addMaquina(d.idarea)"><i class="material-icons">build</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    <span class="badge badge-light">Total:{{total}} </span>
+  </div>
+</div>

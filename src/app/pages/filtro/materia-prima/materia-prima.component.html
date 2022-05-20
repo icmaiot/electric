@@ -1,0 +1,66 @@
+<div class="mt-3">
+    <app-header-table [renderButton]="false" [titleHeader]="'Modulo Interfaz'" [titleSelect]="'Buscar materia..'"
+        (buttonOutput)="add()" (searchOutput)="onSearchChange($event)" [listNav]="listNav">
+    </app-header-table>
+</div>
+<div class="moduloI card mb-4 mx-5">
+    <div class="table-responsive-lg px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Descripción materia prima</th>
+                        <th scope="col" style="width: 25%"> Unidad de medida
+                            <a class="btn-add btn" data-toggle="tooltip" data-placement="top" title="Agregar "
+                                (click)="newUm()"><i class="material-icons">add_circle</i></a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="desc_raw" nombre="desc_raw"
+                                    formControlName="desc_raw"
+                                    [ngClass]="{ 'is-invalid': submitted && f.desc_raw.errors }">
+                                <div *ngIf="submitted && f.desc_raw.errors" class="invalid-feedback">
+                                    <div *ngIf="f.desc_raw.errors.required">Descripción es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                <select class="form-control" id="um_raw" nombre="um_raw" formControlName="um_raw"
+                                    [ngClass]="{ 'is-invalid': submitted && f.um_raw.errors }">
+                                    <option *ngFor="let um of listaUm" [value]="um.idum">{{um.um}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.um_raw.errors" class="invalid-feedback">
+                                    <div *ngIf="f.um_raw.errors.required">Um es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of lista">
+                        <td>{{obj.desc_raw| titlecase}}</td>
+                        <td>{{obj.Um.um}}</td>
+                        <td>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar"
+                                (click)="update(obj)"><i class="material-icons">create</i></a>
+                            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="footer">
+        <span class="badge badge-light">Total:{{total}} </span>
+    </div>
+</div>

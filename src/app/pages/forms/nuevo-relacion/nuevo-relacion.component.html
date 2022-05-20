@@ -1,0 +1,39 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-top:none;">Nueva Relación Comercial</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="relcomercial" nombre="relcomercial"
+                                    formControlName="relcomercial"
+                                    [ngClass]="{ 'is-invalid': submitted && f.relcomercial.errors }">
+                                <div *ngIf="submitted && f.relcomercial.errors" class="invalid-feedback">
+                                    <div *ngIf="f.relcomercial.errors.required">Relación comercial es requerida</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let rel of relcomp">
+                        <td>{{rel.relcomercial| titlecase}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(rel)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

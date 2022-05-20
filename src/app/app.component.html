@@ -1,0 +1,5 @@
+<app-header *ngIf="currentComponent !== 'BoardComponent'"></app-header>
+
+<div>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>

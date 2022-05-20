@@ -1,0 +1,295 @@
+<div class="nuevo-empresa card h-100 d-flex mx-5">
+
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(empresa)">
+      <div class="form-row">
+        <div class="col-md-10">
+          <h3 *ngIf="statusG">Editar: {{empresa.nomemp}}</h3>
+          <h3 *ngIf="statusC">Crear empresa</h3>
+        </div>
+        <div class="form-group col-md-2 toggle">
+          Status <mat-slide-toggle id="activoemp" nombre="activoemp" (change)="ToggleStatusEmp()"
+            [(ngModel)]="empresa.activoemp" formControlName="activoemp"
+            [ngClass]="{ 'is-invalid': submitted && f.activoemp.errors }">
+            {{statusemp}}
+          </mat-slide-toggle>
+          <div *ngIf="submitted && f.activoemp.errors" class="invalid-feedback">
+            <div *ngIf="f.activoemp.errors.required">Estado de la empresa requerido</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nomemp">Razón</label>
+          <input type="text" class="form-control" id="nomemp" nombre="nomemp" [(ngModel)]="empresa.nomemp"
+            formControlName="nomemp" [ngClass]="{ 'is-invalid': submitted && f.nomemp.errors }">
+          <div *ngIf="submitted && f.nomemp.errors" class="invalid-feedback">
+            <div *ngIf="f.nomemp.errors.required">Razón es requerida</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="nombcortemp">Nombre Corto</label>
+          <input type="text" class="form-control" id="nombcortemp" nombre="nombcortemp"
+            [(ngModel)]="empresa.nombcortemp" formControlName="nombcortemp"
+            [ngClass]="{ 'is-invalid': submitted && f.nombcortemp.errors }">
+          <div *ngIf="submitted && f.nombcortemp.errors" class="invalid-feedback">
+            <div *ngIf="f.nombcortemp.errors.required">Nombre corto es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="numfiscalemp">RFC</label>
+          <input type="text" class="form-control" id="numfiscalemp" nombre="numfiscalemp"
+            [(ngModel)]="empresa.numfiscalemp" formControlName="numfiscalemp">
+          <div *ngIf="submitted && f.numfiscalemp.errors" class="invalid-feedback">
+            <div *ngIf="f.numfiscalemp.errors.required">RFC es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-5">
+          <label for="colemp">Colonia</label>
+          <input type="text" class="form-control" id="colemp" nombre="colemp" [(ngModel)]="empresa.colemp"
+            formControlName="colemp">
+          <div *ngIf="submitted && f.colemp.errors" class="invalid-feedback">
+            <div *ngIf="f.colemp.errors.required">Colonia es requerida</div>
+          </div>
+        </div>
+        <div class="form-group col-md-5">
+          <label for="calleemp">Calle</label>
+          <input type="text" class="form-control" id="calleemp" nombre="calleemp" [(ngModel)]="empresa.calleemp"
+            formControlName="calleemp">
+          <!-- <div *ngIf="submitted && f.calleemp.errors" class="invalid-feedback">
+      <div *ngIf="f.calleemp.errors.required">Calle es requerida</div>
+    </div> -->
+        </div>
+        <div class="form-group col-md-1">
+          <label for="numextemp">Número Ext.</label>
+          <input type="number" class="form-control" id="numextemp" nombre="numextemp" [(ngModel)]="empresa.numextemp"
+            formControlName="numextemp">
+          <div *ngIf="submitted && f.numextemp.errors" class="invalid-feedback">
+            <div *ngIf="f.numextemp.errors.required">Número exterior es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="numintemp">Número Int.</label>
+          <input type="number" class="form-control" id="numintemp" nombre="numintemp" [(ngModel)]="empresa.numintemp"
+            formControlName="numintemp">
+          <div *ngIf="submitted && f.numintemp.errors" class="invalid-feedback">
+            <div *ngIf="f.numintemp.errors.required">Número interior es requerido</div>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="pais">País</label>
+          <input type="text" class="form-control" id="pais" nombre="pais" [(ngModel)]="empresa.pais"
+            formControlName="pais">
+          <div *ngIf="submitted && f.pais.errors" class="invalid-feedback">
+            <div *ngIf="f.pais.errors.required">País es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="idestado">Estado</label>
+          <input type="text" class="form-control" id="estado" nombre="estado" [(ngModel)]="empresa.estado"
+            formControlName="estado">
+          <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
+            <div *ngIf="f.estado.errors.required">Estado es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="idciudad">Ciudad</label>
+          <input type="text" class="form-control" id="ciudad" nombre="ciudad" [(ngModel)]="empresa.ciudad"
+            formControlName="ciudad">
+          <div *ngIf="submitted && f.ciudad.errors" class="invalid-feedback">
+            <div *ngIf="f.ciudad.errors.required">Ciudad es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="cpemp">Codigo Postal</label>
+          <input type="number" class="form-control" id="cpemp" nombre="cpemp" [(ngModel)]="empresa.cpemp"
+            formControlName="cpemp">
+          <div *ngIf="submitted && f.cpemp.errors" class="invalid-feedback">
+            <div *ngIf="f.cpemp.errors.required">Codigo Postal es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="pbx1emp">Tel 1</label>
+          <input type="number" class="form-control" id="pbx1emp" nombre="pbx1emp" [(ngModel)]="empresa.pbx1emp"
+            formControlName="pbx1emp">
+          <div *ngIf="submitted && f.pbx1emp.errors" class="invalid-feedback">
+            <div *ngIf="f.pbx1emp.errors.required">Tel 1 es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-1">
+          <label for="pbx2emp">Tel 2</label>
+          <input type="number" class="form-control" id="pbx2emp" nombre="pbx2emp" [(ngModel)]="empresa.pbx2emp"
+            formControlName="pbx2emp">
+          <div *ngIf="submitted && f.pbx2emp.errors" class="invalid-feedback">
+            <div *ngIf="f.pbx2emp.errors.required">Tel 2 es requerido</div>
+          </div>
+        </div>
+        <!-- <div class="form-row col-md-7"> -->
+        <div class="form-group col-md-4">
+          <label for="webemp">Sitio Web</label>
+          <input type="text" class="form-control" id="webemp" nombre="webemp" [(ngModel)]="empresa.webemp"
+            formControlName="webemp">
+          <div *ngIf="submitted && f.webemp.errors" class="invalid-feedback">
+            <div *ngIf="f.webemp.errors.required">Sitio Web es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="idrelacion">Relacion con la Empresa</label>
+          <a class="btn-add btn" data-toggle="tooltip" data-placement="top" title="Agregar " (click)="newRelcomp()"><i
+              class="material-icons">add_circle</i></a>
+          <select class="form-control" id="idrelacion" nombre="idrelacion" [(ngModel)]="empresa.idrelacion"
+            formControlName="idrelacion" [ngClass]="{ 'is-invalid': submitted && f.idrelacion.errors }">
+            <option *ngFor="let r of relcomp" [value]="r.idrelcomercial">
+              {{r.relcomercial}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.idrelacion.errors" class="invalid-feedback">
+            <div *ngIf="f.idrelacion.errors.required">Relacion es requerida</div>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="idcondpago">Condiciones de Pago</label>
+          <a class="btn-add btn" data-toggle="tooltip" data-placement="top" title="Agregar " (click)="newCondpago()"><i
+              class="material-icons">add_circle</i></a>
+          <select class="form-control" id="idcondpago" nombre="idcondpago" [(ngModel)]="empresa.idcondpago"
+            formControlName="idcondpago">
+            <option *ngFor="let c of condpago" [value]="c.idcondpago">
+              {{c.condpago}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.idcondpago.errors" class="invalid-feedback">
+            <div *ngIf="f.idcondpago.errors.required">Condiciones de Pago es requerido</div>
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="taxemp">Impuestos</label>
+          <input type="number" class="form-control" id="taxemp" nombre="taxemp" [(ngModel)]="empresa.taxemp"
+            formControlName="taxemp">
+          <div *ngIf="submitted && f.taxemp.errors" class="invalid-feedback">
+            <div *ngIf="f.taxemp.errors.required">Impuestos es requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <button *ngIf="statusC" type="submit" class="btn btn-primary">Guardar</button>
+        <button *ngIf="statusG" type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="statusG" style="margin-top: 1rem;" class="card h-20 d-flex mx-5">
+
+  <div class="card-body">
+    <div class="table-responsive-lg px-4" *ngIf="statusG">
+      <form [formGroup]="formc">
+        <h3>Contactos</h3>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 20%">Nombre completo</th>
+              <th scope="col" style="width: 10%">Departamento </th>
+              <th scope="col" style="width: 10%">Puesto</th>
+              <th scope="col" style="width: 10%">Telefono</th>
+              <th scope="col" style="width: 10%">Ext.</th>
+              <th scope="col" style="width: 10%">Movil</th>
+              <th scope="col" style="width: 19%">E-mail</th>
+              <th scope="col" style="width: 11%">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="nomcontemp" nombre="nomcontemp"
+                    formControlName="nomcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.nomcontemp.errors }">
+                  <div *ngIf="submitted2 && g.nomcontemp.errors" class="invalid-feedback">
+                    <div *ngIf="g.nomcontemp.errors.required">Nombre es requerido</div>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="depcontemp" nombre="depcontemp"
+                    formControlName="depcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.depcontemp.errors }">
+                  <div *ngIf="submitted2 && g.depcontemp.errors" class="invalid-feedback">
+                    <div *ngIf="g.depcontemp.errors.required">Departamento es requerido</div>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="puestocontemp" nombre="puestocontemp"
+                    formControlName="puestocontemp" [ngClass]="{ 'is-invalid': submitted2 && g.puestocontemp.errors }">
+                  <div *ngIf="submitted2 && g.puestocontemp.errors" class="invalid-feedback">
+                    <div *ngIf="g.puestocontemp.errors.required">Puesto es requerido</div>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="number" class="form-control" id="pbxcontemp" nombre="pbxcontemp"
+                    formControlName="pbxcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.pbxcontemp.errors }">
+                  <!--  <div *ngIf="submitted2 && g.pbxcontemp.errors" class="invalid-feedback">
+                  <div *ngIf="g.pbxcontemp.errors.required">Telefono es requerido</div>
+                </div> -->
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="number" class="form-control" id="extcontemp" nombre="extcontemp"
+                    formControlName="extcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.extcontemp.errors }">
+                  <!--  <div *ngIf="submitted2 && g.extcontemp.errors" class="invalid-feedback">
+                  <div *ngIf="g.extcontemp.errors.required">Extencion es requerida</div>
+                </div> -->
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="number" class="form-control" id="movcontemp" nombre="movcontemp"
+                    formControlName="movcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.movcontemp.errors }">
+                  <!--  <div *ngIf="submitted2 && g.movcontemp.errors" class="invalid-feedback">
+                  <div *ngIf="g.movcontemp.errors.required">Movil es requerido</div>
+                </div>-->
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="emailcontemp" nombre="emailcontemp"
+                    formControlName="emailcontemp" [ngClass]="{ 'is-invalid': submitted2 && g.emailcontemp.errors }">
+                  <!-- <div *ngIf="submitted && g.emailcontemp.errors" class="invalid-feedback">
+                  <div *ngIf="g.emailcontemp.errors.required">Correo es requerido</div>
+                </div> -->
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <button (click)="onSubmitContemp()" class="btn btn-primary">Guardar</button>
+                </div>
+              </th>
+            </tr>
+
+
+            <tr *ngFor="let con of contemp">
+              <td>{{con.nomcontemp | titlecase}}</td>
+              <td>{{con.depcontemp | titlecase}}</td>
+              <td>{{con.puestocontemp| titlecase }} </td>
+              <td>{{con.pbxcontemp | titlecase}} </td>
+              <td>{{con.extcontemp }} </td>
+              <td>{{con.movcontemp | titlecase}} </td>
+              <td>{{con.emailcontemp | titlecase }} </td>
+              <td>
+                <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="editar(con)"><i
+                    class="material-icons">create</i></a>
+                <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar"
+                  (click)="deleteContemp(con.idcontemp)"><i class="material-icons">delete</i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>

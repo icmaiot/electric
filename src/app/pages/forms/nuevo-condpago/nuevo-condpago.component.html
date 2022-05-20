@@ -1,0 +1,39 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-top:none;">Condición de Pago</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="condpago" nombre="condpago"
+                                    formControlName="condpago"
+                                    [ngClass]="{ 'is-invalid': submitted && f.condpago.errors }">
+                                <div *ngIf="submitted && f.condpago.errors" class="invalid-feedback">
+                                    <div *ngIf="f.condpago.errors.required">Condición de pago es requerida</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of condpago">
+                        <td>{{obj.condpago| titlecase}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(obj)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

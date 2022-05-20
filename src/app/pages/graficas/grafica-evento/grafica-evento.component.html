@@ -1,0 +1,158 @@
+<div class="grafica-evento mx-4">
+  <div class="grafica-evento-row">
+
+    <!-- SIDE BAR -->
+    <div class="side-bar">
+      <div class="card my-4">
+        <div class="card-header font-weight-bold" style="font-size: x-large;" (click)="toggleFilter()">
+          <i class="material-icons"> {{ iconFilter }} </i>
+        </div>
+        <div class="card-body mx-2" [hidden]="showFilter">
+          <filter-by [filterBy]="filterByMachine" (selectionFilter)="filterTypeselected($event)"></filter-by>
+          <form [formGroup]="graficaForm" (ngSubmit)="onSubmit()">
+            <button type="submit" class="btn-refresh" [disabled]="graficaForm.invalid"><i class="material-icons">
+                cached </i>
+            </button>
+            <div class="form-group" [hidden]="filterByMachine != 1">
+              <label for="maquina">Equipo:</label>
+              <select class="form-control" id="maquina" formControlName="maquina"
+                [ngClass]="{ 'is-invalid': submitted && f.maquina.errors }">
+                <option value="">Seleccionar equipo</option>
+                <option *ngFor="let m of maquinas" [value]="m.idmaquina">{{m.maquina}} </option>
+              </select>
+              <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
+                <div *ngIf="f.maquina.errors.required">Equipo es requerido</div>
+              </div>
+            </div>
+            <div class="form-group" [hidden]="filterByMachine !=2">
+              <label for="area">Área</label>
+              <select class="form-control" id="area" formControlName="area"
+                [ngClass]="{ 'is-invalid': submitted && f.area.errors }">
+                <option value="">Seleccionar área</option>
+                <option *ngFor="let a of areas" [value]="a.idarea" [disabled]="false">{{a.area | titlecase}}</option>
+              </select>
+              <div *ngIf="submitted && f.area.errors" class="invalid-feedback">
+                <div *ngIf="f.area.errors.required">Área es requerida</div>
+              </div>
+            </div>
+            <div class="form-group" [hidden]="filterByMachine !=3">
+              <label for="tipo">Tipo de Equipo</label>
+              <select class="form-control" id="tipo" formControlName="tipo"
+                [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+                <option value="">Seleccionar tipo</option>
+                <option *ngFor="let t of tipoEquipos" [value]="t.idtipo" [disabled]="false">{{t.tipoequipo | titlecase}}
+                </option>
+              </select>
+              <div *ngIf="submitted && f.tipo.errors" class="invalid-feedback">
+                <div *ngIf="f.tipo.errors.required">Tipo de equipo es requerido</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fechaInicio">Fecha Inicio:</label>
+              <input type="date" id="fechaInicio" class="form-control" [(max)]="maxDate" (change)="fechaChanged()"
+                formControlName="fechaInicio" [ngClass]="{ 'is-invalid': submitted && f.fechaInicio.errors }">
+              <div *ngIf="submitted && f.fechaInicio.errors" class="invalid-feedback">
+                <div *ngIf="f.fechaInicio.errors.required">Fecha inicio es requerida</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="horaInicio">Hora Inicio:</label>
+              <input type="time" step="1" id="horaInicio" class="form-control" formControlName="horaInicio"
+                [ngClass]="{ 'is-invalid': submitted && f.horaInicio.errors }">
+              <div *ngIf="submitted && f.horaInicio.errors" class="invalid-feedback">
+                <div *ngIf="f.horaInicio.errors.required">Hora de inicio es requerida</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="fechaFin">Fecha Fin:</label>
+              <input type="date" id="fechaFin" class="form-control" [(max)]="maxDate" [(min)]="minDate"
+                formControlName="fechaFin" [ngClass]="{ 'is-invalid': submitted && f.fechaFin.errors }">
+              <div *ngIf="submitted && f.fechaFin.errors" class="invalid-feedback">
+                <div *ngIf="f.fechaFin.errors.mustMatch">Fecha final debe ser mayor a la fecha inicio</div>
+                <div *ngIf="f.fechaFin.errors.required">Fecha final es requerida</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="horaFin">Hora Fin:</label>
+              <input type="time" step="1" id="horaFin" class="form-control" formControlName="horaFin"
+                [ngClass]="{ 'is-invalid': submitted && f.horaFin.errors }">
+              <div *ngIf="submitted && f.horaFin.errors" class="invalid-feedback">
+                <div *ngIf="f.horaFin.errors.mustMatch">Hora final debe ser mayor a la hora inicio</div>
+                <div *ngIf="f.horaFin.errors.required">Hora final es requerida</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-sm btn-block">Filtrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS SECTION -->
+    <div class="cards-section">
+      <div class="row">
+        <div class="col">
+          <card-title [title]="'Comparativo de tiempo operativo y tiempo de paro' " *ngIf="dataDonut?.length > 0">
+            <!--<app-time-line [chartData]="dataTimeLine" [fechaInicio]="fechaInicio" [fechaFin]="fechaFin"
+            [maquina]="maquina" [horaInicio]="horaInicio" [horaFin]="horaFin" *ngIf="chatFlag"></app-time-line>-->
+            <!--<div id="chartdiv" style="width: 100%; height: 500px"></div>-->
+            <app-donut [chartData]="dataDonut" [divInput]="'chartDonut'" *ngIf="chatFlagDonut">
+              <div id="chartDonut" style="width: 100%; height: 450px"></div>
+            </app-donut>
+          </card-title>
+
+        </div>
+        <div class="col">
+          <card-title [title]="'Comparativo de tiempo operativo, tiempo no registrado y tiempo de paro'"
+            *ngIf="dataDonut2?.length > 0">
+            <app-donut [chartData]="dataDonut2" [divInput]="'chartDonutTwo'" *ngIf="chatFlagDonut">
+              <div id="chartDonutTwo" style="width: 100%; height: 450px"></div>
+            </app-donut>
+          </card-title>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <card-title [title]="'Cantidad de eventos por tipo' " *ngIf="dataChart?.length > 0">
+            <app-barra [chartData]="dataChart" [fechaInicio]="f.fechaInicio.value" [fechaFin]="f.fechaFin.value"
+              [maquina]="f.maquina.value" [horaInicio]="f.horaInicio.value" [horaFin]="f.horaFin.value"
+              [divInput]="'chartBar'" *ngIf="chatFlag">
+              <div id="chartBar" style="width: 100%; height: 450px"></div>
+            </app-barra>
+          </card-title>
+        </div>
+        <div class="col">
+          <card-title [title]="'Sumatoria de tiempos por tipo'" *ngIf="dataChart1?.length > 0">
+            <app-pie [chartData]="dataChart1" [fechaInicio]="f.fechaInicio.value" [fechaFin]="f.fechaFin.value"
+              [maquina]="f.maquina.value" [horaInicio]="f.horaInicio.value" [horaFin]="f.horaFin.value"
+              *ngIf="chatFlag"></app-pie>
+          </card-title>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <card-title [title]="'Comparativo de tiempo operativo y tiempo de paro'" *ngIf="dataLayared?.length > 0">
+            <app-layered [chartData]="dataLayared" [divInput]="'charLayered'" *ngIf="chatFlagLayered">
+              <div id="charLayered" style="width: 100%; height: 450px"></div>
+            </app-layered>
+          </card-title>
+        </div>
+        <div class="col">
+          <card-title [title]="'Tiempo muerto por causa asignable' " *ngIf="dataBChartTp?.length > 0">
+            <app-barra [chartData]="dataBChartTp" [fechaInicio]="f.fechaInicio.value" [fechaFin]="f.fechaFin.value"
+              [maquina]="f.maquina.value" [horaInicio]="f.horaInicio.value" [horaFin]="f.horaFin.value"
+              [divInput]="'chartBarTp'" *ngIf="chatFlag">
+              <div id="chartBarTp" style="width: 100%; height: 450px"></div>
+            </app-barra>
+          </card-title>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPINNER -->
+<ngx-spinner name="mySpinner"></ngx-spinner>

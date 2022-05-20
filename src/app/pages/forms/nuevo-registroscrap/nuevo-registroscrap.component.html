@@ -1,0 +1,53 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmits()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th class="scope"><label>Descricpión de la causa de scrap</label></th>
+                        <th class="scope"><label>Código de scrap</label></th>
+                        <th class="scope"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="descripcion_scrap"
+                                    nombre="descripcion_scrap" formControlName="descripcion_scrap"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.descripcion_scrap.errors }">
+                                <div *ngIf="submitteds && f.descripcion_scrap.errors" class="invalid-feedback">
+                                    <div *ngIf="f.descripcion_scrap.errors.required">Descripción de scrap es requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="cod_scrap" nombre="cod_scrap"
+                                    formControlName="cod_scrap"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.cod_scrap.errors }">
+                                <div *ngIf="submitteds && f.cod_scrap.errors" class="invalid-feedback">
+                                    <div *ngIf="f.cod_scrap.errors.required">Código de scrap es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sr of scrap">
+                        <td>{{sr.descripcion_scrap }}</td>
+                        <td>{{sr.cod_scrap }}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(sr)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

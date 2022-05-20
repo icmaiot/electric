@@ -1,0 +1,18 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+  <form [formGroup]="IngresaNipForm" (ngSubmit)="onSubmitCN()">
+    <div class="form-group">
+      <label for="nip1">NIP</label>
+      <input type="password" class="form-control" id="nip1" nombre="nip1" [(ngModel)]="nip" formControlName="nip"
+        [ngClass]="{ 'is-invalid': submitted && f.nip.errors }">
+      <!--  -->
+      <div *ngIf="submitted && f.nip.errors" class="invalid-feedback">
+        <div *ngIf="f.nip.errors.required">NIP es requerido</div>
+        <div *ngIf="f.nip.errors.mustMatch">NIP no coincide</div>
+        <div *ngIf="f.nip.errors.pattern">NIP solo incluye numeros</div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-secondary">{{btnText}}</button>
+    </div>
+  </form>
+</dialog-component>

@@ -1,0 +1,97 @@
+@import '../../../../assets/variables.scss';
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.moduloI {
+  margin-top: 3rem;
+}
+
+.footer {
+  text-align: right;
+}
+
+.cc {
+    margin-left: 4px;
+    margin-right: 4px;
+  max-width: fit-content;
+    align-self: flex-end;
+    display: flex;
+}
+
+.div-flex {
+  display: flex;
+  justify-content: flex-end;
+
+  .form-control:focus {
+    border-color: none !important;
+  }
+}
+
+.select-filter {
+  border: none !important;
+  max-width: 200px;
+}
+
+tr {
+  border-top: 0px solid #dee2e6;
+
+}
+
+.table {
+  border-bottom: 0px solid #dee2e6;
+}
+
+.table-td {
+  font-size: 13px;
+  padding-right: .35rem;
+  padding-left: .30rem;
+  width: .50rem;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 0px solid #dee2e6;
+}
+
+.table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+}
+
+.icon {
+  padding: 0 !important;
+  font-size: 19px;
+}
+
+.status-button {
+  padding: 0 !important;
+  display: inline-block;
+}
+
+.c {
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+  align-items: baseline;
+}
+
+.cloud {
+  font-size: 1rem;
+  line-height: 0;
+  align-self: center;
+}
+
+.row {
+  flex-wrap: inherit;
+}
+
+.btn-group {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  align-self: flex-end;
+}

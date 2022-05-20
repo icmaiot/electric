@@ -1,0 +1,36 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="stwosub" nombre="stwosub"
+                                    formControlName="stwosub"
+                                    [ngClass]="{ 'is-invalid': submitted && f.stwosub.errors }">
+                                <div *ngIf="submitted && f.stwosub.errors" class="invalid-feedback">
+                                    <div *ngIf="f.stwosub.errors.required">Status es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let st of statuswosub">
+                        <td>{{st.stwosub | titlecase}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(st)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

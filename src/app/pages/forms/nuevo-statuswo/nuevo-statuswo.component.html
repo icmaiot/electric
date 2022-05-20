@@ -1,0 +1,39 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" style="border-top:none;">Nuevo status Comercial</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="text" class="form-control" id="statuswo" nombre="statuswo"
+                                    formControlName="statuswo"
+                                    [ngClass]="{ 'is-invalid': submitted && f.statuswo.errors }">
+                                <div *ngIf="submitted && f.statuswo.errors" class="invalid-feedback">
+                                    <div *ngIf="f.statuswo.errors.required">Status es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let st of statuswo">
+                        <td>{{st.statuswo | titlecase}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(st)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

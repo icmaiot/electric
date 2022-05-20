@@ -1,0 +1,52 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+  <form [formGroup]="sensorForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="sensor">Sensor</label>
+        <input type="text" class="form-control" id="sensor" nombre="sensor" [(ngModel)]="sensor.sensor"
+          formControlName="sensor" [ngClass]="{ 'is-invalid': submitted && f.sensor.errors }">
+        <div *ngIf="submitted && f.sensor.errors" class="invalid-feedback">
+          <div *ngIf="f.sensor.errors.required">Sensor es requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="intermitente">Intermitente</label>
+        <input type="number" class="form-control" id="intermitente" nombre="intermitente"
+          [(ngModel)]="sensor.intermitente" formControlName="intermitente"
+          [ngClass]="{ 'is-invalid': submitted && f.intermitente.errors }">
+        <div *ngIf="submitted && f.intermitente.errors" class="invalid-feedback">
+          <div *ngIf="f.intermitente.errors.required">Intermitente es requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="tipo">Tipo</label>
+        <input type="number" class="form-control" id="tipo" nombre="tipo" [(ngModel)]="sensor.tipo"
+          formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+        <div *ngIf="submitted && f.tipo.errors" class="invalid-feedback">
+          <div *ngIf="f.tipo.errors.required">Tipo es requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="maquina">Máquina</label>
+        <select class="form-control" id="maquina" nombre="idmaquina" [(ngModel)]="sensor.idmaquina"
+          formControlName="idmaquina" [ngClass]="{ 'is-invalid': submitted && f.idmaquina.errors }">
+          <option *ngFor="let m of maquinas" [value]="m.idmaquina">{{m.maquina | titlecase}} </option>
+        </select>
+        <div *ngIf="submitted && f.idmaquina.errors" class="invalid-feedback">
+          <div *ngIf="f.idmaquina.errors.required">Máquina es requerido</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="color">Color</label>
+        <select class="form-control" id="color" nombre="color" [(ngModel)]="sensor.color" formControlName="color"
+          [ngClass]="{ 'is-invalid': submitted && f.color.errors }">
+          <option *ngFor="let c of colores" [value]="c.idcolor">{{c.color}} </option>
+        </select>
+        <div *ngIf="submitted && f.color.errors" class="invalid-feedback">
+          <div *ngIf="f.color.errors.required">Color es requerido</div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-secondary mt-3">Guardar</button>
+  </form>
+</dialog-component>

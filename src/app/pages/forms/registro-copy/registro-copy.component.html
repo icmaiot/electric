@@ -1,0 +1,43 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmits()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="col-md-12">
+                        <th class="col-md-9">
+                            <div class=" ">
+                                <label>SKU que se va a copiar</label>
+                                <select class="form-control" id="productocopy" nombre="productocopy"
+                                    formControlName="productocopy"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.productocopy.errors }">
+                                    <option disabled hidden value="" [selected]="true">Seleccionar producto</option>
+                                    <option *ngFor="let p of producto" [value]="p.idproducto">
+                                        {{p.producto}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.productocopy.errors" class="invalid-feedback">
+                                    <div *ngIf="f.productocopy.errors.required">El producto es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="col-md-1">
+                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+                                title="Copiar Defectos" (click)="guardar(1)">Defectos</a>
+                        </th>
+                        <th class="col-md-1">
+                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Copiar Scrap"
+                                (click)="guardar(2)">Scrap</a>
+                        </th>
+                        <th class="col-md-1">
+                            <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Copiar Ambos"
+                                (click)="guardar(3)">Ambos</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>

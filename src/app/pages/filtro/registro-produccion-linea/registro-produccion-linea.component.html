@@ -1,0 +1,436 @@
+<div class="modulo mb-3 mx-3">
+  <div *ngFor="let obj of progprodlinea" class="row">
+    <div class="col-sm-12">
+      <div class="mb-3 card">
+        <div style="text-align:center;" class="card-header-tab card-header">
+          <a style="float: left;">{{obj.maquina}}</a>
+          <a>Lote: {{obj.idprogprodlinea}}</a>
+          <a class="estado"> Estado: {{estado}}</a>
+        </div>
+        <div class="row" style="text-align: center;">
+          <div class="col-sm-6 col-md-6 col-xl-3 " style="border-right: #dee2e6 solid 1px;">
+            <div class="card-body">
+              <div class="widget-subheading">
+                Tipo de producción
+              </div>
+              <p> {{obj.tipoprod}} </p>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-6 col-xl-3" style="border-right: #dee2e6 solid 1px;">
+            <div class="card-body">
+              <div class="widget-subheading">
+                Turno
+              </div>
+              <p>  {{obj.turno}} </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-xl-3" style="border-right: #dee2e6 solid 1px;">
+            <div class="card-body">
+              <div class="widget-subheading">
+                Fecha de preparación
+              </div>
+              <p> {{obj.fechaprep|date:"medium"}} </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-xl-3" style="border-right: #dee2e6 solid 0;">
+            <div class="card-body">
+              <div class="widget-subheading">
+                Fecha de producción
+              </div>
+              <p> {{obj.fechaprod|date:"medium"}} </p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="row">
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                SKU
+              </div>
+              <div class="widget-numbers">
+                {{obj.producto}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 col-md-6 col-xl-6">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Descripción
+              </div>
+              <div class="widget-numbers">
+                {{obj.desc_producto}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Cantidad programada
+              </div>
+              <div class="widget-numbers">
+                {{obj.cant}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Tiempo de carga en horas
+              </div>
+              <div class="widget-numbers">
+                {{obj.treal}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Tiempo Muerto
+              </div>
+              <div class="widget-numbers">
+                {{obj.tmuerto}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Eficiencia
+              </div>
+              <div class="widget-numbers">
+                {{obj.eficiencia | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Disponibilidad
+              </div>
+              <div class="widget-numbers">
+                {{obj.disponibilidad | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Rendimiento
+              </div>
+              <div class="widget-numbers">
+                {{obj.rendimiento | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Calidad
+              </div>
+              <div class="widget-numbers">
+                {{obj.percent_calidad | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                OEE Proceso
+              </div>
+              <div class="widget-numbers">
+                {{obj.oee | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                OEE Global
+              </div>
+              <div class="widget-numbers">
+                {{obj.oee_global | percent}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Piezas defectuosas
+              </div>
+              <div class="widget-numbers">
+                {{obj.defsuma}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Scrap generado
+              </div>
+              <div class="widget-numbers">
+                {{obj.scrapsuma}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Producción esperada
+              </div>
+              <div class="widget-numbers">
+                {{obj.prodesp}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Producción real
+              </div>
+              <div class="widget-numbers">
+                {{obj.distan}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Piezas defectuosas
+              </div>
+              <div class="widget-numbers">
+                {{obj.defsuma | number}} 
+              </div>
+               <a class="reg btn btn-primary" type="button" (click)="newPieza(obj)">Registrar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-3 col-xl-3">
+          <div class="card-hover-shadow-2x mb-3 card">
+            <div class="widget-chart-content">
+              <div class="widget-subheading">
+                Scrap generado
+              </div>
+              <div class="widget-numbers">
+                {{obj.scrapsuma | number}}
+              </div>
+              <a class="reg btn btn-primary" type="button" (click)="newScrap(obj)">Registrar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card table-responsive-lg pt-3 px-3">
+        <table class="table table-hover">
+          <thead>
+            <tr id="th">
+              <th scope="col" style="width: 10%">Paro Incial</th>
+              <th scope="col" style="width: 10%">Paro Final</th>
+              <th scope="col" style="width: 10%">Duración Paro</th>
+              <th scope="col" style="width: 10%">Evento</th>
+              <th scope="col" style="width: 20%">Causa Evento</th>
+              <th scope="col" style="width: 35%">Información</th>
+              <th scope="col" style="width: 5%"></th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let tm of listatmp">
+            <tr>
+              <td>{{tm.paroi | date: 'medium' }}</td>
+              <td>{{tm.parof | date: 'medium' }}</td>
+              <td>{{tm.duracion_paro}}</td>
+              <td>{{tm.event}}</td>
+              <td>{{tm.Descfalla}}</td>
+              <td>{{tm.inf}}</td>
+              <td>
+                <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="editTM(tm)"><i
+                    class="material-icons icon">create</i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 
+<div class="mt-3">
+  <app-header-table [renderButton]="false" [titleHeader]="'Modulo Interfaz'" [titleSelect]="'Producto..'"
+    (buttonOutput)="null" (searchOutput)="null" [listNav]="listNav" [statuswosubButton]="false">
+  </app-header-table>
+</div>
+<div *ngFor="let obj of progprodlinea">
+  <div class="moduloI card mb-4 mx-5">
+    <div class="card-body">
+      <form [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="idwo"> <b>Productos en producción en la linea:</b> {{obj.maquina}}</label>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="idwo"> <b>Turno:</b> {{obj.turno}}</label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="idwo"> <b>Fecha de preparación:</b> {{obj.fechaprep|date:"medium"}}</label>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="idwo"> <b>Fecha de producción:</b> {{obj.fechaprod|date:"medium"}}</label>
+          </div>
+
+          <div class="form-group col-md-2">
+            <label for="nombcortemp">SKU del producto</label>
+            <p> {{obj.producto}} </p>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="desc_producto">Descripción del producto</label>
+            <p> {{obj.desc_producto}} </p>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="cant">Cantidad programada</label>
+            <p> {{obj.cant}} </p>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="tcarga">Tiempo carga horas</label>
+            <p> {{obj.treal}} </p>
+          </div>
+          <div class="form-group col-md-1">
+            <label for="idprogprod">Lote</label>
+            <p> {{obj.idprogprodlinea}} </p>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="producto">Tipo de producción</label>
+            <p> {{obj.tipoprod}} </p>
+          </div>
+          <div class="form-group col-md-1">
+            <label for="tm">Tiempo Muerto</label>
+            <p> {{obj.tmuerto}} </p>
+          </div>
+
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">Eficiencia</p>
+            <p> {{obj.eficiencia | percent}} </p>
+          </div>
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">Disponibilidad</p>
+            <p> {{obj.disponibilidad | percent}} </p>
+          </div>
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">Rendimiento</p>
+            <p> {{obj.rendimiento | percent}} </p>
+          </div>
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">Calidad</p>
+            <p> {{obj.percent_calidad | percent}} </p>
+          </div>
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">OEE Proceso</p>
+            <p> {{obj.oee | percent}} </p>
+          </div>
+          <div class="form-group col-md-2 tot">
+            <p for="totscrap">OEE Global</p>
+            <p> {{obj.oee_global | percent}} </p>
+          </div>
+        </div>
+      </form>
+    </div>
+ 
+
+    <div class="form-row px-4">
+      <div class="form-group col-md-2 tot">
+        <label for="totdef">Piezas defectuosas</label>
+        <p> {{obj.defsuma | number}} </p>
+        <a class="reg btn btn-primary" type="button" (click)="newPieza(obj)">Registrar</a>
+      </div>
+      <div class="form-group col-md-2 tot">
+        <label for="totdef">Scrap generado</label>
+        <p> {{obj.scrapsuma | number}} </p>
+        <a class="reg btn btn-primary" type="button" (click)="newScrap(obj)">Registrar</a>
+      </div>
+      <div class="form-group col-md-2 tot">
+        <label for="tm">Producción Estimada</label>
+        <p> {{obj.prodesp}} </p>
+      </div>
+      <div class="form-group col-md-2 tot">
+        <label for="tm">Producción Real</label>
+        <p> {{obj.distan}} </p>
+      </div>
+      <div class="form-group col-md-4 tot" style="text-align: right; align-self: flex-end;">
+        <div class="btn-group" role="group">
+          <a *ngIf="lineapre" type="button" class="reg t btn btn-primary" >Iniciar
+            Preparación</a>
+          <a *ngIf="lineapro" type="button" class="reg t btn btn-primary">Iniciar
+            Producción</a>
+          <a *ngIf="lineater" type="button" class="reg t btn btn-primary">Terminar
+            Producción</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive-lg px-4">
+      <table class="table table-hover">
+        <thead>
+          <tr id="th">
+            <th scope="col" style="width: 10%">Paro Incial</th>
+            <th scope="col" style="width: 10%">Paro Final</th>
+            <th scope="col" style="width: 10%">Duración Paro</th>
+            <th scope="col" style="width: 10%">Evento</th>
+            <th scope="col" style="width: 20%">Causa Evento</th>
+            <th scope="col" style="width: 30%">Información</th>
+            <th scope="col" style="width: 10%"></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let tm of listatmp">
+          <tr>
+            <td>{{tm.paroi | date: 'medium' }}</td>
+            <td>{{tm.parof | date: 'medium' }}</td>
+            <td>{{tm.duracion_paro}}</td>
+            <td>{{tm.event}}</td>
+            <td>{{tm.Descfalla}}</td>
+            <td>{{tm.inf}}</td>
+            <td>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="editTM(tm)"><i
+                  class="material-icons icon">create</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+-->

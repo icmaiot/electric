@@ -1,0 +1,47 @@
+<div class="mt-3">
+  <app-header-table [renderButton]="true" [titleHeader]="'Empresa'" [titleSelect]="'Buscar Empresa..'"
+    (buttonOutput)="add()" (searchOutput)="onSearchChange($event.target.value)" [listNav]="listNav">
+  </app-header-table>
+</div>
+
+<div class="maquina card mb-4 mx-5">
+
+  <div class="table-responsive-lg px-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 50%;">Razón Social</th>
+          <th scope="col" style="width: 20%;">Nombre Corto</th>
+          <th scope="col" style="width: 20%;">Relación con la Empresa</th>
+          <th scope="col" style="width: 10%;">
+            Opciones
+            <select style="width:auto;" class="form-control" id="activoem" nombre="activoem" [(ngModel)]="s"
+              (ngModelChange)="StatusEmp($event)">
+              <option *ngFor="let st of statusr" [ngValue]="st.activoem">{{st.statuse}}</option>
+            </select>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of empresa">
+          <td>{{e.nomemp }}</td>
+          <td>{{e.nombcortemp}}</td>
+          <td>{{e.Relcomp.relcomercial }}</td>
+          <td>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar"
+              [routerLink]="['/empresa',e.idempresa,{status:'edit'}]">
+              <i class="material-icons">create</i>
+            </a>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(e.idempresa)">
+              <i class="material-icons">delete</i>
+            </a>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    <span class="badge badge-light">Total: {{total}}</span>
+  </div>
+</div>

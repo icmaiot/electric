@@ -1,0 +1,58 @@
+<div class="mt-3">
+  <app-header-table [search]="false" [renderButton]="false" [titleHeader]="'Produccion en Ejecución'"
+    [titleSelect]="'Buscar...'" (buttonOutput)="null" (searchOutput)="null" [listNav]="listNav">
+  </app-header-table>
+</div>
+
+<div class="moduloI card mb-4 mx-5">
+  <div class="table-responsive-lg px-4">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Lote</th>
+          <th scope="col">Linea de producción</th>
+          <th scope="col">Turno</th>
+          <th scope="col">SKU del producto</th>
+          <th scope="col">Producción programada</th>
+          <th scope="col">Producción estimada</th>
+          <th scope="col">Produccion real</th>
+          <th scope="col">Defectos</th>
+          <th scope="col">Scrap</th>
+          <th scope="col">Porcentaje Eficiencia</th>
+          <th scope="col">Porcentaje Calidad</th>
+          <th scope="col">OEE del proceso productivo</th>
+          <th scope="col">OEE del proceso global</th>
+          <th scope="col">Tiempo muerto en horas</th>
+          <th scope="col">Estado</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let lote of lotefinal">
+          <td>{{lote.loteac }}</td>
+          <td>{{lote.maquina }}</td>
+          <td>{{lote.turnoac }}</td>
+          <td>{{lote.skuac }}</td>
+          <td>{{lote.prodprogramada | number : '1.2-2' }}</td>
+          <td>{{lote.prodesp }}</td>
+          <td>{{lote.distan }}</td>
+          <td>{{lote.defsuma }}</td>
+          <td>{{lote.scrapsuma }}</td>
+          <td>{{lote.eficiencia | percent}}</td>
+          <td>{{lote.percent_calidad | percent}}</td>
+          <td>{{lote.oee | percent}}</td>
+          <td>{{lote.oee_global | percent}}</td>
+          <td>{{lote.tmuerto }}</td>
+          <td>
+            <img *ngIf="lote.veloc == 0" class="material-icons" style="width: 4rem;" [src]="Enparo" alt="Paro">
+            <img *ngIf="lote.veloc > 0" class="material-icons" style="width: 3rem;" [src]="Operando" alt="Operando">
+            <img *ngIf="tid > 0" class="material-icons" style="width: 3rem;" [src]="Descanso" alt="Descanso">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    <span class="badge badge-light">Total:{{total}} </span>
+  </div>
+</div>

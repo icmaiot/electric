@@ -1,0 +1,86 @@
+<dialog-component [title]="title" (closeEmit)="closeModal()" [alertMessage]="alertMessage">
+    <div class="table-responsive-sm px-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th class="scope" style="border-top:none;"><label>Cantidad</label></th>
+                        <th class="scope" style="border-top:none;"><label>Tipo de defecto</label></th>
+                        <th class="scope" style="border-top:none;"><label>Genera el defecto</label></th>
+                        <th class="scope" style="border-top:none;"><label>Registra</label></th>
+                        <th class="scope" style="border-top:none;"></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class=" ">
+                                <input type="number" class="form-control" id="cantdef" nombre="cantdef"
+                                    formControlName="cantdef"
+                                    [ngClass]="{ 'is-invalid': submitted && f.cantdef.errors }">
+                                <div *ngIf="submitted && f.cantdef.errors" class="invalid-feedback">
+                                    <div *ngIf="f.cantdef.errors.required">Cantidad de defectos es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="iddefreg" nombre="iddefreg" formControlName="iddefreg"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.iddefreg.errors }">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar defecto</option>
+                                    <option *ngFor="let d of defecto" [value]="d.iddefreg">
+                                        {{d.Registrodefecto.descripcion_defecto}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.iddefreg.errors" class="invalid-feedback">
+                                    <div *ngIf="f.iddefreg.errors.required">El scrap es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idusuarios" nombre="idusuarios"
+                                    formControlName="idusuarios"
+                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarios.errors }">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
+                                    <option *ngFor="let d of usuario" [value]="d.id">
+                                        {{d.username + ' ' + d.Username_last}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.idusuarios.errors" class="invalid-feedback">
+                                    <div *ngIf="f.idusuarios.errors.required">El usuario es requerido</div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class=" ">
+                                <select class="form-control" id="idusuarioreg" nombre="idusuarioreg"
+                                    formControlName="idusuarioreg">
+                                    <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
+                                    <option *ngFor="let d of responsable" [value]="d.id">
+                                        {{d.username + ' ' + d.Username_last}}
+                                    </option>
+                                </select>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="">
+                                <button type="submit" (click)="guardar()" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pz of pieza">
+                        <td>{{pz.cantdef | number}}</td>
+                        <td>{{pz.Registrodefecto.descripcion_defecto }}</td>
+                        <td>{{pz.Usuario.username + ' ' + pz.Usuario.Username_last}}</td>
+                        <td>{{pz.usreg.username + ' ' + pz.usreg.Username_last}}</td>
+                        <td>
+                            <a class="btn icon" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                                (click)="delete(pz)"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</dialog-component>
