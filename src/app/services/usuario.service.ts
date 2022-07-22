@@ -60,7 +60,7 @@ export class UsuarioService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://3.17.43.30:3000`;
+    const url = `http://54.241.14.55:3000`;
     return this.http.get(`${url + '/sendUsuarios?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 

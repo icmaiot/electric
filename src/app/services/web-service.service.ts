@@ -11,7 +11,7 @@ export class WebServiceService {
 
   getEncoderData() {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://3.17.43.30:3000/getData`;
+    const url = `http://54.241.14.55:3000/getData`;
     return this.http.get(url, { headers });
   }
 }
