@@ -32,8 +32,6 @@ export class GaugeComponent implements OnInit, OnDestroy {
   }
 
   Gauge(){
-    console.log(this.chartData)
-    console.log(this.chartdiv)
     if(this.chartdiv == 'chartdiv'){
       this.title = 'CALIDAD'
     } else { this. title = 'OEE'}

@@ -27,3 +27,12 @@
 a.btn {
   padding: 6px 6px;
 }
+
+a.add {
+  padding: 0px 0px;
+}
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

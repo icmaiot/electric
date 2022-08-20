@@ -39,7 +39,6 @@ export class PaginationBarComponent implements OnInit {
         pageNumber: i+1
       });
     }
-    console.log("changes pagination");
     this.validatePagination();
   }
 
@@ -51,7 +50,6 @@ export class PaginationBarComponent implements OnInit {
   selectPrevPage() {
     if (!this.prevDisabled) {
       this.pageSelected = this.pageSelected - 1;
-      console.log(this.pageSelected);
       this.selectPageOut.emit(this.pageSelected);
       this.validatePagination();
     }
@@ -60,7 +58,6 @@ export class PaginationBarComponent implements OnInit {
   selectNextPage() {
     if (!this.nextDisabled) {
       this.pageSelected = this.pageSelected + 1;
-      console.log(this.pageSelected);
       this.selectPageOut.emit(this.pageSelected);
       this.validatePagination();
     }

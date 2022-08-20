@@ -37,7 +37,7 @@ export abstract class ClassChart {
                 this.maquinas = response.maquina;
             }
         } catch (e) {
-            console.log(e);
+            //console.log(e);
         }
     }
 
@@ -48,7 +48,7 @@ export abstract class ClassChart {
                 this.areas = response.area;
             }
         } catch (e) {
-            console.log(e);
+            //console.log(e);
         }
     }
 
@@ -59,7 +59,7 @@ export abstract class ClassChart {
                 this.tipoEquipos = response.tipo_equipos;
             }
         } catch (e) {
-            console.log(e);
+           // console.log(e);
         }
     }
 

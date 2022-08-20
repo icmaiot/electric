@@ -35,7 +35,6 @@ export class ContempService {
   readContemp(idcontemp: string, token): Observable<any> {
     let params = new HttpParams();
     params = params.append('busqueda', idcontemp);
-    console.log(idcontemp + 'este es el params>> ' + params)
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/contemp', { headers, params: params });
   }

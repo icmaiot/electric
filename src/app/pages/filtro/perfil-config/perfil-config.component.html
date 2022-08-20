@@ -58,16 +58,16 @@
             <td mat-cell *matCellDef="let element"> {{element.automanual ==1 ? "Manual" : "Automático"}} </td>
         </ng-container>
         <ng-container matColumnDef="opciones">
-            <th mat-header-cell *matHeaderCellDef> Opciones</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
-                <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(row)"><i
-                        class="material-icons">create</i></a>
-                <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar "
-                    (click)="delete(row.idperfil)"><i class="material-icons">delete</i></a>
                 <a class="btn" data-toggle="tooltip" data-placement="top"
                     title="{{row.ConfiguracionModulos.length >0 ? 'Editar configuración' : 'Agregar configuración'}}"
                     [routerLink]="['/configuracionModulo',row.idperfil,{status:row.ConfiguracionModulos.length >0 ? 'edit' : 'create',auto:row.automanual }]">
                     <i class="material-icons"> settings </i></a>
+                <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(row)"><i
+                        class="material-icons">create</i></a>
+                <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar "
+                    (click)="delete(row.idperfil)"><i class="material-icons">delete</i></a>
             </td>
         </ng-container>
 

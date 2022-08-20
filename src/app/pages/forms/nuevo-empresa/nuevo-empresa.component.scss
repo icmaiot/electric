@@ -23,3 +23,8 @@
 .right{
   text-align: right;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

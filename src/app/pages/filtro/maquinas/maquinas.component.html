@@ -35,7 +35,7 @@
       </div>
       <div class="col-md-2">
         <label for="tipoequipo" class="form-label">Tipo de equipo</label>
-        <select class="form-control" id="tipoequipo2" nombre="tipoequipo2" formControlName="tipoequipo"
+        <select class="form-control" id="tipoequipo1" nombre="tipoequipo1" formControlName="tipoequipo"
           [ngClass]="{ 'is-invalid': submitted && f.tipoequipo.errors }">
           <option *ngFor="let te of tipoequipo" [value]="te.idtipo">{{te.tipoequipo}}
           </option>
@@ -130,19 +130,19 @@
             <td>{{obj.serial }}</td>
             <td>{{obj.serialrmt}}</td>
             <td>{{obj.progprod}}</td>
+            <td style="width: 1%; white-space: nowrap;">
+              <a *ngIf="obj.progprod == 'Línea'||'Linea'" class="btn btn-primary status-button" data-toggle="tooltip"
+                data-placement="top" title="Registros" [routerLink]="['/board',obj.idmaquina]" target="_blank">Board</a>
+            </td>
             <td>
+              <a class="btn" data-toggle="tooltip" data-placement="top" title="Actualizar Equipo"
+                (click)="Serial(obj.idmaquina)"><i class="material-icons icon">update</i></a>
               <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar correos a la línea" (click)="email(obj)"><i
                   class="material-icons icon">email</i></a>
               <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="update(obj)"><i
                   class="material-icons icon">create</i></a>
               <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar"
                 (click)="delete(obj.idmaquina)"><i class="material-icons icon">delete</i></a>
-              <a class="btn" data-toggle="tooltip" data-placement="top" title="Actualizar Equipo"
-                (click)="Serial(obj.idmaquina)"><i class="material-icons icon">update</i></a>
-            </td>
-            <td>
-              <a *ngIf="obj.progprod == 'Línea'||'Linea'" class="btn btn-primary status-button" data-toggle="tooltip"
-                data-placement="top" title="Registros" [routerLink]="['/board',obj.idmaquina]" target="_blank">Board</a>
             </td>
           </tr>
         </tbody>

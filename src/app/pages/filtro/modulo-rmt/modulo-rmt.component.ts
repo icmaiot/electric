@@ -22,6 +22,7 @@ export class ModuloRMTComponent implements OnInit {
 
   listNav = [
     { "name": "Equipos", "router": "/maquina" },
+    { "name": "Modulo RMT", "router": "/modulo-RMT" },
   ]
 
   constructor(

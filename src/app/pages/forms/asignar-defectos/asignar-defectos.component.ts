@@ -55,7 +55,6 @@ export class AsignarDefectosComponent extends Dialog implements OnInit {
       let resp = await this.asignardefectosService.get(this.idp, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.defecto = resp.response;
-        console.log(this.defecto)
       }
     } catch (e) {
     }

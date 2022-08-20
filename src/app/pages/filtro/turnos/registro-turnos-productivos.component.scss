@@ -5,7 +5,7 @@
 }
 
 .moduloI {
-  margin-top: 2.5rem;
+  margin-top: 5rem;
 }
 
 .footer {
@@ -25,13 +25,6 @@
   border: none !important;
   max-width: 150px;
 }
-
-/*
-.table-td {
-  font-size: 13px;
-  padding-right: .35rem;
-  padding-left: .30rem;
-}*/
 
 .s {
   width: 1%;
@@ -54,5 +47,11 @@ input {
   padding: 0 !important;
   text-align: center;
   display: inline-block;
+  white-space: nowrap;
+}
+
+
+tr td:last-child {
+  width: 1%;
   white-space: nowrap;
 }

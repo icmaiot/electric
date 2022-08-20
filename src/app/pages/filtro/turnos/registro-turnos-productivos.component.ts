@@ -90,7 +90,6 @@ export class TurnosProductivosComponent implements OnInit {
 
   async SendProductosMQTT(info) {
     this.MQTT.value.message =  'Turno:'+ info +'/Fin';
-    console.log(this.MQTT.value)
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTT.value).toPromise();
       

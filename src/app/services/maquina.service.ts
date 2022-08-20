@@ -11,6 +11,7 @@ export class MaquinaService {
 
   private url: string = environment.environment.urlEndPoint + '/maquina';
   private url2: string = environment.environment.urlEndPoint;
+  private urlmqtt: string = environment.environment.urlMQTT;
   chartPage = new Subject();
   constructor(private http: HttpClient) { }
 
@@ -118,8 +119,7 @@ export class MaquinaService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://54.241.14.55:3000`;
-    return this.http.get(`${url + '/sendDescanso?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+    return this.http.get(`${this.urlmqtt + '/sendDescanso?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 
   getModuloInterfaz(token): Observable<any> {

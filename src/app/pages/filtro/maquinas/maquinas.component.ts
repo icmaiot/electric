@@ -147,13 +147,11 @@ export class MaquinasComponent implements OnInit {
   //oBTENER RMT TOPIC
 
   async Serial(idmaquina) {
-      console.log(idmaquina)
       this.idmaquina = idmaquina;
     try {
          let resp = await this.maquinaService.getInterfaz(this.idmaquina, this.auth.token).toPromise();
          if (resp.code == 200) {
             this.moduloi = resp.response;
-            console.log(this.moduloi)
             this.getprodAct(this.moduloi[0].serialrmt);
             this.getTurnoDescanso(this.moduloi[0].serialrmt);
             this.getUsrAct(this.moduloi[0].serialrmt);
@@ -184,7 +182,6 @@ export class MaquinasComponent implements OnInit {
 
   async SendProductosMQTT(info) {
     this.MQTT.value.message =  'SKU:'+ info +'/Fin';
-    console.log(this.MQTT.value)
     try {
       let resp = await this.skumaquinaService.MQTTEncoder(this.MQTT.value).toPromise();
       
@@ -216,7 +213,6 @@ export class MaquinasComponent implements OnInit {
 
   async SendTurnosMQTT(info) {
     this.MQTTt.value.message =  'Turno:'+ info +'/Fin';
-    console.log(this.MQTTt.value)
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTTt.value).toPromise();
       
@@ -244,7 +240,6 @@ export class MaquinasComponent implements OnInit {
 
   async SendUsuariosMQTT(info) {
     this.MQTTu.value.message =  'Ids:'+ info +'/Fin';
-    console.log(this.MQTTu.value)
     try {
       let resp = await this.usuarioService.MQTTEncoder(this.MQTTu.value).toPromise();
       
@@ -275,7 +270,6 @@ export class MaquinasComponent implements OnInit {
 
   async SendSubMQTT(info) {
     this.MQTTs.value.message =  'SUB:'+ info +'/Fin';
-    console.log(this.MQTTs.value)
     try {
       let resp = await this.submaquinaService.MQTTEncoder(this.MQTTs.value).toPromise();
       

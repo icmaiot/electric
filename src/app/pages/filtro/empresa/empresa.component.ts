@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { Spinner } from 'ngx-spinner/lib/ngx-spinner.enum';
@@ -12,9 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Empresa } from '../../../models/empresa';
 import { Wo } from '../../../models/wo';
 import { Contemp } from '../../../models/contemp';
-import { FormBuilder, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
-import { pushAll } from '@amcharts/amcharts4/.internal/core/utils/Array';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-empresa',

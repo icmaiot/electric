@@ -16,3 +16,8 @@
   text-align: -webkit-right;
   align-self: self-end;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

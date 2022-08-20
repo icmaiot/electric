@@ -9,5 +9,11 @@
 }
 
 .footer {
-  text-align: center;
+  text-align: right;
+  margin: 3px
+}
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
 }

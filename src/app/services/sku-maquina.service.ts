@@ -9,6 +9,7 @@ import * as environment from '../../environments/environment';
 export class SkuMaquinaService {
 
   private url: string = environment.environment.urlEndPoint + '/skuMaquina';
+  private urlmqtt: string = environment.environment.urlMQTT;
   constructor(private http: HttpClient) { }
 
   get(token, id): Observable<any> {
@@ -34,8 +35,7 @@ export class SkuMaquinaService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://54.241.14.55:3000`;
-    return this.http.get(`${url + '/sendProductosMaquina?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+    return this.http.get(`${this.urlmqtt + '/sendProductosMaquina?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 
   create(obj, token): Observable<any> {

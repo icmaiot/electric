@@ -26,8 +26,8 @@ export class TipoEquipoComponent implements OnInit {
   urlProduccion: string;
   urlMateriales: string;
   listNav = [
-    { "name": "Tipo de equipo", "router": "/tipoEquipo" },
     { "name": "Equipos", "router": "/maquina" },
+    { "name": "Tipo de equipo", "router": "/tipoEquipo" },
   ]
   constructor(private tipoService: TipoEquipoService,
     private dialog: MatDialog, private auth: AuthService) { }

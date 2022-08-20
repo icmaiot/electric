@@ -125,7 +125,6 @@ export class EditarUsuarioComponent extends Dialog implements OnInit {
 
   async update() {
     this.usuarioForm.value.id = this.usuario.id;
-    console.log(this.usuarioForm)
     try {
       let response = await this.usuarioService.update(this.usuarioForm.value, this.token).toPromise();
       if (response.code == 200) {
@@ -221,7 +220,6 @@ export class EditarUsuarioComponent extends Dialog implements OnInit {
     this.tipousuario = tipousuario;
     this.usuario.id = id;
     this.usuario = usuario;
-    console.log(this.usuario)
     if (tipousuario) {
       this.sistema = true;
     }

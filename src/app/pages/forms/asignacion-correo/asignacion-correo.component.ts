@@ -52,7 +52,6 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
     this.alertSuccesText = alertSuccesText;
     this.alertErrorText = alertErrorText;
     this.linea = linea;
-    console.log(this.linea)
   }
 
   closeModal() {
@@ -62,7 +61,6 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    console.log(this.form.value)
     this.submitted = true;
     if (this.form.invalid) {
       return;
@@ -76,7 +74,6 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
       let resp = await this.usuarioService.getUsuarioEx( this.auth.token).toPromise();
       if (resp.code == 200) {
         this.listaUsuario = resp.response;
-        console.log(this.listaUsuario)
       }
     } catch (e) {
     }
@@ -85,11 +82,9 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
 
   async getLineaemail() {
     try {
-      console.log(this.linea)
       let resp = await this.lineaemailService.get(this.linea,this.auth.token).toPromise();
       if (resp.code == 200) {
         this.lista = resp.response;
-        console.log(this.lista)
       }
     } catch (e) {
     }
@@ -97,7 +92,6 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
 
   async guardar() {
     this.form.value.id_linea = this.linea;
-    console.log(this.form.value)
     try {
       let response = await this.lineaemailService.create(this.form.value, this.auth.token).toPromise();
       if (response.code == 200) {
@@ -114,7 +108,6 @@ export class AsignacionCorreoComponent extends Dialog implements OnInit {
   }
 
   delete(obj) {
-    console.log(obj)
     Swal.fire({
       title: '¿Desea eliminar el registro?', text: "",
       type: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6',

@@ -18,9 +18,14 @@
 }
 
 a.btn{
-  padding: 6px 6px;
+  padding: 0px 6px;
 }
 
 .table-td {
   width: auto;
+}
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
 }

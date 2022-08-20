@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           this.alertRegister = "No se pudo iniciar sesión.";
         } else {
           this.auth.guardarUsuarioToken(usuario.token, usuario.id, usuario.expires, usuario.idcia);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/']);
         }
       }
     } catch (e) {

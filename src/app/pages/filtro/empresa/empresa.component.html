@@ -13,11 +13,10 @@
           <th scope="col" style="width: 50%;">Razón Social</th>
           <th scope="col" style="width: 20%;">Nombre Corto</th>
           <th scope="col" style="width: 20%;">Relación con la Empresa</th>
-          <th scope="col" style="width: 10%;">
-            Opciones
-            <select style="width:auto;" class="form-control" id="activoem" nombre="activoem" [(ngModel)]="s"
+          <th scope="col">
+            <select class="form-control status" id="activoem" nombre="activoem" [(ngModel)]="s"
               (ngModelChange)="StatusEmp($event)">
-              <option *ngFor="let st of statusr" [ngValue]="st.activoem">{{st.statuse}}</option>
+              <option class="ststus" *ngFor="let st of statusr" [ngValue]="st.activoem">{{st.statuse}}</option>
             </select>
           </th>
         </tr>
@@ -26,7 +25,7 @@
         <tr *ngFor="let e of empresa">
           <td>{{e.nomemp }}</td>
           <td>{{e.nombcortemp}}</td>
-          <td>{{e.Relcomp.relcomercial }}</td>
+          <td>{{e.Relcomp.relcomercial}}</td>
           <td>
             <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar"
               [routerLink]="['/empresa',e.idempresa,{status:'edit'}]">

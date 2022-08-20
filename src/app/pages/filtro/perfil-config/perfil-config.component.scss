@@ -58,3 +58,8 @@ tr.example-element-row:not(.example-expanded-row):active {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

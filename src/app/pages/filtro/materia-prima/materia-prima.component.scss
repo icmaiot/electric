@@ -16,3 +16,8 @@
   padding: .0rem .75rem;
   vertical-align: bottom;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

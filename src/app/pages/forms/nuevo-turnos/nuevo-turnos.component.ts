@@ -98,7 +98,7 @@ export class NuevoTurnosComponent implements OnInit {
 
   async SendProductosMQTT(info) {
     this.MQTT.value.message =  'Turno:'+ info +'/Fin';
-    console.log(this.MQTT.value)
+    //console.log(this.MQTT.value)
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTT.value).toPromise();
       
@@ -121,7 +121,7 @@ export class NuevoTurnosComponent implements OnInit {
     try {
       
       this.form.value.idturno = this.idurl;
-      console.log(this.form.value)
+      //console.log(this.form.value)
       let response = await this.turnoService.create(this.form.value, this.auth.token).toPromise();
       if (response.code == 200) {
         Swal.fire('Guardado', 'El registro ha sido guardado!', 'success');

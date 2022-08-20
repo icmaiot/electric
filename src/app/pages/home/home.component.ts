@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         icon: 'store',
         text: 'Editar Empresa',
         function: '/cia/0',
-        class: 'Empresa',
+        class: 'blue-cg'
       },
       {
         icon: 'person_add',
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
       },
       {
         icon: 'description',
-        text: 'Productos',
+        text: 'SKU',
         function: '/producto',
         class: 'gray-bg',
       },

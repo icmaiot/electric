@@ -76,7 +76,6 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit(a) {
-    console.log(a)
     this.submitted = true;
     if (this.form.invalid) {
       return;
@@ -130,7 +129,6 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
           this.listap = this.listap.split("[").join('');
           this.listap = this.listap.split(",").join('?');
           this.SendProductosMQTT(this.listap);
-          console.log(this.listap)
       }
     } catch (e) {
     }
@@ -141,7 +139,6 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
       let resp = await this.skuService.getRmt(idmaquina,this.auth.token).toPromise();
       if (resp.code == 200) {
         this.Rmt = resp.response;
-        console.log(this.Rmt)
         this.MQTT.controls['topic'].setValue(this.Rmt[0].serialrmt);
       }
     } catch (e) {
@@ -150,7 +147,6 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
 
   async SendProductosMQTT(info) {
     this.MQTT.value.message =  'SKU:'+ info +'/Fin';
-    console.log(this.MQTT.value)
     try {
       let resp = await this.skuService.MQTTEncoder(this.MQTT.value).toPromise();
       
@@ -166,7 +162,6 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
       response = await this.skuService.create(this.form.value, this.auth.token).toPromise();
       if (response.code == 200) {
         this.getSKU();
-        console.log(this.idmaquina)
         this.getProductosMaquina(this.idmaquina);
       }
       else {

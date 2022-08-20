@@ -152,7 +152,6 @@ export class ProgramaDeProduccionComponent implements OnInit {
          let resp = await this.maquinaService.getInterfaz(this.form.value.idlineaprod, this.auth.token).toPromise();
          if (resp.code == 200) {
             this.moduloi = resp.response;
-            console.log(this.moduloi)
             this.SendMQTT(this.moduloi[0].serialrmt);
          
         }
@@ -164,7 +163,6 @@ export class ProgramaDeProduccionComponent implements OnInit {
   async SendMQTT(modulo) {
     this.MQTT.value.topic = modulo;
             this.MQTT.value.message = 'LINEA: SKU-' + this.form.value.idskunow + ' CANTIDAD-' + this.form.value.cant + ' TIPO-' + this.form.value.tipoprod  + '/Fin';
-            console.log(this.MQTT.value)
             try {
               let respon = await this.progprodlineaService.MQTTEncoder(this.MQTT.value).toPromise();
               if(respon.code = 200){
@@ -212,7 +210,6 @@ export class ProgramaDeProduccionComponent implements OnInit {
       if (resp.code == 200) {
         this.productolinea = resp.response;
         this.cdRef.detectChanges();
-        console.log(this.productolinea)
         
         this.filterArray = this.productolinea.reduce((accumalator, current) => {
           if (!accumalator.some(item => item.idskunow === current.idskunow)) {
@@ -239,7 +236,6 @@ export class ProgramaDeProduccionComponent implements OnInit {
       let resp = await this.progprodlineaService.getseleccionturno(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.selectturno = resp.response;
-        console.log(this.selectturno)
       }
     } catch (e) {
 

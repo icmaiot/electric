@@ -9,7 +9,6 @@ import { ProduccionhistoricoService } from '@app/services/produccionhistorico.se
 import { ExcelService } from '@app/services/excel.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-historico-produccion',
@@ -138,7 +137,6 @@ export class HistoricoProduccionComponent implements OnInit {
   }
 
   async getProduccionhistorico(idlote) {
-        console.log(idlote)
     try {
       let resp = await this.produccionhistoricoService.get(idlote, this.auth.token).toPromise();
       if (resp.code == 200) {
@@ -190,7 +188,6 @@ export class HistoricoProduccionComponent implements OnInit {
       let resp = await this.maquinaService.getHistorico(this.formFilter.value, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.filter = resp.response;
-        console.log(this.filter)
         this.FilterArray = this.filter.reduce((accumalator, current) => {
           if (!accumalator.some(item => item.idskunow === current.idskunow)) {
             accumalator.push(current);
@@ -226,8 +223,6 @@ export class HistoricoProduccionComponent implements OnInit {
 
 
   exportAsExcelFile(data): void {
-    console.log(data)
-    console.log(data.progprodlinea)
     this.getProduccionhistorico(data);
     //this.excelService.exportAsExcelFile(data);
   }

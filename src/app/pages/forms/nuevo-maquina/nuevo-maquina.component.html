@@ -24,7 +24,7 @@
       </div>
       <div class="col-md-6">
         <label for="tipoequipo3" class="form-label">Tipo de Equipo</label>
-        <select class="form-control" id="tipoequipo3" nombre="tipoequipo3" formControlName = "tipoequipo"
+        <select class="form-control" id="tipoequipo0" nombre="tipoequipo." formControlName="tipoequipo"
           [ngClass]="{ 'is-invalid': submitted && f.tipoequipo.errors }">
           <option *ngFor="let tp of TP" [value]="tp.idtipo">{{tp.tipoequipo}}
           </option>

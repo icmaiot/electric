@@ -11,3 +11,18 @@
 .footer {
   text-align: center;
 }
+
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}

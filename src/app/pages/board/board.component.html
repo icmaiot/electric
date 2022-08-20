@@ -3,7 +3,7 @@
 <a *ngIf="actv" class="desc img2" style="align-items: center;">EN PREPARACIÓN</a>
 <div class="dark">
   <div class="navbar-brand">
-    <a><img class=""  [routerLink]="['/home']" [src]="urlMidas" alt="Midas"></a>
+    <a><img class=""  [routerLink]="['/']" [src]="urlMidas" alt="Midas"></a>
   </div>
   <div class="row">
     <div class="card-body">
@@ -155,87 +155,3 @@
   </section>
 </footer>
 </div>
-
-
-<!--<img *ngIf="vel" class="paro img" src="../../../assets/img/PARONO.png">
-<a *ngIf="desc" class="desc img2">DESCANSO <br> {{tid}} minutos </a>
-<a *ngIf="actv" class="desc img2" style="align-items: center;">EN PREPARACIÓN</a>
-<div class="row header">
-  <div class="col-10 Head">
-    <h1>PERFORMANCE BOARD</h1>
-  </div>
-  <div class="col-2 black">
-    <a class="navbar-brand"><img class="" [src]="urlMidas" alt="Midas"></a>
-  </div>
-</div>
-<div class="container">
-  <div class="row infoEncoder">
-    <table>
-      <tr>
-        <th>
-          <h2>CALIDAD</h2>
-          <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdiv'">
-            <div id="chartdiv" style="width: 100%; height: 300px"></div>
-          </app-productos-en-produccion>
-        </th>
-        <th class="alg">
-          <h2 class="red"> {{maquina}} </h2>
-          <p style="margin-bottom: 0rem"> Tiempo de paro actual </p>
-          <h2 style="color: red" class="red"> {{paro}} </h2>
-        </th>
-        <th>
-          <h2> OEE</h2>
-          <app-productos-en-produccion [chartData]="idmaquina" [chartdiv]="'chartdivtwo'">
-            <div id="chartdivtwo" style="width: 100%; height: 300px"></div>
-          </app-productos-en-produccion>
-        </th>
-      </tr>
-    </table>
-    <table class="infoEncoder" *ngFor="let obj of board">
-      <tr class="dataEnc">
-        <th>
-          <h2>PRODUCCIÓN ACTUAL (Piezas)</h2>
-        </th>
-        <th>
-          <h2>PRODUCCIÓN ESPERADA (Piezas)</h2>
-        </th>
-        <th>
-          <h2>DELTA</h2>
-        </th>
-      </tr>
-      <tr class="dataEnc">
-        <td>
-          <p [ngStyle]="{'color': (obj.distan - obj.prodesp < 0) ? 'red' : '#00ff00'}" class="dataEnc distan red">
-            {{obj.distan}}</p>
-        </td>
-        <td>
-          <p [ngStyle]="{'color': '#00ff00'}" class="dataEnc red">{{obj.prodesp}}</p>
-        </td>
-        <td>
-          <p [ngStyle]="{'color': (obj.delta > 0) ? 'red' : '#00ff00'}" class="dataEnc red">{{obj.delta}}</p>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div class="row infoEncoder2">
-  </div>
-  <div class="row dataSku" *ngFor="let obj of board">
-    <table class="sku_info">
-      <tr class="sku">
-        <th>SKU EN PRODUCCIÓN</th>
-        <th>PIEZAS PROGRAMADAS</th>
-        <th>VELOCIDAD DE LÍNEA</th>
-        <th>SIGUIENTE SKU</th>
-        <th>TIEMPO MUERTO TOTAL</th>
-      </tr>
-      <tr class="sku">
-        <td>{{ obj.skuactual }}</td>
-        <td>{{ obj.cantprod }}</td>
-        <td>{{ obj.veloc }} pieza/hr</td>
-        <td>{{ obj.skusig }}</td>
-        <td>{{ obj.tmuerto }}</td>
-      </tr>
-    </table>
-  </div>
-</div>
--->

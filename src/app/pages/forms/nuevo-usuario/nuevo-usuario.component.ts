@@ -96,7 +96,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
         this.usrSend = this.usrSend.split("[").join('');
         this.usrSend = this.usrSend.split(",").join('?');
         this.SendUsuariosMQTT(this.usrSend)
-        console.log(this.usrSend)
+        //console.log(this.usrSend)
       }
     } catch (e) {
     }
@@ -104,7 +104,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
 
   async SendUsuariosMQTT(info) {
     this.MQTT.value.message =  'Ids:'+ info +'/Fin';
-    console.log(this.MQTT.value)
+    //console.log(this.MQTT.value)
     try {
       let resp = await this.usuarioService.MQTTEncoder(this.MQTT.value).toPromise();
       

@@ -5,7 +5,7 @@
 }
 
 .moduloI {
-  margin-top: 3rem;
+  margin-top: 0rem;
 }
 
 .footer {
@@ -13,11 +13,11 @@
 }
 
 .cc {
-    margin-left: 4px;
-    margin-right: 4px;
+  margin-left: 4px;
+  //margin-right: 4px;
   max-width: fit-content;
-    align-self: flex-end;
-    display: flex;
+  align-self: flex-end;
+  display: flex;
 }
 
 .div-flex {
@@ -94,4 +94,9 @@ tr {
   display: inline-flex;
   vertical-align: middle;
   align-self: flex-end;
+}
+
+.des {
+  width: 100%;
+  justify-content: right;
 }

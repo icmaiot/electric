@@ -2,6 +2,7 @@
 
   <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="onSubmit(empresa)">
+      
       <div class="form-row">
         <div class="col-md-10">
           <h3 *ngIf="statusG">Editar: {{empresa.nomemp}}</h3>
@@ -196,7 +197,7 @@
               <th scope="col" style="width: 10%">Ext.</th>
               <th scope="col" style="width: 10%">Movil</th>
               <th scope="col" style="width: 19%">E-mail</th>
-              <th scope="col" style="width: 11%">Opciones</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>

@@ -41,7 +41,7 @@ export class ProductosComponent implements OnInit {
   prodSend: string;
 
   listNav = [
-    { "name": "Producto", "router": "/producto" },
+    { "name": "SKU", "router": "/producto" },
     { "name": "Subensamble", "router": "/subensamble" },
     { "name": "Materia Prima", "router": "/materiaPrima" }
   ]

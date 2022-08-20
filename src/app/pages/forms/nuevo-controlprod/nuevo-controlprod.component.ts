@@ -64,7 +64,6 @@ export class NuevoControlProdComponent extends Dialog implements OnInit {
   }
 
   async update() {
-    console.log(this.form.value)
     try {
       let response = await this.controlprodService.update(this.form.value, this.token).toPromise();
       if (response.code = 200) {

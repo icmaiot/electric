@@ -10,6 +10,7 @@ import * as environment from '../../environments/environment';
 export class TurnosdescansoService {
 
   private url: string = environment.environment.urlEndPoint + '/turnosdescanso';
+  private urlmqtt: string = environment.environment.urlMQTT;
   constructor(private http: HttpClient) { }
 
   get(busqueda, token): Observable<any> {
@@ -21,8 +22,7 @@ export class TurnosdescansoService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://54.241.14.55:3000`;
-    return this.http.get(`${url + '/sendTurnos?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+    return this.http.get(`${this.urlmqtt + '/sendTurnos?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 
   create(turno, token): Observable<any> {

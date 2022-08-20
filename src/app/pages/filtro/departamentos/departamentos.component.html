@@ -10,19 +10,19 @@
       <thead>
         <tr>
           <th scope="col">Departamento</th>
-          <th scope="col">Opciones</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let d of departamentos">
           <td>{{d.departamento| titlecase}}</td>
           <td>
+            <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar Usuario "
+              (click)="addUsuario(d.iddep)"><i class="material-icons"> person_add</i></a>
             <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="updateDepto(d)"><i
                 class="material-icons">create</i></a>
             <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(d.iddep)"><i
                 class="material-icons">delete</i></a>
-            <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar Usuario "
-              (click)="addUsuario(d.iddep)"><i class="material-icons"> person_add</i></a>
           </td>
         </tr>
       </tbody>

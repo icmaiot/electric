@@ -32,7 +32,7 @@ export class SubensambleComponent implements OnInit {
   totalMBP;
 
   listNav = [
-    { "name": "Sunensamble", "router": "/producto" },
+    { "name": "SKU", "router": "/producto" },
     { "name": "Subensamble", "router": "/subensamble" },
     { "name": "Materia Prima", "router": "/materiaPrima" }
   ]
@@ -115,7 +115,6 @@ export class SubensambleComponent implements OnInit {
       let resp = await this.subensambleService.getMaquinaBySubensamble(idsubens, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.MBP = resp.response;
-        console.log(this.MBP)
         this.totalMBP = this.MBP.length;
         if(this.totalMBP > 0){
           for(let i in this.MBP){
@@ -209,7 +208,6 @@ export class SubensambleComponent implements OnInit {
   }
 
   AsigMaquina(subensamble) {
-    console.log(subensamble)
     const dialogRef = this.dialog.open(AsignacionMaquinaComponent, {
       width: '30rem',
       data: {

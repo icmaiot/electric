@@ -25,7 +25,7 @@ export class MateriaPrimaComponent implements OnInit {
   submitted = false;
   form: FormGroup
   listNav = [
-    { "name": "Producto", "router": "/producto" },
+    { "name": "SKU", "router": "/producto" },
     { "name": "Subensamble", "router": "/subensamble" },
     { "name": "Materia Prima", "router": "/materiaPrima" }
   ]

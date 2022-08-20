@@ -18,6 +18,7 @@ export class ModuloInterfazComponent implements OnInit {
   listaModulo: ModuloInterfaz[];
   total: number;
   listNav = [
+    { "name": "Equipos", "router": "/maquina" },
     { "name": "Modulo Interfaz", "router": "/moduloInterfaz" },
     { "name": "Perfil configuración", "router": "/perfilConfig" }
   ]

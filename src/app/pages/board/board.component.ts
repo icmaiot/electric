@@ -218,16 +218,13 @@ export class BoardComponent implements OnInit {
 
     async sendEmail(correos) {
         this.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm:ss');
-        console.log(this.date)
         this.SendEmail.value.email = correos;
         this.SendEmail.value.maquina = this.maquina;
         this.SendEmail.value.paroi = this.date;
-        console.log(this.SendEmail.value)
         try {
             let response;
             response = await this.maquinaService.sendEmail(this.SendEmail.value, this.auth.token).toPromise();
             if (response.code == 200) {
-                console.log('enviado')
                 this.UpdateEstadoEmail(2);
             }
         } catch (error) { }

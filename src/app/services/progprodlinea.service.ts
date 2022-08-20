@@ -10,6 +10,7 @@ import * as environment from '../../environments/environment';
 export class ProgprodlineaService {
 
   private url: string = environment.environment.urlEndPoint + '/progprodlinea';
+  private urlmqtt: string = environment.environment.urlMQTT;
   constructor(private http: HttpClient) { }
 
   get(name, token): Observable<any> {
@@ -53,8 +54,7 @@ export class ProgprodlineaService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://54.241.14.55:3000`;
-    return this.http.get(`${url + '/sendLineaprod?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+    return this.http.get(`${this.urlmqtt + '/sendLineaprod?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 
   create(name, token): Observable<any> {

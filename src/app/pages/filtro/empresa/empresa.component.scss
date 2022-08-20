@@ -30,3 +30,13 @@
 .toggle {
   text-align: right;
 }
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.status{
+  width:auto;
+  border: none !important;
+}

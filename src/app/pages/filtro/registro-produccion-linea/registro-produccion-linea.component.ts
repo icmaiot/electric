@@ -201,7 +201,6 @@ export class RegistroProduccionLineaComponent implements OnInit {
       let resp = await this.tiempomuertopService.tm(this.idprogprodlinea, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.listatmp = resp.response;
-        console.log(this.listatmp)
       }
     } catch (e) {
 
@@ -216,7 +215,6 @@ export class RegistroProduccionLineaComponent implements OnInit {
       if (resp.code == 200) {
         this.ver_tmp = resp.response;
         this.tmp = this.ver_tmp[0].tmuerto_reg;
-        console.log(this.tmp)
         this.ult_period = this.ver_tmp[0].ult_periodo;
         if (this.tmp == 1 && this.form.value.statprodlinea == 3) {
           this.lineater = false;

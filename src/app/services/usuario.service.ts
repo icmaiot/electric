@@ -9,6 +9,7 @@ import { Usuario } from '../models/usuario';
 })
 export class UsuarioService {
   private url: string = environment.environment.urlEndPoint + '/usuario';
+  private urlmqtt: string = environment.environment.urlMQTT;
   constructor(private http: HttpClient) { }
 
   getUsuarios(name: string, departamento: string, evento: string, token): Observable<any> {
@@ -60,8 +61,7 @@ export class UsuarioService {
 
   MQTTEncoder(MQTT): Observable<any> {
     const headers: HttpHeaders = new HttpHeaders();
-    const url = `http://54.241.14.55:3000`;
-    return this.http.get(`${url + '/sendUsuarios?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+    return this.http.get(`${this.urlmqtt + '/sendUsuarios?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
   }
 
   create(usuario: Usuario, token): Observable<any> {

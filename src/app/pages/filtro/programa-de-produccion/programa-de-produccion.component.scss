@@ -46,3 +46,9 @@
 a.btn{
   padding: 6px 6px;
 }
+
+
+tr td:last-child {
+  width: 1%;
+  white-space: nowrap;
+}
