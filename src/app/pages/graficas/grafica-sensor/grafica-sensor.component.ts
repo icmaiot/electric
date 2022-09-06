@@ -145,6 +145,8 @@ export class GraficaSensorComponent extends ClassChart implements OnInit {
     this.chartHeap.generateSerie(this.chart);
   }
 
+  get f() { return this.graficaForm.controls; }
+
   filterSelected(type: number) {
     if (this.chart) {
       this.chart.data = [];

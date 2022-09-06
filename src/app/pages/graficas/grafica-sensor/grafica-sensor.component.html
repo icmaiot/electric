@@ -2,7 +2,7 @@
   <div class="div-flex">
     <div class="c row">
       <filter-by [filterBy]="filterByMachine" (selectionFilter)="filterSelected($event)"></filter-by>
-        <form [formGroup]="graficaForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="graficaForm" >
           <!--Equipo-->
           <div class="c row" [hidden]="filterByMachine != 1">
             <label for="maquina">Equipo:</label>

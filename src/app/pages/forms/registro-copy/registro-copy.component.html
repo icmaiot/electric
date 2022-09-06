@@ -15,7 +15,7 @@
                                         {{p.producto}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f.productocopy.errors" class="invalid-feedback">
+                                <div *ngIf="submitteds && f.productocopy.errors" class="invalid-feedback">
                                     <div *ngIf="f.productocopy.errors.required">El producto es requerido</div>
                                 </div>
                             </div>

@@ -26,7 +26,7 @@
                             <div class=" ">
                                 <select class="form-control" id="idscrapreg" nombre="idscrapreg"
                                     formControlName="idscrapreg"
-                                    [ngClass]="{ 'is-invalid': submitteds && f.idscrapreg.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.idscrapreg.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar scrap</option>
                                     <option *ngFor="let d of scraps" [value]="d.idscrapreg">
                                         {{d.Registroscrap.descripcion_scrap}}
@@ -41,7 +41,7 @@
                             <div class=" ">
                                 <select class="form-control" id="idusuarios" nombre="idusuarios"
                                     formControlName="idusuarios"
-                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarios.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.idusuarios.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
                                     <option *ngFor="let d of usuario" [value]="d.id">
                                         {{d.username + ' ' + d.Username_last}}
@@ -56,7 +56,7 @@
                             <div class=" ">
                                 <select class="form-control" id="idusuarioreg" nombre="idusuarioreg"
                                     formControlName="idusuarioreg"
-                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarioreg.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.idusuarioreg.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
                                     <option *ngFor="let d of responsable" [value]="d.id">
                                         {{d.username + ' ' + d.Username_last}}

@@ -45,6 +45,7 @@ import { LayeredComponent } from './components/charts/layered/layered.component'
 import { CardTitleComponent } from './components/card-title/card-title.component';
 import { FilterByComponent } from './components/filter-by/filter-by.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { GaugeComponent } from './components/charts/gauge/gauge.component';
 
 //**********************************************************************PAGINAS********************************************************************************** */
 import { LoginComponent } from './pages/login/login.component';
@@ -94,7 +95,6 @@ import { IngresaNipComponent } from './pages/forms/ingresa-nip/ingresa-nip/ingre
 import { EditarProgprodlineaComponent } from './pages/forms/editar-progprodlinea/editar-progprodlinea.component';
 import { EditarTurnoComponent } from './pages/forms/editar-turno/editar-turno.component';
 import { EditarUsuarioComponent } from './pages/forms/editar-usuario/editar-usuario.component';
-import { EditarStatusComponent } from './pages/forms/editar-progprod/editar-status/editar-status.component';
 import { EditarProgprodComponent } from './pages/forms/editar-progprod/editar-progprod.component';
 
 //****MODELS - ASIGNACION**** */
@@ -142,10 +142,30 @@ import { NuevoTipoEquipoComponent } from './pages/forms/nuevo-tipo-equipo/nuevo-
 registerLocaleData(localeEsMX, 'es-Mx');
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+  ],
   declarations: [
     AppComponent,
     GraficaEventoComponent,
     TablaSensorComponent,
+    GaugeComponent,
     NuevoMaquinaComponent,
     GraficaLinealComponent,
     HeaderComponent,
@@ -213,7 +233,6 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoDiaTurnoComponent,
     BoardComponent,
     StatusPipePipe,
-    EditarStatusComponent,
     FuncionUsuComponent,
     EditarUsuarioComponent,
     CambiarNipComponent,
@@ -240,26 +259,6 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoEventoasignacionfallaComponent,
     AsignacionCorreoComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgxSpinnerModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatNativeDateModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatSlideToggleModule,
-
-  ],
   providers: [ExcelService, DatePipe, MaquinaService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
 
   bootstrap: [AppComponent],
@@ -268,7 +267,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoTipoEquipoComponent, NuevoModuloComponent, NuevoPerfilconfigComponent, NuevoProductoComponent, NuevoMateriapComponent, NuevoSubensambleComponent,
     NuevoUmComponent, NuevoContempComponent, NuevoEmpresaComponent, NuevoRelcompComponent, NuevoCondpagoComponent, NuevoStatuswoComponent, AsignacionEquipoComponent,
     IngresaNipComponent, CatalogoFuncionesComponent, NuevoWoComponent, NuevoStatuswosubComponent, NuevoWosubComponent, EditarProgprodComponent, NuevoTurnosComponent,
-    NuevoDiaTurnoComponent,FuncionUsuComponent, EditarUsuarioComponent, CambiarContrComponent, CambiarNipComponent, EditarStatusComponent, NuevoEventoCausaComponent, 
+    NuevoDiaTurnoComponent,FuncionUsuComponent, EditarUsuarioComponent, CambiarContrComponent, CambiarNipComponent, NuevoEventoCausaComponent, 
      NuevoRegOrdenComponent, NuevoRegPiezaComponent, NuevoRegScrapComponent, NuevoControlProdComponent, EditarProgprodlineaComponent, 
     RegistroProduccionLineaComponent, EditarTurnoComponent, NuevoRegistodefectosComponent, NuevoRegistoscrapComponent, RegistrocopyComponent, AsignarDefectosComponent, 
     AsignarScrapComponent, NuevoTMComponent, NuevoEventoasignacionfallaComponent, AsignacionMaquinaComponent, AsignacionCorreoComponent,

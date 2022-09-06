@@ -14,7 +14,7 @@
                                         {{d.descripcion_defecto}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f.iddefreg.errors" class="invalid-feedback">
+                                <div *ngIf="submitteds && f.iddefreg.errors" class="invalid-feedback">
                                     <div *ngIf="f.iddefreg.errors.required">El defecto es requerido</div>
                                 </div>
                             </div>

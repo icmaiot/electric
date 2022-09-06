@@ -24,7 +24,7 @@
                         <th>
                             <div class=" ">
                                 <select class="form-control" id="iddefreg" nombre="iddefreg" formControlName="iddefreg"
-                                    [ngClass]="{ 'is-invalid': submitteds && f.iddefreg.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.iddefreg.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar defecto</option>
                                     <option *ngFor="let d of defecto" [value]="d.iddefreg">
                                         {{d.Registrodefecto.descripcion_defecto}}
@@ -39,7 +39,7 @@
                             <div class=" ">
                                 <select class="form-control" id="idusuarios" nombre="idusuarios"
                                     formControlName="idusuarios"
-                                    [ngClass]="{ 'is-invalid': submitteds && f.idusuarios.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.idusuarios.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar usuario</option>
                                     <option *ngFor="let d of usuario" [value]="d.id">
                                         {{d.username + ' ' + d.Username_last}}

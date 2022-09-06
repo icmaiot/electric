@@ -11,7 +11,7 @@ import { ProgprodlineaService } from '@app/services/progprodlinea.service'
 import { ProduccionloteService } from '@app/services/produccionlote.service';
 import { TurnosProductivosService } from '@app/services/turnos-productivos.service'
 import { EditarProgprodlineaComponent } from '@app/pages/forms/editar-progprodlinea/editar-progprodlinea.component'
-import { EditarStatusComponent } from '@app/pages/forms/editar-progprod/editar-status/editar-status.component'
+//import { EditarStatusComponent } from '@app/pages/forms/editar-progprod/editar-status/editar-status.component'
 
 
 @Component({
@@ -296,6 +296,7 @@ export class ProgramaDeProduccionComponent implements OnInit {
     });
   }
 
+  /*
   editStatus(obj) {
     const dialogRef = this.dialog.open(EditarStatusComponent, {
       width: '20rem',
@@ -311,5 +312,5 @@ export class ProgramaDeProduccionComponent implements OnInit {
       //this.getprogprodprioridad();
       this.getFiltro();
     });
-  }
+  }*/
 }

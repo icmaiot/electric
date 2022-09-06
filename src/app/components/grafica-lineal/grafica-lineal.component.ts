@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
 
 am4core.useTheme(am4themes_animated);
+am4core.options.autoDispose = true;
 
 @Component({
   selector: 'app-grafica-lineal',
@@ -25,7 +26,7 @@ export class GraficaLinealComponent implements OnInit {
   Input: string;
   dataGauge = [];
   turnos = [];
-  form: FormGroup;
+  formF: FormGroup;
   submitted = false;
   X = false;
   Z = false;
@@ -57,22 +58,19 @@ export class GraficaLinealComponent implements OnInit {
     this.token = this.auth.token;
     this.date = new Date();
     this.date2 = new Date();
-    this.form = this.formBuilder.group({
+    this.formF = this.formBuilder.group({
       fechaprep: ['0000-00-00'],
       fechaprep2: ['0000-00-00'],
-    })
+    });
 
     this.sumarDias(this.date, -7);
     this.minDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
     this.maxDate = this.datePipe.transform(this.date2, 'yyyy-MM-dd');
-    this.form.controls['fechaprep'].setValue(this.minDate);
-    this.form.controls['fechaprep2'].setValue(this.maxDate);
+    this.formF.controls['fechaprep'].setValue(this.minDate);
+    this.formF.controls['fechaprep2'].setValue(this.maxDate);
 
     this.getMaquina();
 
-    /* this.id =  setInterval(() => {
-     this.getMaquinas();
-     }, 10000);*/
   }
 
   ngOnDestroy() {
@@ -87,14 +85,14 @@ export class GraficaLinealComponent implements OnInit {
   }
 
   async limpiarFiltro() {
-    this.form.controls['fechaprep'].setValue(this.minDate);
-    this.form.controls['fechaprep2'].setValue(this.maxDate);
-    this.getMaquinas();
+    this.formF.controls['fechaprep'].setValue(this.minDate);
+    this.formF.controls['fechaprep2'].setValue(this.maxDate);
+    this.getMaquina();
   }
 
   async getMaquinas() {
     try {
-      let resp = await this.maquinaService.PGraficaLinea(this.token).toPromise();
+      let resp = await this.maquinaService.PGraficaLinea(this.formF.value, this.token).toPromise();
       if (resp.code == 200) {
         this.dataGauge = resp.response;
       }
@@ -119,9 +117,11 @@ export class GraficaLinealComponent implements OnInit {
 
   async getMaquina() {
     try {
-      let resp = await this.maquinaService.PGraficaLinea(this.token).toPromise();
+      let resp = await this.maquinaService.PGraficaLinea(this.formF.value,this.token).toPromise();
       if (resp.code == 200) {
         this.dataGauge = resp.response;
+        console.log(this.dataGauge)
+        console.log(this.formF.value)
         this.getTurnos(this.dataGauge)
 
       }
@@ -149,10 +149,16 @@ export class GraficaLinealComponent implements OnInit {
 
     // Create series
     function createSeries(name, data, turnodb) {
+      console.log(data, turnodb)
       let series = chart.series.push(new am4charts.LineSeries());
       series.dataFields.valueY = turnodb;
       series.dataFields.dateX = "fechaprod";
       series.name = name;
+
+      console.log(series.dataFields.valueY = turnodb)
+      console.log(series.dataFields.dateX = "fechaprod")
+      
+
 
       let segment = series.segments.template;
       segment.interactionsEnabled = true;
@@ -170,16 +176,7 @@ export class GraficaLinealComponent implements OnInit {
       segment.events.on("out", function (event) {
         processOut(event.target.parent.parent.parent);
       });
-
-      /*let data = [];
-      let value = Math.round(Math.random() * 100) + 100;
-      for (var i = 1; i < 100; i++) {
-        value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 30 + i / 5);
-        let dataItem = { date: new Date(2018, 0, i) };
-        dataItem["value" + s] = value;
-        data.push(dataItem);
-      }
-    */
+    
       // Make bullets grow on hover
       let bullet = series.bullets.push(new am4charts.CircleBullet());
       bullet.circle.strokeWidth = 2;
@@ -203,6 +200,7 @@ export class GraficaLinealComponent implements OnInit {
       /*chart.scrollbarX.series.push(series);*/
       //chart.scrollbarX.parent = chart.bottomAxesContainer;
 
+      console.log(series.data = data)
       series.data = data;
       return series;
     }
@@ -258,6 +256,7 @@ export class GraficaLinealComponent implements OnInit {
         series.legendDataItem.label.setState("default");
       });
     }
+    
     /*// Create chart instance
    let chart = am4core.create("chartdiv", am4charts.XYChart);
        lista = this.dataGauge;

@@ -2,76 +2,76 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="mx-5">
-        <form class="div-flex" [formGroup]="">
+        <form class="div-flex" [formGroup]="formF">
           <div class="c row">
             <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getHistorico()" (change)="filtroTm()" (change)="filtroScrap()" (change)="filtroDefectos()" />
+              (change)="getMaquina()" />
           </div>
           <div class="c row">
             <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              [(max)]="maxDate" (change)="getHistorico()" (change)="filtroTm()" (change)="filtroScrap()"
-              (change)="filtroDefectos()" />
+              (change)="getMaquina()" [(max)]="maxDate" />
           </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
         </form>
       </div>
       <div class="mx-5 mb-3">
-
-        <div style="text-align:center;" class="card-header-tab card-header">
-          Hola
-        </div>
         <div class="row">
           <div class="col-sm-12 col-md-12 col-xl-12">
-            <div class="card-body">
-              <div class="widget-subheading">
-                <div id="chartdiv" class="chart"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      
-
-      <div class="row">
-        <div class="col-sm-6 col-md-6 col-xl-6">
-          <div class="card-hover-shadow-2x mb-3 card">
-            <div class="widget-chart-content">
-              <div class="widget-subheading">
-                <div id="chartdiv2" class="chart"></div>
-              </div>
-              <div class="widget-numbers">
-
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-numbers">
+                  Tiempo muerto total por turno
+                </div>
+                <div class="widget-subheading">
+                  <div id="chartdiv" class="chart"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-8 col-md-6 col-xl-6">
-          <div class="card-hover-shadow-2x mb-3 card">
-            <div class="widget-chart-content">
-              <div class="widget-subheading">
-                <div id="chartdiv3" class="chart"></div>
-              </div>
-              <div class="widget-numbers">
 
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-xl-6">
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-numbers">
+                  SKU Producido por Lote
+                </div>
+                <div class="widget-subheading">
+                  <div id="chartdiv2" class="chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-8 col-md-6 col-xl-6">
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-subheading">
+
+                </div>
+                <div class="widget-numbers">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-subheading">
+
+                </div>
+                <div class="widget-numbers">
+
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-sm-12 col-md-12 col-xl-12">
-          <div class="card-hover-shadow-2x mb-3 card">
-            <div class="widget-chart-content">
-              <div class="widget-subheading">
-                <div id="chartdiv4" class="chart"></div>
-              </div>
-              <div class="widget-numbers">
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
 

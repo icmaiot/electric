@@ -7,6 +7,7 @@ import { AuthService } from '@app/services/auth.service';
 import { ProgprodService } from '@app/services/progprod.service';
 import { MaquinaService } from '@app/services/maquina.service'
 import { ProductoService } from '@app/services/producto.service'
+
 @Component({
   selector: 'app-editar-progprod',
   templateUrl: './editar-progprod.component.html',

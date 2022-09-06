@@ -14,7 +14,7 @@
       <div class="form-group col-md-6">
         <label for="cant">Cantidad</label>
         <input type="number" class="form-control" id="cant" nombre="cant" formControlName="cant"
-          [ngClass]="{ 'is-invalid': submitted && f.cant.errors }">
+          >
         <div *ngIf="submitted && f.cant.errors" class="invalid-feedback">
           <div *ngIf="f.area.cant.required">Área es requerida</div>
         </div>

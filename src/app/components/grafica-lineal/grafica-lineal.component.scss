@@ -1,4 +1,3 @@
-
 #chartdiv {
   width: 100%;
   height: 700px;
@@ -11,11 +10,11 @@
   height: 500px;
   max-width: 100%;
   margin-top: 5rem;
-  
+
 }
 
-.reg {  
-    text-align: center;
+.reg {
+  text-align: center;
   font-size: 18px;
   margin-left: 2rem;
   margin-right: 2rem;
@@ -86,12 +85,12 @@ label {
   padding: 0 !important;
 }
 
-.widget-chart-content{
-    flex-direction: row;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
-    padding: 1rem;
+.widget-chart-content {
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
 }
 
 .widget-numbers {
@@ -102,7 +101,7 @@ label {
   margin: 1rem auto;
 }
 
-.estado{
+.estado {
   float: right;
 }
 
@@ -114,6 +113,7 @@ label {
   margin-right: 5px;
   margin-left: 5px;
   align-items: baseline;
+  flex-wrap: inherit;
 }
 
 .div-flex {
@@ -124,6 +124,8 @@ label {
     border-color: none !important;
   }
 }
+
 /*.row {
   flex-wrap: inherit;
+      border-radius: 8px;
 }*/

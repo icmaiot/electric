@@ -15,7 +15,7 @@
                                         {{d.descripcion_scrap}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f.idscrapreg.errors" class="invalid-feedback">
+                                <div *ngIf="submitteds && f.idscrapreg.errors" class="invalid-feedback">
                                     <div *ngIf="f.idscrapreg.errors.required">El scrap es requerido</div>
                                 </div>
                             </div>

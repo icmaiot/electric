@@ -81,8 +81,11 @@ export class MaquinaService {
     return this.http.get(this.url + '/filtroDefectos', { headers, params: params });
   }
 
-  PGraficaLinea( token): Observable<any> {
+  PGraficaLinea(form, token): Observable<any> {
     let params = new HttpParams();
+    
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/PGraficaLinea', { headers, params: params });
   }

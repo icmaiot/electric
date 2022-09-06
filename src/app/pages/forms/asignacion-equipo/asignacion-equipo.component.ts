@@ -75,7 +75,7 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
 
   get f() { return this.form.controls; }
 
-  onSubmit(a) {
+  onSubmit() {
     this.submitted = true;
     if (this.form.invalid) {
       return;
