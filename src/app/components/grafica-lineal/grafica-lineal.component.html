@@ -5,12 +5,19 @@
         <form class="div-flex" [formGroup]="formF">
           <div class="c row">
             <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getMaquina()" />
+              (change)="getMaquina()" (change)="getOEE()" />
           </div>
           <div class="c row">
             <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getMaquina()" [(max)]="maxDate" />
+              (change)="getMaquina()"  (change)="getOEE()" [(max)]="maxDate" />
           </div>
+          <div class="col-md-2">
+            <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"> 
+              (change)="getMaquina()" (change)="getOEE()"
+                <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
+                </option>
+            </select>
+        </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
         </form>
@@ -33,14 +40,14 @@
 
 
         <div class="row">
-          <div class="col-sm-6 col-md-6 col-xl-6">
+          <div class="col-sm-12 col-md-12 col-xl-12">
             <div class="card-hover-shadow-2x mb-3 card">
               <div class="widget-chart-content">
                 <div class="widget-numbers">
                   SKU Producido por Lote
                 </div>
                 <div class="widget-subheading">
-                  <div id="chartdiv2" class="chart"></div>
+                  <div id="OEE" class="chart"></div>
                 </div>
               </div>
             </div>

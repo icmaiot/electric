@@ -38,6 +38,13 @@ import { GraficaLinealComponent } from '@app/components/grafica-lineal/grafica-l
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { EstadisticasComponent } from '@app/pages/filtro/estadisticas/estadisticas.component';
+import { GraficoMnttoComponent } from '@app/pages/forms/grafico-mntto/grafico-mntto.component';
+import { GraficoMatsComponent } from '@app/pages/forms/grafico-mats/grafico-mats.component';
+import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.component';
+import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
+import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -74,7 +81,14 @@ const routes: Routes = [
   { path: 'historico-produccion', component: HistoricoProduccionComponent, canActivate: [AuthGuard]  },
   { path: 'graficas', component:  GraficaLinealComponent , canActivate: [AuthGuard]  },
   { path: 'graficas/:idMaquina', component: GraficaEventoComponent, canActivate: [AuthGuard] },
+  { path: 'estadistica', component: EstadisticasComponent, canActivate: [AuthGuard] },
+  { path: 'estadistica/:/mntto', component: GraficoMnttoComponent, canActivate: [AuthGuard]},
+  { path: 'estadistica/:/mats', component: GraficoMatsComponent, canActivate: [AuthGuard]},
+  { path: 'estadistica/:/ing', component: GraficoIngComponent, canActivate: [AuthGuard]},
+  { path: 'estadistica/:/prod', component: GraficoProdComponent, canActivate: [AuthGuard]},
+  { path: 'estadistica/:/calidad', component: GraficoCalidadComponent, canActivate: [AuthGuard]}, 
 ];
+
 @NgModule({
   declarations: [],
   imports: [

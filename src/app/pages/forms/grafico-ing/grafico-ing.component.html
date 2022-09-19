@@ -1,0 +1,99 @@
+<div class="home card card-shadow h-100 d-flex mx-5 mb-5">
+<div class="form_data">
+    <form [formGroup]="form" (ngSubmit)="onSubmits()">
+        <table >
+            <tr>
+                <th>
+                     <label class="select-filter">Fecha Inicio: </label>
+                </th>
+                <th>
+                     <label class="select-filter">Fecha Final: </label>
+                </th>
+                <th><label class="select-filter">Maquina: </label></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>
+                     <input type="datetime-local" class="form-control select-filter" id="r1" nombre="r1" formControlName="r1" [ngClass]="{ 'is-invalid': submitted && f.r1.errors }" >
+                     <div *ngIf="submitted && f.r1.errors" class="invalid-feedback">
+                        <div *ngIf="f.r1.errors.required">La fecha y hora es necesaria para el campo 1</div>
+                    </div>
+                </td>
+                <td>
+                     <input type="datetime-local" class="form-control select-filter" id="r2" nombre="r2" formControlName="r2" [ngClass]="{ 'is-invalid': submitted && f.r2.errors }" >
+                     <div *ngIf="submitted && f.r2.errors" class="invalid-feedback">
+                        <div *ngIf="f.r2.errors.required">La fecha y hora es necesaria para el campo 2</div>
+                    </div>
+                </td>
+                <td>
+                    <select name="maquina" id="maquina" formControlName="maquina" class="form-control select-filter" [ngClass]="{ 'is-invalid': submitted && f.maquina.errors}">
+                        <option [selected]="true">Seleccionar maquina</option>
+                        <option *ngFor="let o of opt" [value]="o.maquina"> {{ o.maquina }}</option>
+                    </select>
+                    <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
+                        <div *ngIf="f.maquina.errors.required">Selecciona la maquina a graficar</div>
+                    </div>
+                </td>
+                <td></td>
+                <td>
+                     <button type="submit" class="btn btn-primary">Graficar</button>
+                </td>
+            </tr>
+            <div *ngIf="submitted && f.r1.errors" class="invalid-feedback">
+                <div *ngIf="f.r1.errors.required">La fecha y hora es necesaria para el campo 1</div>
+            </div>
+            <div *ngIf="submitted && f.r2.errors" class="invalid-feedback">
+                 <div *ngIf="f.r2.errors.required">La fecha y hora es necesaria para el campo 2</div>
+             </div>
+        </table>
+    </form>
+</div>
+
+<div >
+    <div class="form_cons" id="cons">
+        <form [formGroup]="form2" (ngSubmit)="onSubmits2()">
+           <b> Detalles causa:</b>
+            <table>
+                <tr>
+                    <th>
+                        <select name="causa" id="causa" formControlName="causa" class="form-control select-filter" [ngClass]="{ 'is-invalid': submitted2 && efe.causa.errors}">
+                            <option *ngFor="let o of mycall" [value]="o.folio">{{ o.descripcion }}</option>
+                        </select>
+                        <div *ngIf="submitted2 && efe.causa.errors" class="invalid-feedback">
+                            <div *ngIf="efe.causa.errors.required">Error seleccione una opcion</div>
+                        </div>
+                    </th>
+                    <th><button type="submit" class="btn btn-primary" >Consultar</button></th>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+ <div class="ling">
+     <table class="two" >
+         <tr>
+             <td class="contenido"><div class="chartdiv"></div> </td>
+             <td class="contenido"><div  class="chartdivcantidad"></div></td>
+         </tr>
+     </table>        
+</div>
+
+<div class="form_cons">
+    <table class="table  table-bordered" style="box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0,0 , 0, 0.22)">
+        <tr class="table blue-lite-bg" >
+            <th>Codigo</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Duracion</th>
+        </tr>
+        <tr *ngFor="let res of inft">
+            <td>{{res.codigo}}</td>
+            <td>{{res.descripcion}}</td>
+            <td>{{res.fecha}} {{res.hora}}</td>
+            <td>{{res.tiempo}}</td>
+        </tr>
+    </table>
+</div>
+</div>
+</div>
