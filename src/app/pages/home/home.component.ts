@@ -100,11 +100,16 @@ export class HomeComponent implements OnInit {
         function: '/programa-de-produccion',
         class: 'orange-bg'
       },
-{
+      {
         icon: 'equalizer',
         text: 'Estadísticas',
         function: '/estadistica',
         class: 'gray-bg'
+      },{
+        icon: 'equalizer',
+        text: 'Graficas',
+        function: '/graficas',
+        class: 'green-bg'
       },
     ];
 
