@@ -5,19 +5,26 @@
         <form class="div-flex" [formGroup]="formF">
           <div class="c row">
             <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getMaquina()" (change)="getOEE()" />
+              (change)="getMaquina()" (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()"  />
           </div>
           <div class="c row">
             <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getMaquina()"  (change)="getOEE()" [(max)]="maxDate" />
+              (change)="getMaquina()" (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()" [(max)]="maxDate" />
           </div>
-          <div class="col-md-2">
-            <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"> 
-              (change)="getMaquina()" (change)="getOEE()"
-                <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
-                </option>
+          <div class="col-md-1">
+            <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow" 
+            (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()">
+              <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
+              </option>
             </select>
-        </div>
+          </div>
+         <!-- <div class="col-md-1">
+            <select class="form-control " id="idlineaprod" nombre="idlineaprod" formControlName="idlineaprod"
+              (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()">
+              <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
+              </option>
+            </select>
+          </div> -->
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
         </form>
@@ -47,20 +54,7 @@
                   SKU Producido por Lote
                 </div>
                 <div class="widget-subheading">
-                  <div id="OEE" class="chart"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-8 col-md-6 col-xl-6">
-            <div class="card-hover-shadow-2x mb-3 card">
-              <div class="widget-chart-content">
-                <div class="widget-subheading">
-
-                </div>
-                <div class="widget-numbers">
-
+                  <div id="SKU" class="chart"></div>
                 </div>
               </div>
             </div>
@@ -69,22 +63,31 @@
           <div class="col-sm-12 col-md-12 col-xl-12">
             <div class="card-hover-shadow-2x mb-3 card">
               <div class="widget-chart-content">
-                <div class="widget-subheading">
-
-                </div>
                 <div class="widget-numbers">
-
+                  OEE por SKU
+                </div>
+                <div class="widget-subheading">
+                  <div id="OEE" class="chart"></div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-numbers">
+                  Eficiencia por SKU
+                </div>
+                <div class="widget-subheading">
+                  <div id="EFICIENCIA" class="chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-
-
       </div>
-
-
     </div>
   </div>
 </div>

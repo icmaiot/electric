@@ -10,7 +10,7 @@
             <th>
               <div class=" ">
                 <select class="form-control" id="funcionusu" nombre="funcionusu" formControlName="funcionusu"
-                  [(ngModel)]="this.funcion" [ngClass]="{ 'is-invalid': submitted && f.funcionusu.errors }">
+                  [ngClass]="{ 'is-invalid': submitted && f.funcionusu.errors }">
                   <option *ngFor="let fun of listaFuncusu" [value]="fun.IDfuncusu">{{fun.funcusu}}</option>
                 </select>
                 <div *ngIf="submitted && f.funcionusu.errors" class="invalid-feedback">
@@ -33,6 +33,7 @@
                                 (click)="delete(obj)"><i class="material-icons">delete</i></a>
                         </td> 
                     </tr>-->
+          <!-- [(ngModel)]="this.funcion"-->
         </tbody>
       </table>
     </form>

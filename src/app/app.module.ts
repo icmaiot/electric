@@ -47,6 +47,12 @@ import { FilterByComponent } from './components/filter-by/filter-by.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { GaugeComponent } from './components/charts/gauge/gauge.component';
 
+import { GraficoMnttoComponent } from '@app/pages/forms/grafico-mntto/grafico-mntto.component';
+import { GraficoMatsComponent } from '@app/pages/forms/grafico-mats/grafico-mats.component';
+import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.component';
+import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
+import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
+
 //**********************************************************************PAGINAS********************************************************************************** */
 import { LoginComponent } from './pages/login/login.component';
 import { AreasComponent } from './pages/filtro/areas/areas.component';
@@ -75,6 +81,7 @@ import { MateriaPrimaComponent } from './pages/filtro/materia-prima/materia-prim
 import { TurnosProductivosComponent } from './pages/filtro/turnos/registro-turnos-productivos.component';
 import { ModuloRMTComponent } from './pages/filtro/modulo-rmt/modulo-rmt.component';
 import { TipoEquipoComponent } from './pages/filtro/tipo-equipo/tipo-equipo.component';
+import { EstadisticasComponent } from '@app/pages/filtro/estadisticas/estadisticas.component';
 
 import { BoardComponent } from './pages/board/board.component';
 
@@ -258,6 +265,12 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoTMComponent,
     NuevoEventoasignacionfallaComponent,
     AsignacionCorreoComponent,
+    EstadisticasComponent,
+    GraficoMnttoComponent,
+    GraficoMatsComponent,
+    GraficoIngComponent,
+    GraficoProdComponent,
+    GraficoCalidadComponent,
   ],
   providers: [ExcelService, DatePipe, MaquinaService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
 

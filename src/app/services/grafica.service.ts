@@ -50,4 +50,25 @@ export class GraficaService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/graficaSobrepuesta', { headers, params: params });
   }
+
+  
+  PGraficaSkuProducido(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('linea', form.linea);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaSkuProducido', { headers, params: params });
+  }
+
+  PGraficaEficiencia(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('linea', form.linea);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaEficiencia', { headers, params: params });
+  }
 }

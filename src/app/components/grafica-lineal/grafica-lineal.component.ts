@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, NgForm } from '@angula
 import { MaquinaService } from '@app/services/maquina.service';
 import { TurnosProductivosService } from '@app/services/turnos-productivos.service';
 import { ProductoService } from '@app/services/producto.service'
+import { GraficaService } from '@app/services/grafica.service'
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
@@ -27,8 +28,11 @@ export class GraficaLinealComponent implements OnInit {
   Input: string;
   dataGauge = [];
   dataOEE = [];
+  dataGraficaSkuProducido = [];
+  dataGraficaEficiencia = [];
   turnos = [];
   productos = [];
+  filterArray = [];
   formF: FormGroup;
   submitted = false;
   X = false;
@@ -54,6 +58,7 @@ export class GraficaLinealComponent implements OnInit {
     private datePipe: DatePipe,
     private turnosService: TurnosProductivosService,
     private productoService: ProductoService,
+    private graficaService: GraficaService,
   ) {
 
   }
@@ -65,7 +70,8 @@ export class GraficaLinealComponent implements OnInit {
     this.formF = this.formBuilder.group({
       fechaprep: ['0000-00-00'],
       fechaprep2: ['0000-00-00'],
-      idskunow: ['53'],
+      idskunow: ['-1'],
+      linea: ['-1'],
     });
 
     this.sumarDias(this.date, -120);
@@ -77,6 +83,7 @@ export class GraficaLinealComponent implements OnInit {
     this.getMaquina();
     this.getProductos();
     this.getOEE();
+    this.getGraficaSkuProducido();
   }
 
   ngOnDestroy() {
@@ -93,9 +100,26 @@ export class GraficaLinealComponent implements OnInit {
   async limpiarFiltro() {
     this.formF.controls['fechaprep'].setValue(this.minDate);
     this.formF.controls['fechaprep2'].setValue(this.maxDate);
-    this.formF.controls['idskunow'].setValue('53');
+    this.formF.controls['idskunow'].setValue('-1');
+    this.formF.controls['linea'].setValue('-1');
     this.getMaquina();
     this.getOEE();
+    this.getGraficaSkuProducido();
+    this.getGraficaEficiencia();
+  }
+
+  //Graficas
+
+  async getMaquina() {
+    try {
+      let resp = await this.maquinaService.PGraficaLinea(this.formF.value,this.token).toPromise();
+      if (resp.code == 200) {
+        this.dataGauge = resp.response;
+        this.getTurnos(this.dataGauge)
+
+      }
+    } catch (e) {
+    }
   }
 
   async getOEE() {
@@ -103,14 +127,55 @@ export class GraficaLinealComponent implements OnInit {
       let resp = await this.maquinaService.PGraficaOEE(this.formF.value, this.token).toPromise();
       if (resp.code == 200) {
         this.dataOEE = resp.response;
-        console.log(this.dataOEE)
-        console.log(this.formF.value)
         this.OEE(this.dataOEE);
       }
     } catch (e) {
     }
   }
 
+  async getGraficaSkuProducido() {
+    try {
+      let resp = await this.graficaService.PGraficaSkuProducido(this.formF.value, this.token).toPromise();
+      if (resp.code == 200) {
+        this.dataGraficaSkuProducido = resp.response;
+        this.SKU(this.dataGraficaSkuProducido);
+      }
+    } catch (e) {
+    }
+  }
+
+  async getGraficaEficiencia() {
+    try {
+      let resp = await this.graficaService.PGraficaEficiencia(this.formF.value, this.token).toPromise();
+      if (resp.code == 200) {
+        this.dataGraficaEficiencia = resp.response;
+        this.EFICIENCIA(this.dataGraficaEficiencia);
+      }
+    } catch (e) {
+    }
+  }
+
+// Filtros
+
+
+
+ /* async getProductosDeGraficaSku(data) {
+    try {
+      let resp = await this.graficaService.PGraficaSkuProducido(this.formF.value, this.token).toPromise();
+      if (resp.code == 200) {
+        this.dataGraficaSkuProducido = resp.response;
+        this.filterArray = this.dataGraficaSkuProducido.reduce((accumalator, current) => {
+          if (!accumalator.some(item => item.idskunow === current.idskunow )) {
+            accumalator.push(current);
+          }
+          return accumalator;
+        }, []);
+        this.SKU(data, this.filterArray)
+      }
+    } catch (e) {
+    }
+  }  */
+  
   async getProductos() {
     try {
       let resp = await this.productoService.get("", this.auth.token).toPromise();
@@ -128,20 +193,6 @@ export class GraficaLinealComponent implements OnInit {
       if (resp.code == 200) {
         this.turnos = resp.response;
         this.TIEMPOMUERTO(this.turnos, data);
-        this.EFICIENCIA(this.turnos, data);
-
-      }
-    } catch (e) {
-    }
-  }
-
-  async getMaquina() {
-    try {
-      let resp = await this.maquinaService.PGraficaLinea(this.formF.value,this.token).toPromise();
-      if (resp.code == 200) {
-        this.dataGauge = resp.response;
-        this.getTurnos(this.dataGauge)
-
       }
     } catch (e) {
     }
@@ -167,16 +218,10 @@ export class GraficaLinealComponent implements OnInit {
 
     // Create series
     function createSeries(name, data, turnodb) {
-      console.log(data, turnodb)
       let series = chart.series.push(new am4charts.LineSeries());
       series.dataFields.valueY = turnodb;
       series.dataFields.dateX = "fechaprod";
       series.name = name;
-
-      console.log(series.dataFields.valueY = turnodb)
-      console.log(series.dataFields.dateX = "fechaprod")
-      
-
 
       let segment = series.segments.template;
       segment.interactionsEnabled = true;
@@ -218,7 +263,6 @@ export class GraficaLinealComponent implements OnInit {
       /*chart.scrollbarX.series.push(series);*/
       //chart.scrollbarX.parent = chart.bottomAxesContainer;
 
-      console.log(series.data = data)
       series.data = data;
       return series;
     }
@@ -337,141 +381,49 @@ export class GraficaLinealComponent implements OnInit {
   }
 
   //CHARTDIV2
-  SKU(turnos, data) {
-    let chart = am4core.create("chartdiv2", am4charts.XYChart);
+  SKU( data) {
+    let chart = am4core.create("SKU", am4charts.XYChart3D);
 
-// Create axes
-let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+chart.data  = data;
+    // Create axes
+let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "fechaprod";
+
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
 let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-for (var i = 0; i < turnos.length ; i++) {
-  createSeries(turnos[i].turno, data, turnos[i].turnodb)
-}
+valueAxis.title.text = "Cantidad de Piezas Producidas";
+valueAxis.renderer.labels.template.adapter.add("text", function(text) {
+  return text + "Un";
+});
 
 // Create series
-function createSeries(name, data, turnodb) {
-  let series = chart.series.push(new am4charts.LineSeries());
-  series.dataFields.valueY = turnodb ;
-  series.dataFields.dateX = "fechaprod";
-  series.name = name;
+let series = chart.series.push(new am4charts.ColumnSeries3D());
+series.dataFields.valueY = "cantproducida";
+series.dataFields.categoryX = "fechaprod";
+series.name = "producto";
+series.clustered = false;
+series.columns.template.tooltipText = "Cantidad {category}: [bold]{valueY}[/]";
+series.columns.template.fillOpacity = 0.9;
 
-  let segment = series.segments.template;
-  segment.interactionsEnabled = true;
-
-  let hoverState = segment.states.create("hover");
-  hoverState.properties.strokeWidth = 3;
-
-  let dimmed = segment.states.create("dimmed");
-  dimmed.properties.stroke = am4core.color("#dadada");
-
-  segment.events.on("over", function(event) {
-    processOver(event.target.parent.parent.parent);
-  });
-
-  segment.events.on("out", function(event) {
-    processOut(event.target.parent.parent.parent);
-  });
-
-  /*let data = [];
-  let value = Math.round(Math.random() * 100) + 100;
-  for (var i = 1; i < 100; i++) {
-    value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 30 + i / 5);
-    let dataItem = { date: new Date(2018, 0, i) };
-    dataItem["value" + s] = value;
-    data.push(dataItem);
-  }
-*/
-// Make bullets grow on hover
-let bullet = series.bullets.push(new am4charts.CircleBullet());
-bullet.circle.strokeWidth = 2;
-bullet.circle.radius = 4;
-bullet.circle.fill = am4core.color("#fff");
-
-let bullethover = bullet.states.create("hover");
-bullethover.properties.scale = 1.3;
-
-// Make a panning cursor
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-
-// Create vertical scrollbar and place it before the value axis
-//chart.scrollbarY = new am4core.Scrollbar();
-//chart.scrollbarY.parent = chart.leftAxesContainer;
-//chart.scrollbarY.toBack();
-
-// Create a horizontal scrollbar with previe and place it underneath the date axis
-//chart.scrollbarX = new am4charts.XYChartScrollbar();
-/*chart.scrollbarX.series.push(series);*/
-//chart.scrollbarX.parent = chart.bottomAxesContainer;
-
-  series.data = data;
-  return series;
-}
-
-chart.legend = new am4charts.Legend();
-chart.legend.position = "right";
-chart.legend.scrollable = true;
-
-
-// setTimeout(function() {
-//   chart.legend.markers.getIndex(0).opacity = 0.3;
-// }, 3000)
-chart.legend.markers.template.states.create("dimmed").properties.opacity = 0.3;
-chart.legend.labels.template.states.create("dimmed").properties.opacity = 0.3;
-
-chart.legend.itemContainers.template.events.on("over", function(event) {
-  processOver(event.target.dataItem.dataContext);
-})
-
-chart.legend.itemContainers.template.events.on("out", function(event) {
-  processOut(event.target.dataItem.dataContext);
-})
-
-function processOver(hoveredSeries) {
-  hoveredSeries.toFront();
-
-  hoveredSeries.segments.each(function(segment) {
-    segment.setState("hover");
-  })
-  
-  hoveredSeries.legendDataItem.marker.setState("default");
-  hoveredSeries.legendDataItem.label.setState("default");
-
-  chart.series.each(function(series) {
-    if (series != hoveredSeries) {
-      hoveredSeries.segments.each(function(segment) {
-        segment.setState("dimmed");
-      })
-      series.bulletsContainer.setState("dimmed");
-      series.legendDataItem.marker.setState("dimmed");
-      series.legendDataItem.label.setState("dimmed");
-    }
-  });
-}
-
-function processOut(hoveredSeries) {
-  chart.series.each(function(series) {
-    hoveredSeries.segments.each(function(segment) {
-      segment.setState("default");
-    })
-    series.bulletsContainer.setState("default");
-    series.legendDataItem.marker.setState("default");
-    series.legendDataItem.label.setState("default");
-  });
-}
-
-
+/*let series2 = chart.series.push(new am4charts.ColumnSeries3D());
+series2.dataFields.valueY = "year2018";
+series2.dataFields.categoryX = "country";
+series2.name = "Year 2018";
+series2.clustered = false;
+series2.columns.template.tooltipText = "GDP grow in {category} (2017): [bold]{valueY}[/]";*/
   }
 
   //CHARTDIV3****
   OEE( data) {
     let chart = am4core.create("OEE", am4charts.XYChart3D);
-console.log(data)
+
 chart.data  = data;
     // Create axes
 let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.dataFields.category = "fechaprod";
-console.log(data)
+
 categoryAxis.renderer.grid.template.location = 0;
 categoryAxis.renderer.minGridDistance = 30;
 
@@ -499,129 +451,38 @@ series2.columns.template.tooltipText = "GDP grow in {category} (2017): [bold]{va
   }
 
   //CHARTDIV4****
-  EFICIENCIA(turnos, data) {
-    let chart = am4core.create("chartdiv4", am4charts.XYChart);
+  EFICIENCIA( data) {
+    let chart = am4core.create("EFICIENCIA", am4charts.XYChart3D);
 
-// Create axes
-let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+chart.data  = data;
+    // Create axes
+let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "fechaprod";
+
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
 let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-for (var i = 0; i < turnos.length ; i++) {
-  createSeries(turnos[i].turno, data, turnos[i].turnodb)
-}
+valueAxis.title.text = "Eficiencia";
+valueAxis.renderer.labels.template.adapter.add("text", function(text) {
+  return text + "%";
+});
 
 // Create series
-function createSeries(name, data, turnodb) {
-  let series = chart.series.push(new am4charts.LineSeries());
-  series.dataFields.valueY = turnodb ;
-  series.dataFields.dateX = "fechaprod";
-  series.name = name;
+let series = chart.series.push(new am4charts.ColumnSeries3D());
+series.dataFields.valueY = "eficienciafinal";
+series.dataFields.categoryX = "fechaprod";
+series.name = "producto";
+series.clustered = false;
+series.columns.template.tooltipText = "Eficiencia {category}: [bold]{valueY}[/]";
+series.columns.template.fillOpacity = 0.9;
 
-  let segment = series.segments.template;
-  segment.interactionsEnabled = true;
-
-  let hoverState = segment.states.create("hover");
-  hoverState.properties.strokeWidth = 3;
-
-  let dimmed = segment.states.create("dimmed");
-  dimmed.properties.stroke = am4core.color("#dadada");
-
-  segment.events.on("over", function(event) {
-    processOver(event.target.parent.parent.parent);
-  });
-
-  segment.events.on("out", function(event) {
-    processOut(event.target.parent.parent.parent);
-  });
-
-  /*let data = [];
-  let value = Math.round(Math.random() * 100) + 100;
-  for (var i = 1; i < 100; i++) {
-    value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 30 + i / 5);
-    let dataItem = { date: new Date(2018, 0, i) };
-    dataItem["value" + s] = value;
-    data.push(dataItem);
-  }
-*/
-// Make bullets grow on hover
-let bullet = series.bullets.push(new am4charts.CircleBullet());
-bullet.circle.strokeWidth = 2;
-bullet.circle.radius = 4;
-bullet.circle.fill = am4core.color("#fff");
-
-let bullethover = bullet.states.create("hover");
-bullethover.properties.scale = 1.3;
-
-// Make a panning cursor
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-
-// Create vertical scrollbar and place it before the value axis
-//chart.scrollbarY = new am4core.Scrollbar();
-//chart.scrollbarY.parent = chart.leftAxesContainer;
-//chart.scrollbarY.toBack();
-
-// Create a horizontal scrollbar with previe and place it underneath the date axis
-//chart.scrollbarX = new am4charts.XYChartScrollbar();
-/*chart.scrollbarX.series.push(series);*/
-//chart.scrollbarX.parent = chart.bottomAxesContainer;
-
-  series.data = data;
-  return series;
-}
-
-chart.legend = new am4charts.Legend();
-chart.legend.position = "right";
-chart.legend.scrollable = true;
-
-
-// setTimeout(function() {
-//   chart.legend.markers.getIndex(0).opacity = 0.3;
-// }, 3000)
-chart.legend.markers.template.states.create("dimmed").properties.opacity = 0.3;
-chart.legend.labels.template.states.create("dimmed").properties.opacity = 0.3;
-
-chart.legend.itemContainers.template.events.on("over", function(event) {
-  processOver(event.target.dataItem.dataContext);
-})
-
-chart.legend.itemContainers.template.events.on("out", function(event) {
-  processOut(event.target.dataItem.dataContext);
-})
-
-function processOver(hoveredSeries) {
-  hoveredSeries.toFront();
-
-  hoveredSeries.segments.each(function(segment) {
-    segment.setState("hover");
-  })
-  
-  hoveredSeries.legendDataItem.marker.setState("default");
-  hoveredSeries.legendDataItem.label.setState("default");
-
-  chart.series.each(function(series) {
-    if (series != hoveredSeries) {
-      hoveredSeries.segments.each(function(segment) {
-        segment.setState("dimmed");
-      })
-      series.bulletsContainer.setState("dimmed");
-      series.legendDataItem.marker.setState("dimmed");
-      series.legendDataItem.label.setState("dimmed");
-    }
-  });
-}
-
-function processOut(hoveredSeries) {
-  chart.series.each(function(series) {
-    hoveredSeries.segments.each(function(segment) {
-      segment.setState("default");
-    })
-    series.bulletsContainer.setState("default");
-    series.legendDataItem.marker.setState("default");
-    series.legendDataItem.label.setState("default");
-  });
-}
-
+/*let series2 = chart.series.push(new am4charts.ColumnSeries3D());
+series2.dataFields.valueY = "year2018";
+series2.dataFields.categoryX = "country";
+series2.name = "Year 2018";
+series2.clustered = false;
+series2.columns.template.tooltipText = "GDP grow in {category} (2017): [bold]{valueY}[/]";*/
   }
 
 

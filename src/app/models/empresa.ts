@@ -24,4 +24,5 @@ export class Empresa {
   ciudad: string;
   pais: string;
   estado: string;
+  cpemp: number;
 }
