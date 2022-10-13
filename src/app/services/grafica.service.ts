@@ -70,5 +70,14 @@ export class GraficaService {
     params = params.append('fechaprep2', form.fechaprep2);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/PGraficaEficiencia', { headers, params: params });
+  }  
+  
+  PGraficaTiempomuertoPorDiayTurno(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    params = params.append('turno', form.turno);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaTiempomuertoPorDiayTurno', { headers, params: params });
   }
 }

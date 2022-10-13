@@ -34,7 +34,6 @@ import { ProgramaDeProduccionComponent } from '@app/pages/filtro/programa-de-pro
 import { ModuloRMTComponent } from '@app/pages/filtro/modulo-rmt/modulo-rmt.component';
 import { ProduccionEjecucionComponent } from '@app/pages/filtro/produccion-ejecucion/produccion-ejecucion.component';
 import { HistoricoProduccionComponent } from '@app/pages/filtro/historico-produccion/historico-produccion.component';
-import { GraficaLinealComponent } from '@app/components/grafica-lineal/grafica-lineal.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -44,6 +43,10 @@ import { GraficoMatsComponent } from '@app/pages/forms/grafico-mats/grafico-mats
 import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.component';
 import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
 import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
+import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomuerto/grafico-tiempomuerto.component';
+import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
+import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
+import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -79,7 +82,6 @@ const routes: Routes = [
   { path: 'board/:id', component: BoardComponent, canActivate: [AuthGuard]  },
   { path: 'produccion-ejecucion', component: ProduccionEjecucionComponent, canActivate: [AuthGuard]  },
   { path: 'historico-produccion', component: HistoricoProduccionComponent, canActivate: [AuthGuard]  },
-  { path: 'graficas', component:  GraficaLinealComponent , canActivate: [AuthGuard]  },
   { path: 'graficas/:idMaquina', component: GraficaEventoComponent, canActivate: [AuthGuard] },
   { path: 'estadistica', component: EstadisticasComponent, canActivate: [AuthGuard] },
   { path: 'estadistica/:/mntto', component: GraficoMnttoComponent, canActivate: [AuthGuard]},
@@ -87,6 +89,10 @@ const routes: Routes = [
   { path: 'estadistica/:/ing', component: GraficoIngComponent, canActivate: [AuthGuard]},
   { path: 'estadistica/:/prod', component: GraficoProdComponent, canActivate: [AuthGuard]},
   { path: 'estadistica/:/calidad', component: GraficoCalidadComponent, canActivate: [AuthGuard]}, 
+  { path: 'estadistica/:/tiempomuerto', component:  GraficoTiempomuertoComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/eficiencia', component:  GraficoEficienciaComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/sku', component:  GraficoSkuComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/oee', component:  GraficoOEEComponent , canActivate: [AuthGuard] },
 ];
 
 @NgModule({

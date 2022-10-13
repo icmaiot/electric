@@ -18,6 +18,7 @@ export class EstadisticasComponent implements OnInit {
   URLIngeneria = "../../../../assets/img/sin_fondo/INGENIERIA.png";
   URLProduccion = "../../../../assets/img/sin_fondo/PRODUCCION.png";
   URLMantenimiento = "../../../../assets/img/sin_fondo/MANTENIMIENTO.png";
+  
   private url2: string = environment.environment.urlEndPoint;
   constructor(private router: Router, private auth: AuthService) { }
 
@@ -52,6 +53,30 @@ export class EstadisticasComponent implements OnInit {
         text: 'Estadisticas de Calidad',
         function: '/calidad',
         class: 'pink-bg',
+      },
+      {
+        icon: this.URLCalidad,
+        text: 'Estadisticas de Tiempo Muerto',
+        function: '/tiempomuerto',
+        class: 'green-two-bg',
+      },
+      {
+        icon: this.URLCalidad,
+        text: 'Estadisticas de SKU',
+        function: '/sku',
+        class: 'gray-bg',
+      },
+      {
+        icon: this.URLCalidad,
+        text: 'Estadisticas de OEE',
+        function: '/oee',
+        class: 'red-bg',
+      },
+      {
+        icon: this.URLCalidad,
+        text: 'Estadisticas de Eficiencia',
+        function: '/eficiencia',
+        class: 'be-bg',
       },
     ];
   }

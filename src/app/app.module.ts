@@ -31,7 +31,6 @@ import { StatusPipePipe } from './pipes/status-pipe.pipe';
 
 //**********************************************************************COMPONENTES********************************************************************************** */
 import { HeaderTableComponent } from './components/header-table/header-table.component';
-import { GraficaLinealComponent  } from './components/grafica-lineal/grafica-lineal.component';
 import { TablaSensorComponent } from './components/tabla-sensor/tabla-sensor.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PieComponent } from './components/charts/pie/pie.component';
@@ -52,6 +51,10 @@ import { GraficoMatsComponent } from '@app/pages/forms/grafico-mats/grafico-mats
 import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.component';
 import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
 import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
+import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomuerto/grafico-tiempomuerto.component';
+import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
+import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
+import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
 
 //**********************************************************************PAGINAS********************************************************************************** */
 import { LoginComponent } from './pages/login/login.component';
@@ -174,7 +177,6 @@ registerLocaleData(localeEsMX, 'es-Mx');
     TablaSensorComponent,
     GaugeComponent,
     NuevoMaquinaComponent,
-    GraficaLinealComponent,
     HeaderComponent,
     NuevoSensorComponent,
     EventoComponent,
@@ -271,6 +273,10 @@ registerLocaleData(localeEsMX, 'es-Mx');
     GraficoIngComponent,
     GraficoProdComponent,
     GraficoCalidadComponent,
+    GraficoTiempomuertoComponent,
+    GraficoSkuComponent,
+    GraficoOEEComponent,
+    GraficoEficienciaComponent,
   ],
   providers: [ExcelService, DatePipe, MaquinaService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
 

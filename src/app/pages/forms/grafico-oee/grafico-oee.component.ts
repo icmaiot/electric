@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, Input, Inject, OnDestroy } from '@angular/core';
+import { Component,  ViewEncapsulation, NgZone, OnInit, Input, Inject, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
 import { MaquinaService } from '@app/services/maquina.service';
@@ -16,12 +16,13 @@ am4core.useTheme(am4themes_animated);
 am4core.options.autoDispose = true;
 
 @Component({
-  selector: 'app-grafica-lineal',
-  templateUrl: './grafica-lineal.component.html',
-  styleUrls: ['./grafica-lineal.component.scss'],
+  selector: 'app-grafico-oee',
+  templateUrl: './grafico-oee.component.html',
+  styleUrls: ['./grafico-oee.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
-export class GraficaLinealComponent implements OnInit {
+export class GraficoOEEComponent implements OnInit {
   @Input() chartdiv: string;
   @Input() chartData;
   CG;
