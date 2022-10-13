@@ -18,6 +18,8 @@ export class EstadisticasComponent implements OnInit {
   URLIngeneria = "../../../../assets/img/sin_fondo/INGENIERIA.png";
   URLProduccion = "../../../../assets/img/sin_fondo/PRODUCCION.png";
   URLMantenimiento = "../../../../assets/img/sin_fondo/MANTENIMIENTO.png";
+  URLTM = "../../../../assets/img/sin_fondo/TIEMPOMUERTO.png";
+  URLOEE = "../../../../assets/img/sin_fondo/OEE.png";
   
   private url2: string = environment.environment.urlEndPoint;
   constructor(private router: Router, private auth: AuthService) { }
@@ -55,29 +57,29 @@ export class EstadisticasComponent implements OnInit {
         class: 'pink-bg',
       },
       {
-        icon: this.URLCalidad,
+        icon: this.URLTM,
         text: 'Estadisticas de Tiempo Muerto',
         function: '/tiempomuerto',
         class: 'green-two-bg',
+      },  {
+        icon: this.URLOEE,
+        text: 'Estadisticas de OEE',
+        function: '/oee',
+        class: 'red-bg',
       },
-      {
+    /*  {
         icon: this.URLCalidad,
         text: 'Estadisticas de SKU',
         function: '/sku',
         class: 'gray-bg',
       },
-      {
-        icon: this.URLCalidad,
-        text: 'Estadisticas de OEE',
-        function: '/oee',
-        class: 'red-bg',
-      },
+    
       {
         icon: this.URLCalidad,
         text: 'Estadisticas de Eficiencia',
         function: '/eficiencia',
         class: 'be-bg',
-      },
+      },*/
     ];
   }
 }

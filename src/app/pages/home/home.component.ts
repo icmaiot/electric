@@ -105,12 +105,7 @@ export class HomeComponent implements OnInit {
         text: 'Estadísticas',
         function: '/estadistica',
         class: 'gray-bg'
-      },{
-        icon: 'equalizer',
-        text: 'Graficas',
-        function: '/graficas',
-        class: 'green-bg'
-      },
+      }
     ];
 
     this.getCia();
