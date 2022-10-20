@@ -78,7 +78,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
       turno: ['-1'],
     });
 
-    this.sumarDias(this.date, -120);
+    this.sumarDias(this.date, -90);
     this.minDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
     this.maxDate = this.datePipe.transform(this.date2, 'yyyy-MM-dd');
     this.formF.controls['fechaprep'].setValue(this.minDate);
@@ -86,7 +86,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
     this.getProductos();
     this.getGraficaTiempomuertoPorDiayTurno();
-    this.getTurnos();
+    this.getMaquina();
   }
 
   ngOnDestroy() {
@@ -106,18 +106,18 @@ export class GraficoTiempomuertoComponent implements OnInit {
     this.formF.controls['idskunow'].setValue('-1');
     this.formF.controls['linea'].setValue('-1');
     this.formF.controls['turno'].setValue('-1');
-    this.getTurnos();
+    this.getMaquina();
     this.getGraficaTiempomuertoPorDiayTurno();
   }
 
   //Graficas
 
-  async getMaquina(turnos) {
+  async getMaquina() {
     try {
       let resp = await this.maquinaService.PGraficaLinea(this.formF.value,this.token).toPromise();
       if (resp.code == 200) {
         this.dataGauge = resp.response;
-        this.TIEMPOMUERTO(turnos, this.dataGauge);
+        this.getTurnos(this.dataGauge);
       }
     } catch (e) {
     }
@@ -137,25 +137,6 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
 // Filtros
 
-
-
- /* async getProductosDeGraficaSku(data) {
-    try {
-      let resp = await this.graficaService.PGraficaSkuProducido(this.formF.value, this.token).toPromise();
-      if (resp.code == 200) {
-        this.dataGraficaSkuProducido = resp.response;
-        this.filterArray = this.dataGraficaSkuProducido.reduce((accumalator, current) => {
-          if (!accumalator.some(item => item.idskunow === current.idskunow )) {
-            accumalator.push(current);
-          }
-          return accumalator;
-        }, []);
-        this.SKU(data, this.filterArray)
-      }
-    } catch (e) {
-    }
-  }  */
-  
   async getProductos() {
     try {
       let resp = await this.productoService.get("", this.auth.token).toPromise();
@@ -167,12 +148,12 @@ export class GraficoTiempomuertoComponent implements OnInit {
   }
 
 
-  async getTurnos() {
+  async getTurnos(data) {
     try {
       let resp = await this.turnosService.get("", this.token).toPromise();
       if (resp.code == 200) {
         this.turnos = resp.response;
-        this.getMaquina(this.turnos);
+        this.TIEMPOMUERTO(this.turnos, data);
         console.log(this.turnos)
       }
     } catch (e) {
@@ -190,6 +171,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
         }
         console.log(this.lineas)
         this.TMTURNOLINEAS(this.lineas, data);
+        this.TMLINEASTURNOS(this.lineas, data);
       }
     } catch (e) {
     }
@@ -298,105 +280,79 @@ export class GraficoTiempomuertoComponent implements OnInit {
     }
   }
 
-  TMLINEASTURNOS(turnos, data) {
-    let chart = am4core.create("tm-lineas-turnos", am4charts.XYChart);
+  TMLINEASTURNOS(lineas, data) {
 
-    // Create axes
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    // Create chart instance
+let chart = am4core.create("tm-lineas-turnos", am4charts.XYChart);
 
-    for (var i = 0; i < turnos.length; i++) {
-      createSeries(turnos[i].turno, data, turnos[i].turnodb)
-    }
+// Add data
+chart.data = data;
 
-    // Create series
-    function createSeries(name, data, turnodb) {
-      let series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = turnodb;
-      series.dataFields.dateX = "fechaprod";
-      series.name = name;
+/*[ {
+  "year": "2003",
+  "europe": 2.5,
+  "namerica": 2.5,
+  "asia": 2.1,
+  "lamerica": 1.2,
+  "meast": 0.2,
+  "africa": 0.1
+}, {
+  "year": "2004",
+  "europe": 2.6,
+  "namerica": 2.7,
+  "asia": 2.2,
+  "lamerica": 1.3,
+  "meast": 0.3,
+  "africa": 0.1
+}, {
+  "year": "2005",
+  "europe": 2.8,
+  "namerica": 2.9,
+  "asia": 2.4,
+  "lamerica": 1.4,
+  "meast": 0.3,
+  "africa": 0.1
+} ];*/
 
-      let segment = series.segments.template;
-      segment.interactionsEnabled = true;
+// Create axes
+let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "fechaprod";
+categoryAxis.title.text = "Líneas de Producción";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 20;
+categoryAxis.renderer.cellStartLocation = 0.1;
+categoryAxis.renderer.cellEndLocation = 0.9;
 
-      let hoverState = segment.states.create("hover");
-      hoverState.properties.strokeWidth = 3;
+let  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.min = 0;
+valueAxis.title.text = "Tiempo Muerto (TM)";
 
-      let dimmed = segment.states.create("dimmed");
-      dimmed.properties.stroke = am4core.color("#dadada");
+// Create series
+function createSeries(value, data, name, stacked) {
+  console.log(value)
+  let series = chart.series.push(new am4charts.ColumnSeries());
+  series.dataFields.valueY = value;
+  series.dataFields.categoryX = "fechaprod";
+  series.name = name;
+  series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
+  series.stacked = stacked;
+  series.columns.template.width = am4core.percent(95);
+}
 
-      segment.events.on("over", function (event) {
-        processOver(event.target.parent.parent.parent);
-      });
+for (var i = 0; i < lineas.length; i++) {
+  
+  createSeries(lineas[i].maquina.replaceAll(' ','_'), data, lineas[i].maquina, true)
+}
 
-      segment.events.on("out", function (event) {
-        processOut(event.target.parent.parent.parent);
-      });
-    
-      // Make bullets grow on hover
-      let bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.strokeWidth = 2;
-      bullet.circle.radius = 4;
-      bullet.circle.fill = am4core.color("#fff");
+/*createSeries("europe", "Europe", false);
+createSeries("namerica", "North America", true);
+createSeries("asia", "Asia", false);
+createSeries("lamerica", "Latin America", true);
+createSeries("meast", "Middle East", true);
+createSeries("africa", "Africa", true);*/
 
-      let bullethover = bullet.states.create("hover");
-      bullethover.properties.scale = 1.3;
-
-      // Make a panning cursor
-      chart.cursor = new am4charts.XYCursor();
-      chart.cursor.xAxis = dateAxis;
-
-      series.data = data;
-      return series;
-    }
-
-    chart.legend = new am4charts.Legend();
-    chart.legend.position = "right";
-    chart.legend.scrollable = true;
-
-    chart.legend.markers.template.states.create("dimmed").properties.opacity = 0.3;
-    chart.legend.labels.template.states.create("dimmed").properties.opacity = 0.3;
-
-    chart.legend.itemContainers.template.events.on("over", function (event) {
-      processOver(event.target.dataItem.dataContext);
-    })
-
-    chart.legend.itemContainers.template.events.on("out", function (event) {
-      processOut(event.target.dataItem.dataContext);
-    })
-
-    function processOver(hoveredSeries) {
-      hoveredSeries.toFront();
-
-      hoveredSeries.segments.each(function (segment) {
-        segment.setState("hover");
-      })
-
-      hoveredSeries.legendDataItem.marker.setState("default");
-      hoveredSeries.legendDataItem.label.setState("default");
-
-      chart.series.each(function (series) {
-        if (series != hoveredSeries) {
-          hoveredSeries.segments.each(function (segment) {
-            segment.setState("dimmed");
-          })
-          series.bulletsContainer.setState("dimmed");
-          series.legendDataItem.marker.setState("dimmed");
-          series.legendDataItem.label.setState("dimmed");
-        }
-      });
-    }
-
-    function processOut(hoveredSeries) {
-      chart.series.each(function (series) {
-        hoveredSeries.segments.each(function (segment) {
-          segment.setState("default");
-        })
-        series.bulletsContainer.setState("default");
-        series.legendDataItem.marker.setState("default");
-        series.legendDataItem.label.setState("default");
-      });
-    }
+// Add legend
+chart.legend = new am4charts.Legend();
   }
 
   TMTURNOLINEAS(lineas, data){

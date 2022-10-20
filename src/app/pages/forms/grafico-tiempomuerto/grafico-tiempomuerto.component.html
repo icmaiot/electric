@@ -5,11 +5,11 @@
         <div class="div-flex mx-5">
           <div class="c row">
             <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getTurnos()" (change)="getGraficaTiempomuertoPorDiayTurno()"  />
+              (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()"  />
           </div>
           <div class="c row">
             <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getTurnos()" (change)="getGraficaTiempomuertoPorDiayTurno()" [(max)]="maxDate" />
+              (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()" [(max)]="maxDate" />
           </div>
           <!-- <div class="col-md-1">
             <select class="form-control " id="idlineaprod" nombre="idlineaprod" formControlName="idlineaprod"
@@ -31,7 +31,7 @@
                     Tiempo muerto total por turno
                     <div class="col-md-2 select-fil">
                       <select class="form-control " id="linea" nombre="linea" formControlName="linea"
-                      (change)="getTurnos()">
+                      (change)="getMaquina()">
                         <option value="-1" selected>Lineas</option>
                         <option *ngFor="let linea of lineas" [value]="linea.idmaquina">{{linea.maquina}}</option>
                       </select>
@@ -39,6 +39,28 @@
                   </div>
                   <div class="widget-subheading">
                     <div id="tm-turno" class="chart"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="widget-chart-content">
+                  <div class="widget-numbers">
+                    Tiempo muerto total por dia
+                    <div class="col-md-2 select-fil">
+                    <select class="form-control " id="turno" nombre="turno" formControlName="turno"
+                      (change)="getGraficaTiempomuertoPorDiayTurno()">
+                        <option value="-1" selected>Turnos</option>
+                        <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
+                      </select>
+                    </div> 
+                  </div>
+                  <div class="widget-subheading">
+                    <div id="tm-lineas-turnos" class="chart"></div>
                   </div>
                 </div>
               </div>

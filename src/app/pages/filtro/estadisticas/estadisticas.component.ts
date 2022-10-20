@@ -20,6 +20,7 @@ export class EstadisticasComponent implements OnInit {
   URLMantenimiento = "../../../../assets/img/sin_fondo/MANTENIMIENTO.png";
   URLTM = "../../../../assets/img/sin_fondo/TIEMPOMUERTO.png";
   URLOEE = "../../../../assets/img/sin_fondo/OEE.png";
+  URLEficiencia = "../../../../assets/img/sin_fondo/EFICIENCIA.png";
   
   private url2: string = environment.environment.urlEndPoint;
   constructor(private router: Router, private auth: AuthService) { }
@@ -66,6 +67,12 @@ export class EstadisticasComponent implements OnInit {
         text: 'Estadisticas de OEE',
         function: '/oee',
         class: 'red-bg',
+      },
+      {
+        icon: this.URLEficiencia,
+        text: 'Estadisticas de Eficiencia',
+        function: '/eficiencia',
+        class: 'be-bg',
       },
     /*  {
         icon: this.URLCalidad,
