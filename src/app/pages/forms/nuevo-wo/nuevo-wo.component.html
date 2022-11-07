@@ -52,7 +52,7 @@
 
         <div class="form-group col-md-2">
           <label for="tipowosub">Tipo de Producción</label>
-          <select class="form-control" id="tipowosub" nombre="tipowosub" (change)="TWosub()" [(ngModel)]="tipo"
+          <select class="form-control" id="tipowosub" nombre="tipowosub" (change)="TWosub($event)" [(ngModel)]="tipo"
             formControlName="tipowosub" [ngClass]="{ 'is-invalid': submitted && f.tipowosub.errors }">
             <option *ngFor="let tp of tipoP" [value]="tp.id">
               {{tp.tipo}}

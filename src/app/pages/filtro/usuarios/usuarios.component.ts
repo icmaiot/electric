@@ -12,6 +12,7 @@ import { Departamento } from '@app/models/departamento';
 import { DepartamentoService } from '@app/services/departamento.service';
 import { IngresaNipComponent } from '@app/pages/forms/ingresa-nip/ingresa-nip/ingresa-nip.component';
 import { FuncionUsuComponent } from '../funcion-usu/funcion-usu.component';
+import { CatalogoFuncionesComponent } from '@app/pages/filtro/catalogo-funciones/catalogo-funciones.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -216,6 +217,18 @@ export class UsuariosComponent implements OnInit {
         usuario,
       }
     });
+  }
+
+  openFunciones(){
+    const dialogRef = this.dialog.open(CatalogoFuncionesComponent, {
+      width: '40rem',
+      data: {
+        title: 'Catalogo de funciones autorizadas en el sistema',
+        btnText: 'Guardar',
+        alertSuccesText: 'Funcion agregada correctamente',
+        alertErrorText: "No se puede agregar función",
+      }
+    });    
   }
 
   StatusUsu(activousu) {

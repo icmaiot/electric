@@ -1,3 +1,4 @@
+import { Empresa } from './empresa';
 
 export class Wo {
   idwo: string;
@@ -7,4 +8,9 @@ export class Wo {
   idempresa: string;
   ocliente: string;
   nomemp: string;
+  Empresa: Empresa;
+
+  constructor() {
+    this.Empresa = new Empresa();
+}
 }

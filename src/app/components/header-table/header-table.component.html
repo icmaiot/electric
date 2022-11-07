@@ -5,7 +5,7 @@
         <a class="nav-link active" [routerLink]="[li.router]" [routerLinkActive]="['activate']">{{li.name}}</a>
       </li>
       <li *ngIf="funcionButton">
-        <a class="nav-link active" (click)="openFunciones()">Catálogo de Funciones</a>
+        <a class="nav-link active" (click)="onClickFunciones()">Catálogo de Funciones</a>
       </li>
       <li>
         <a class="button-s" (click)="onClickStatuswosub()" *ngIf="statuswosubButton"> <b>Catálogo de status de fabricación</b></a>

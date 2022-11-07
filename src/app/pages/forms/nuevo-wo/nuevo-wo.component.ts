@@ -18,6 +18,7 @@ import { EmpresaService } from '../../../services/empresa.service';
 import { ProductoService } from '../../../services/producto.service';
 import { StatuswosubService } from '../../../services/statuswosub.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { CatalogoFuncionesComponent } from '@app/pages/filtro/catalogo-funciones/catalogo-funciones.component';
 
 @Component({
   selector: 'app-nuevo-wo',
@@ -223,6 +224,18 @@ export class NuevoWoComponent implements OnInit {
         Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
       }
     });
+  }
+
+  openFunciones(){
+    const dialogRef = this.dialog.open(CatalogoFuncionesComponent, {
+      width: '40rem',
+      data: {
+        title: 'Catalogo de funciones autorizadas en el sistema',
+        btnText: 'Guardar',
+        alertSuccesText: 'Funcion agregada correctamente',
+        alertErrorText: "No se puede agregar función",
+      }
+    });    
   }
 
   showSpinner() {
