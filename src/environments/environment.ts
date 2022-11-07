@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-   urlEndPoint: 'https://iofarming.tech:5000',
+   urlEndPoint: 'http://iofarming.tech:5000',
    //urlEndPoint: 'http://localhost:5000' ,
-   urlMQTT: 'https://iofarming.tech:3000'
+   urlMQTT: 'http://iofarming.tech:3000'
 };
 
 /*
