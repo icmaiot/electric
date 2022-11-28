@@ -64,12 +64,42 @@ export class GraficaService {
 
   PGraficaEficiencia(form, token): Observable<any> {
     let params = new HttpParams();
+    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
-    params = params.append('linea', form.linea);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/PGraficaEficiencia', { headers, params: params });
+  }  
+
+  PGraficaDisponibilidad(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idturno', form.idturno);
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaDisponibilidad', { headers, params: params });
+  }  
+
+  PGraficaRendimiento(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idturno', form.idturno);
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaRendimiento', { headers, params: params });
+  }  
+
+  PGraficaPcalidad(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idturno', form.idturno);
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaPcalidad', { headers, params: params });
   }  
   
   PGraficaTiempomuertoPorDiayTurno(form, token): Observable<any> {

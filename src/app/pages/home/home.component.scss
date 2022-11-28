@@ -102,11 +102,17 @@ div.card-grafica:hover {
 
 .cards-row {
   display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 1rem;
+ /* display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
-  padding: 1rem;
+  padding: 1rem;*/
 }
 
 .item-container {

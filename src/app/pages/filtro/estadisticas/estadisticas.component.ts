@@ -22,6 +22,9 @@ export class EstadisticasComponent implements OnInit {
   URLOEE = "../../../../assets/img/sin_fondo/OEE.png";
   URLEficiencia = "../../../../assets/img/sin_fondo/EFICIENCIA.png";
   URLSKU = "../../../../assets/img/sin_fondo/SKU.png";
+  URLDisponibilidad = "../../../../assets/img/sin_fondo/DISPONIBILIDAD.png";
+  URLRendimiento = "../../../../assets/img/sin_fondo/RENDIMIENTO.png";
+  URLPcalidad = "../../../../assets/img/sin_fondo/PCALIDAD.png";
   
   private url2: string = environment.environment.urlEndPoint;
   constructor(private router: Router, private auth: AuthService) { }
@@ -63,23 +66,42 @@ export class EstadisticasComponent implements OnInit {
         text: 'Estadisticas de Tiempo Muerto',
         function: '/tiempomuerto',
         class: 'green-two-bg',
-      },  {
-        icon: this.URLOEE,
-        text: 'Estadisticas de OEE',
-        function: '/oee',
-        class: 'red-bg',
-      },
-      {
-        icon: this.URLEficiencia,
-        text: 'Estadisticas de Eficiencia',
-        function: '/eficiencia',
-        class: 'be-bg',
       },
       {
         icon: this.URLSKU,
         text: 'Estadisticas de SKU',
         function: '/sku',
         class: 'gray-bg',
+      },  
+      {
+        icon: this.URLOEE,
+        text: 'Estadisticas de %OEE',
+        function: '/oee',
+        class: 'red-bg',
+      },
+      {
+        icon: this.URLEficiencia,
+        text: 'Estadisticas de %Eficiencia',
+        function: '/eficiencia',
+        class: 'be-bg',
+      },
+      {
+        icon: this.URLDisponibilidad,
+        text: 'Estadisticas de %Disponibilidad',
+        function: '/disponibilidad',
+        class: 'bluemidas',
+      },
+      {
+        icon: this.URLRendimiento,
+        text: 'Estadisticas de %Rendimiento',
+        function: '/rendimiento',
+        class: 'bluesmidas',
+      },
+      {
+        icon: this.URLPcalidad,
+        text: 'Estadisticas de %Calidad',
+        function: '/pcalidad',
+        class: 'purplemidas',
       },
     ];
   }

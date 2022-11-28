@@ -55,6 +55,9 @@ import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomue
 import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
 import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
 import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
+import { GraficoDisponibilidadComponent } from '@app/pages/forms/grafico-disponibilidad/grafico-disponibilidad.component';
+import { GraficoRendimientoComponent } from '@app/pages/forms/grafico-rendimiento/grafico-rendimiento.component';
+import { GraficoPcalidadComponent } from '@app/pages/forms/grafico-pcalidad/grafico-pcalidad.component';
 
 //**********************************************************************PAGINAS********************************************************************************** */
 import { LoginComponent } from './pages/login/login.component';
@@ -277,6 +280,9 @@ registerLocaleData(localeEsMX, 'es-Mx');
     GraficoSkuComponent,
     GraficoOEEComponent,
     GraficoEficienciaComponent,
+    GraficoDisponibilidadComponent,
+    GraficoRendimientoComponent,
+    GraficoPcalidadComponent
   ],
   providers: [ExcelService, DatePipe, MaquinaService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
 

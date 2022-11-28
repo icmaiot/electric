@@ -1,3 +1,4 @@
+
 #chartdiv {
   width: 100%;
   height: 700px;
@@ -13,6 +14,7 @@
   margin-top: 5rem;
 }
 
+@import '../../../../assets/variables.scss';
 .reg {
   text-align: center;
   font-size: 18px;
@@ -26,6 +28,16 @@
   font-weight: bolder;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.select-fil{
+  margin-left: auto;
+  margin-right: 0;
+  float: right;
+}
+
+.card {
+  box-shadow: $shadow-card;
 }
 
 .t {
@@ -60,6 +72,7 @@ label {
 .select-filter {
   border: none !important;
   max-width: 150px;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 
 .btn-group-vertical {
@@ -85,21 +98,21 @@ label {
   padding: 0 !important;
 }
 
-.widget-chart-content {
-  flex-direction: row;
-  -ms-flex-align: center;
-  align-items: center;
-  text-align: center;
-  padding: 1rem;
+.widget-chart-content{
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
 }
 
 .widget-numbers {
-  font-weight: bold;
-  font-size: 2.5rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   display: block;
   line-height: 1;
   margin: 1rem auto;
-
+  text-align: left;
 }
 
 .estado {
@@ -124,6 +137,21 @@ label {
   .form-control:focus {
     border-color: none !important;
   }
+}
+
+.label{
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fbfbfb;
+  background-color: #58a4ee;
+  background-clip: padding-box;
+  border: 1px solid #58a4ee;
+  border-radius: 0.25rem 0 0 0.25rem;
 }
 
 /*.row {

@@ -47,6 +47,9 @@ import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomue
 import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
 import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
 import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
+import { GraficoDisponibilidadComponent } from '@app/pages/forms/grafico-disponibilidad/grafico-disponibilidad.component';
+import { GraficoRendimientoComponent } from '@app/pages/forms/grafico-rendimiento/grafico-rendimiento.component';
+import { GraficoPcalidadComponent } from '@app/pages/forms/grafico-pcalidad/grafico-pcalidad.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -93,6 +96,9 @@ const routes: Routes = [
   { path: 'estadistica/:/eficiencia', component:  GraficoEficienciaComponent , canActivate: [AuthGuard] },
   { path: 'estadistica/:/sku', component:  GraficoSkuComponent , canActivate: [AuthGuard] },
   { path: 'estadistica/:/oee', component:  GraficoOEEComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/disponibilidad', component:  GraficoDisponibilidadComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/rendimiento', component:  GraficoRendimientoComponent , canActivate: [AuthGuard] },
+  { path: 'estadistica/:/pcalidad', component:  GraficoPcalidadComponent , canActivate: [AuthGuard] },
 ];
 
 @NgModule({

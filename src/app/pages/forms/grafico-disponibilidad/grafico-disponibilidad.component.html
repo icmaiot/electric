@@ -5,11 +5,11 @@
         <div class="mx-5 div-flex">
           <div class="c row">
             <a class="label">Desde: </a> <input class="form-control select-filter" type="date"
-              formControlName="fechaprep" (change)="getGraficaEficiencia()" />
+              formControlName="fechaprep" (change)="getGraficaDisponibilidad()" />
           </div>
           <div class="c row">
             <a class="label">Hasta: </a> <input class="form-control select-filter" type="date"
-              formControlName="fechaprep2" (change)="getGraficaEficiencia()" [(max)]="maxDate" />
+              formControlName="fechaprep2" (change)="getGraficaDisponibilidad()" [(max)]="maxDate" />
           </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
@@ -21,10 +21,10 @@
               <div class="card-hover-shadow-2x mb-3 card">
                 <div class="widget-chart-content">
                   <div class="widget-numbers">
-                    Eficiencia
+                    Disponibilidad
                     <div class="col-md-1 select-fil">
                       <select class="form-control " id="idturno" nombre="idturno" formControlName="idturno"
-                        (change)="getGraficaEficiencia()">
+                        (change)="getGraficaDisponibilidad()">
                         <option value="-1" hidden selected>TURNO</option>
                         <option value="-1" selected>TODOS</option>
                         <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-1 select-fil">
                       <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
-                        (change)="getGraficaEficiencia()">
+                        (change)="getGraficaDisponibilidad()">
                         <option value="-1" hidden selected>SKU</option>
                         <option value="-1" selected>TODOS</option>
                         <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
@@ -40,7 +40,7 @@
                     </div>
                   </div>
                   <div class="widget-subheading">
-                    <div id="EFICIENCIA" class="chart"></div>
+                    <div id="Disponibilidad" class="chart"></div>
                   </div>
                 </div>
               </div>

@@ -1,45 +1,46 @@
 <div class="modulo mb-3 mx-3">
   <div class="row">
     <div class="col-sm-12">
-      <div class="mx-5">
-        <form class="div-flex" [formGroup]="formF">
+      <form [formGroup]="formF">
+        <div class="mx-5 div-flex">
           <div class="c row">
-            <a>Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getMaquina()" (change)="getOEE()" (change)="getGraficaSkuProducido()"
-              (change)="getGraficaEficiencia()" />
+            <a class="label">Desde: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep" (change)="getMaquina()" (change)="getOEE()"
+              (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()" />
           </div>
           <div class="c row">
-            <a>Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getMaquina()" (change)="getOEE()" (change)="getGraficaSkuProducido()"
-              (change)="getGraficaEficiencia()" [(max)]="maxDate" />
-          </div>
-          <div class="col-md-1">
-            <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow" (change)="getOEE()"
-              (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()">
-              <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}
-              </option>
-            </select>
+            <a class="label">Hasta: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep2" (change)="getMaquina()" (change)="getOEE()"
+              (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()" [(max)]="maxDate" />
           </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
-        </form>
-      </div>
-      <div class="mx-5 mb-3">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-xl-12">
-            <div class="card-hover-shadow-2x mb-3 card">
-              <div class="widget-chart-content">
-                <div class="widget-numbers">
-                  SKU Producido por Lote
-                </div>
-                <div class="widget-subheading">
-                  <div id="SKU" class="chart"></div>
+
+        </div>
+        <div class="mx-5 mb-3">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card-hover-shadow-2x mb-3 card">
+                <div class="widget-chart-content">
+                  <div class="widget-numbers">
+                    SKU Producido por Lote
+                    <div class="col-md-1 select-fil">
+                      <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
+                        (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()">
+                        <option value="-1" hidden selected>SKU</option>
+                        <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="widget-subheading">
+                    <div id="SKU" class="chart"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

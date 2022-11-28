@@ -1,4 +1,4 @@
-import { Component,ViewEncapsulation, NgZone, OnInit, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, NgZone, OnInit, Input, Inject, OnDestroy } from '@angular/core';
 import { AuthService } from '@app/services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormControl, NgForm } from '@angular/forms';
 import { MaquinaService } from '@app/services/maquina.service';
@@ -78,7 +78,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
       turno: ['-1'],
     });
 
-    this.sumarDias(this.date, -90);
+    this.sumarDias(this.date, -7);
     this.minDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
     this.maxDate = this.datePipe.transform(this.date2, 'yyyy-MM-dd');
     this.formF.controls['fechaprep'].setValue(this.minDate);
@@ -114,7 +114,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
   async getMaquina() {
     try {
-      let resp = await this.maquinaService.PGraficaLinea(this.formF.value,this.token).toPromise();
+      let resp = await this.maquinaService.PGraficaLinea(this.formF.value, this.token).toPromise();
       if (resp.code == 200) {
         this.dataGauge = resp.response;
         this.getTurnos(this.dataGauge);
@@ -122,20 +122,19 @@ export class GraficoTiempomuertoComponent implements OnInit {
     } catch (e) {
     }
   }
-  
+
   async getGraficaTiempomuertoPorDiayTurno() {
     try {
       let resp = await this.graficaService.PGraficaTiempomuertoPorDiayTurno(this.formF.value, this.token).toPromise();
       if (resp.code == 200) {
         this.dataGraficaTmturnolineas = resp.response;
         this.getLineas(this.dataGraficaTmturnolineas);
-        console.log(this.dataGraficaTmturnolineas)
       }
     } catch (e) {
     }
   }
 
-// Filtros
+  // Filtros
 
   async getProductos() {
     try {
@@ -154,7 +153,6 @@ export class GraficoTiempomuertoComponent implements OnInit {
       if (resp.code == 200) {
         this.turnos = resp.response;
         this.TIEMPOMUERTO(this.turnos, data);
-        console.log(this.turnos)
       }
     } catch (e) {
     }
@@ -162,14 +160,12 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
   async getLineas(data) {
     try {
-      let resp = await this.maquinaService.getLinea('',this.token).toPromise();
+      let resp = await this.maquinaService.getLinea('Línea', this.token).toPromise();
       if (resp.code == 200) {
         this.lineas = resp.response;
-
         for (var i = 0; i < this.lineas.length; i++) {
-          this.lineas[i].maquina.replaceAll(' ','_');
+          this.lineas[i].maquina.replaceAll(' ', '_');
         }
-        console.log(this.lineas)
         this.TMTURNOLINEAS(this.lineas, data);
         this.TMLINEASTURNOS(this.lineas, data);
       }
@@ -213,7 +209,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
       segment.events.on("out", function (event) {
         processOut(event.target.parent.parent.parent);
       });
-    
+
       // Make bullets grow on hover
       let bullet = series.bullets.push(new am4charts.CircleBullet());
       bullet.circle.strokeWidth = 2;
@@ -283,190 +279,130 @@ export class GraficoTiempomuertoComponent implements OnInit {
   TMLINEASTURNOS(lineas, data) {
 
     // Create chart instance
-let chart = am4core.create("tm-lineas-turnos", am4charts.XYChart);
+    let chart = am4core.create("tm-lineas-turnos", am4charts.XYChart);
 
-// Add data
-chart.data = data;
+    // Add data
+    chart.data = data;
 
-/*[ {
-  "year": "2003",
-  "europe": 2.5,
-  "namerica": 2.5,
-  "asia": 2.1,
-  "lamerica": 1.2,
-  "meast": 0.2,
-  "africa": 0.1
-}, {
-  "year": "2004",
-  "europe": 2.6,
-  "namerica": 2.7,
-  "asia": 2.2,
-  "lamerica": 1.3,
-  "meast": 0.3,
-  "africa": 0.1
-}, {
-  "year": "2005",
-  "europe": 2.8,
-  "namerica": 2.9,
-  "asia": 2.4,
-  "lamerica": 1.4,
-  "meast": 0.3,
-  "africa": 0.1
-} ];*/
+    // Create axes
+    let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "fechaprod";
+    categoryAxis.title.text = "Líneas de Producción";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.minGridDistance = 20;
+    categoryAxis.renderer.cellStartLocation = 0.1;
+    categoryAxis.renderer.cellEndLocation = 0.9;
 
-// Create axes
-let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-categoryAxis.dataFields.category = "fechaprod";
-categoryAxis.title.text = "Líneas de Producción";
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.renderer.minGridDistance = 20;
-categoryAxis.renderer.cellStartLocation = 0.1;
-categoryAxis.renderer.cellEndLocation = 0.9;
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.min = 0;
+    valueAxis.title.text = "Tiempo Muerto (TM)";
 
-let  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.min = 0;
-valueAxis.title.text = "Tiempo Muerto (TM)";
+    // Create series
+    function createSeries(value, data, name, stacked) {
+      let series = chart.series.push(new am4charts.ColumnSeries());
+      series.dataFields.valueY = value;
+      series.dataFields.categoryX = "fechaprod";
+      series.name = name;
+      series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
+      series.stacked = stacked;
+      series.columns.template.width = am4core.percent(95);
 
-// Create series
-function createSeries(value, data, name, stacked) {
-  console.log(value)
-  let series = chart.series.push(new am4charts.ColumnSeries());
-  series.dataFields.valueY = value;
-  series.dataFields.categoryX = "fechaprod";
-  series.name = name;
-  series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
-  series.stacked = stacked;
-  series.columns.template.width = am4core.percent(95);
-}
+      var bullet = series.bullets.push(new am4charts.LabelBullet())
+      bullet.interactionsEnabled = false
+      bullet.locationY = 0.5;
+      bullet.label.text = '{valueY}'
+      bullet.label.fill = am4core.color('#ffffff')
+      bullet.verticalCenter = "middle";
+    }
 
-for (var i = 0; i < lineas.length; i++) {
-  
-  createSeries(lineas[i].maquina.replaceAll(' ','_'), data, lineas[i].maquina, true)
-}
+    for (var i = 0; i < lineas.length; i++) {
 
-/*createSeries("europe", "Europe", false);
-createSeries("namerica", "North America", true);
-createSeries("asia", "Asia", false);
-createSeries("lamerica", "Latin America", true);
-createSeries("meast", "Middle East", true);
-createSeries("africa", "Africa", true);*/
+      createSeries(lineas[i].maquina.replaceAll(' ', '_'), data, lineas[i].maquina, true)
+    }
 
-// Add legend
-chart.legend = new am4charts.Legend();
+    // Add legend
+    chart.legend = new am4charts.Legend();
   }
 
-  TMTURNOLINEAS(lineas, data){
+  TMTURNOLINEAS(lineas, data) {
     let chart = am4core.create('tm-turno-lineas', am4charts.XYChart)
-chart.colors.step = 2;
+    chart.colors.step = 2;
 
-chart.legend = new am4charts.Legend()
-chart.legend.position = 'top'
-chart.legend.paddingBottom = 20
-chart.legend.labels.template.maxWidth = 95
+    chart.legend = new am4charts.Legend()
+    chart.legend.position = 'top'
+    chart.legend.paddingBottom = 20
+    chart.legend.labels.template.maxWidth = 95
 
-let xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-xAxis.dataFields.category = 'fechaprod'
-xAxis.renderer.cellStartLocation = 0.1
-xAxis.renderer.cellEndLocation = 0.9
-xAxis.renderer.grid.template.location = 0;
+    let xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
+    xAxis.dataFields.category = 'fechaprod'
+    xAxis.renderer.cellStartLocation = 0.1
+    xAxis.renderer.cellEndLocation = 0.9
+    xAxis.renderer.grid.template.location = 0;
 
-let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-yAxis.min = 0;
+    let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    yAxis.min = 0;
 
-function createSeries(value, data, name) {
-    let series = chart.series.push(new am4charts.ColumnSeries())
-    series.dataFields.valueY = value
-    series.dataFields.categoryX = 'fechaprod'
-    series.name = name
-    series.columns.template.tooltipText = "{name} = {valueY}";
-    series.events.on("hidden", arrangeColumns);
-    series.events.on("shown", arrangeColumns);
-    
-    let bullet = series.bullets.push(new am4charts.LabelBullet())
-    bullet.interactionsEnabled = false
-    bullet.dy = 30;
-    bullet.label.text = '{valueY}'
-    bullet.label.fill = am4core.color('#ffffff')
+    function createSeries(value, data, name) {
+      let series = chart.series.push(new am4charts.ColumnSeries())
+      series.dataFields.valueY = value
+      series.dataFields.categoryX = 'fechaprod'
+      series.name = name
+      series.columns.template.tooltipText = "{name} = {valueY}";
+      series.events.on("hidden", arrangeColumns);
+      series.events.on("shown", arrangeColumns);
 
-    return series;
-}
+      let bullet = series.bullets.push(new am4charts.LabelBullet())
+      bullet.interactionsEnabled = false
+      bullet.dy = 30;
+      bullet.label.text = '{valueY}'
+      bullet.label.fill = am4core.color('#ffffff')
 
-chart.data = data;
-
-/*[
-    {
-        category: 'Place #1',
-        first: 40,
-        second: 55,
-        third: 60
-    },
-    {
-        category: 'Place #2',
-        first: 30,
-        second: 78,
-        third: 69
-    },
-    {
-        category: 'Place #3',
-        first: 27,
-        second: 40,
-        third: 45
-    },
-    {
-        category: 'Place #4',
-        first: 50,
-        second: 33,
-        third: 22
+      return series;
     }
-]*/
 
-for (var i = 0; i < lineas.length; i++) {
-  
-  createSeries(lineas[i].maquina.replaceAll(' ','_'), data, lineas[i].maquina)
-}
-/*
-createSeries('first', 'The First');
-createSeries('second', 'The Second');
-createSeries('third', 'The Third');*/
+    chart.data = data;
 
-function arrangeColumns() {
+    for (var i = 0; i < lineas.length; i++) {
 
-    let series = chart.series.getIndex(0);
+      createSeries(lineas[i].maquina.replaceAll(' ', '_'), data, lineas[i].maquina)
+    }
 
-    let w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
-    if (series.dataItems.length > 1) {
+    function arrangeColumns() {
+
+      let series = chart.series.getIndex(0);
+
+      let w = 1 - xAxis.renderer.cellStartLocation - (1 - xAxis.renderer.cellEndLocation);
+      if (series.dataItems.length > 1) {
         let x0 = xAxis.getX(series.dataItems.getIndex(0), "categoryX");
         let x1 = xAxis.getX(series.dataItems.getIndex(1), "categoryX");
         let delta = ((x1 - x0) / chart.series.length) * w;
         if (am4core.isNumber(delta)) {
-            let middle = chart.series.length / 2;
+          let middle = chart.series.length / 2;
 
-            let newIndex = 0;
-            chart.series.each(function(series) {
-                if (!series.isHidden && !series.isHiding) {
-                    series.dummyData = newIndex;
-                    newIndex++;
-                }
-                else {
-                    series.dummyData = chart.series.indexOf(series);
-                }
-            })
-            let visibleCount = newIndex;
-            let newMiddle = visibleCount / 2;
+          let newIndex = 0;
+          chart.series.each(function (series) {
+            if (!series.isHidden && !series.isHiding) {
+              series.dummyData = newIndex;
+              newIndex++;
+            }
+            else {
+              series.dummyData = chart.series.indexOf(series);
+            }
+          })
+          let visibleCount = newIndex;
+          let newMiddle = visibleCount / 2;
 
-            chart.series.each(function(series) {
-                let trueIndex = chart.series.indexOf(series);
-                let newIndex = series.dummyData;
+          chart.series.each(function (series) {
+            let trueIndex = chart.series.indexOf(series);
+            let newIndex = series.dummyData;
 
-                let dx = (newIndex - trueIndex + middle - newMiddle) * delta
+            let dx = (newIndex - trueIndex + middle - newMiddle) * delta
 
-                series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-                series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
-            })
+            series.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+            series.bulletsContainer.animate({ property: "dx", to: dx }, series.interpolationDuration, series.interpolationEasing);
+          })
         }
+      }
     }
-}
   }
-
-
 }

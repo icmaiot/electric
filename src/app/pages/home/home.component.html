@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="section-cards">
-      <div class="cards-row">
-        <div class="item-container {{card.class}}" routerLink="{{card.function}}" *ngFor="let card of homeCards">
+      <div class="cards-row ">
+        <div class="item-container col-2 {{card.class}}" routerLink="{{card.function}}" *ngFor="let card of homeCards">
           <i class="material-icons"> {{ card.icon }} </i>
           <div> {{ card.text }}</div>
         </div>
