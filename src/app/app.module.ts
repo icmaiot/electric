@@ -292,9 +292,9 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoTipoEquipoComponent, NuevoModuloComponent, NuevoPerfilconfigComponent, NuevoProductoComponent, NuevoMateriapComponent, NuevoSubensambleComponent,
     NuevoUmComponent, NuevoContempComponent, NuevoEmpresaComponent, NuevoRelcompComponent, NuevoCondpagoComponent, NuevoStatuswoComponent, AsignacionEquipoComponent,
     IngresaNipComponent, CatalogoFuncionesComponent, NuevoWoComponent, NuevoStatuswosubComponent, NuevoWosubComponent, EditarProgprodComponent, NuevoTurnosComponent,
-    NuevoDiaTurnoComponent,FuncionUsuComponent, EditarUsuarioComponent, CambiarContrComponent, CambiarNipComponent, NuevoEventoCausaComponent, 
-     NuevoRegOrdenComponent, NuevoRegPiezaComponent, NuevoRegScrapComponent, NuevoControlProdComponent, EditarProgprodlineaComponent, 
-    RegistroProduccionLineaComponent, EditarTurnoComponent, NuevoRegistodefectosComponent, NuevoRegistoscrapComponent, RegistrocopyComponent, AsignarDefectosComponent, 
+    NuevoDiaTurnoComponent, FuncionUsuComponent, EditarUsuarioComponent, CambiarContrComponent, CambiarNipComponent, NuevoEventoCausaComponent,
+    NuevoRegOrdenComponent, NuevoRegPiezaComponent, NuevoRegScrapComponent, NuevoControlProdComponent, EditarProgprodlineaComponent,
+    RegistroProduccionLineaComponent, EditarTurnoComponent, NuevoRegistodefectosComponent, NuevoRegistoscrapComponent, RegistrocopyComponent, AsignarDefectosComponent,
     AsignarScrapComponent, NuevoTMComponent, NuevoEventoasignacionfallaComponent, AsignacionMaquinaComponent, AsignacionCorreoComponent,
 
   ]

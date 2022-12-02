@@ -5,13 +5,13 @@
         <div class="mx-5 div-flex">
           <div class="c row">
             <a class="label">Desde: </a> <input class="form-control select-filter" type="date"
-              formControlName="fechaprep" (change)="getMaquina()" (change)="getOEE()"
-              (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()" />
+              formControlName="fechaprep" 
+              (change)="getGraficaSkuProducido()" />
           </div>
           <div class="c row">
             <a class="label">Hasta: </a> <input class="form-control select-filter" type="date"
-              formControlName="fechaprep2" (change)="getMaquina()" (change)="getOEE()"
-              (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()" [(max)]="maxDate" />
+              formControlName="fechaprep2"
+              (change)="getGraficaSkuProducido()" [(max)]="maxDate" />
           </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
@@ -26,7 +26,7 @@
                     SKU Producido por Lote
                     <div class="col-md-1 select-fil">
                       <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
-                        (change)="getOEE()" (change)="getGraficaSkuProducido()" (change)="getGraficaEficiencia()">
+                        (change)="getGraficaSkuProducido()">
                         <option value="-1" hidden selected>SKU</option>
                         <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
                       </select>

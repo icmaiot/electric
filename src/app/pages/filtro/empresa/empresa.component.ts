@@ -39,7 +39,6 @@ export class EmpresaComponent implements OnInit {
   ];
 
   listNav = [
-    { "name": "Orden de manufactura", "router": "/OrdenManufactura" },
     { "name": "Clientes y proveedores", "router": "/empresa" },
   ]
 

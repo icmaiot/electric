@@ -5,11 +5,11 @@
       <div class="mx-5 div-flex">
           <div class="c row">
             <a class="label">Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getOEE()"  />
+              (change)="getOEE()" (change)="getOEEGLOBAL()" />
           </div>
           <div class="c row">
             <a class="label">Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getOEE()" [(max)]="maxDate" />
+              (change)="getOEE()"  (change)="getOEEGLOBAL()"[(max)]="maxDate" />
           </div>
           <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
               class="material-icons">filter_list</i></a>
@@ -40,6 +40,35 @@
                 </div>
                 <div class="widget-subheading">
                   <div id="OEE" class="chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="card-hover-shadow-2x mb-3 card">
+              <div class="widget-chart-content">
+                <div class="widget-numbers">
+                  OEE GLOBAL
+                  <div class="col-md-1 select-fil">
+                    <select class="form-control " id="idturno2" nombre="idturno2" formControlName="idturno"
+                      (change)="getOEEGLOBAL()">
+                      <option value="-1" hidden selected>TURNO</option>
+                      <option value="-1" selected>TODOS</option>
+                      <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-1 select-fil">
+                    <select class="form-control " id="idskunow2" nombre="idskunow2" formControlName="idskunow"
+                      (change)="getOEEGLOBAL()">
+                      <option value="-1" hidden selected>SKU</option>
+                      <option value="-1" selected>TODOS</option>
+                      <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="widget-subheading">
+                  <div id="OEEGLOBAL" class="chart"></div>
                 </div>
               </div>
             </div>

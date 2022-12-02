@@ -100,6 +100,17 @@ export class MaquinaService {
     return this.http.get(this.url + '/PGraficaOEE', { headers, params: params });
   }
 
+  PGraficaOEEGLOBAL(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idturno', form.idturno);
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PGraficaOEEGLOBAL', { headers, params: params });
+  }
+
+
   getMaquinas(name: string, area: string, token): Observable<any> {
     let params = new HttpParams();
     params = params.append('busqueda', name);

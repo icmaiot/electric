@@ -11,6 +11,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { CardTitleComponent } from '@app/components/card-title/card-title.component';
 import { DatePipe } from '@angular/common';
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 am4core.useTheme(am4themes_animated);
 am4core.options.autoDispose = true;
@@ -29,8 +30,7 @@ export class GraficoOEEComponent implements OnInit {
   Input: string;
   dataGauge = [];
   dataOEE = [];
-  dataGraficaSkuProducido = [];
-  dataGraficaEficiencia = [];
+  dataOEE_GLOBAL = [];
   turnos = [];
   productos = [];
   filterArray = [];
@@ -84,6 +84,7 @@ export class GraficoOEEComponent implements OnInit {
     this.getTurnos()
     this.getProductos();
     this.getOEE();
+    this.getOEEGLOBAL();
   }
 
   ngOnDestroy() {
@@ -103,6 +104,7 @@ export class GraficoOEEComponent implements OnInit {
     this.formF.controls['idskunow'].setValue('-1');
     this.formF.controls['idturno'].setValue('-1');
     this.getOEE();
+    this.getOEEGLOBAL();
   }
 
   //Graficas
@@ -112,6 +114,19 @@ export class GraficoOEEComponent implements OnInit {
       if (resp.code == 200) {
         this.dataOEE = resp.response;
         this.OEE(this.dataOEE);
+        console.log(this.dataOEE)
+      }
+    } catch (e) {
+    }
+  }
+
+  async getOEEGLOBAL() {
+    try {
+      let resp = await this.maquinaService.PGraficaOEEGLOBAL(this.formF.value, this.token).toPromise();
+      if (resp.code == 200) {
+        this.dataOEE_GLOBAL = resp.response;
+        this.OEEGLOBAL(this.dataOEE_GLOBAL);
+        console.log(this.dataOEE_GLOBAL)
       }
     } catch (e) {
     }
@@ -160,7 +175,64 @@ export class GraficoOEEComponent implements OnInit {
 
     // Create series
     let series = chart.series.push(new am4charts.LineSeries());
-    series.dataFields.valueY = "oee_global";
+    series.dataFields.valueY = "oee";
+    series.dataFields.dateX = "fechaprod";
+    series.tooltipText = "{value}"
+    series.strokeWidth = 2;
+    series.minBulletDistance = 15;
+
+    // Drop-shaped tooltips
+    series.tooltip.background.cornerRadius = 20;
+    series.tooltip.background.strokeOpacity = 0;
+    series.tooltip.pointerOrientation = "vertical";
+    series.tooltip.label.minWidth = 40;
+    series.tooltip.label.minHeight = 40;
+    series.tooltip.label.textAlign = "middle";
+    series.tooltip.label.textValign = "middle";
+
+    // Create a horizontal scrollbar with previe and place it underneath the date axis
+    chart.scrollbarX = new am4charts.XYChartScrollbar();
+
+    chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+    // Make bullets grow on hover
+    let bullet = series.bullets.push(new am4charts.CircleBullet());
+    bullet.circle.strokeWidth = 2;
+    bullet.circle.radius = 4;
+    bullet.circle.fill = am4core.color("#fff");
+
+    let bullethover = bullet.states.create("hover");
+    bullethover.properties.scale = 1.3;
+
+    // Make a panning cursor
+    chart.cursor = new am4charts.XYCursor();
+    chart.cursor.behavior = "panXY";
+    chart.cursor.xAxis = dateAxis;
+    chart.cursor.snapToSeries = series;
+  }
+
+  OEEGLOBAL(data) {
+    let chart = am4core.create("OEEGLOBAL", am4charts.XYChart);
+
+    // Add data
+    chart.data = data;
+    console.log(data)
+
+    // Set input format for the dates
+    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm";
+
+    // Create axes
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "OEE GLOBAL";
+    valueAxis.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "%";
+    });
+
+    // Create series
+    let series = chart.series.push(new am4charts.LineSeries());
+    series.dataFields.valueY = "oeeglobal";
     series.dataFields.dateX = "fechaprod";
     series.tooltipText = "{value}"
     series.strokeWidth = 2;
