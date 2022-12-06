@@ -23,18 +23,9 @@
                   <div class="widget-numbers">
                     Rendimiento
                     <div class="col-md-1 select-fil">
-                      <select class="form-control " id="idturno" nombre="idturno" formControlName="idturno"
-                        (change)="getGraficaRendimiento()">
-                        <option value="-1" hidden selected>TURNO</option>
-                        <option value="-1" selected>TODOS</option>
-                        <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
-                      </select>
-                    </div>
-                    <div class="col-md-1 select-fil">
                       <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
                         (change)="getGraficaRendimiento()">
                         <option value="-1" hidden selected>SKU</option>
-                        <option value="-1" selected>TODOS</option>
                         <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
                       </select>
                     </div>

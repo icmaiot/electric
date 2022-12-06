@@ -23,7 +23,7 @@
               <div class="card-hover-shadow-2x mb-3 card">
                 <div class="widget-chart-content">
                   <div class="widget-numbers">
-                    SKU Producido por Lote
+                    SKU Producido
                     <div class="col-md-1 select-fil">
                       <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
                         (change)="getGraficaSkuProducido()">
@@ -39,6 +39,24 @@
               </div>
             </div>
           </div>
+
+         <!--  <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" >SKU</th>
+                    <th scope="col" >Cantidad de Piezas</th>
+                    <th scope="col" >Unidad de medida
+                    <th scope="col" >Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of dataGraficaSkuProducido">
+                    <td>{{p. }}</td>
+                    <td>{{p.desc_producto }}</td>
+                    <td>{{p.te_producto }} </td>
+                </tr>
+            </tbody>
+        </table> -->
         </div>
       </form>
     </div>

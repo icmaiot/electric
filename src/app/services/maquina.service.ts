@@ -92,7 +92,6 @@ export class MaquinaService {
 
   PGraficaOEE(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
@@ -102,7 +101,6 @@ export class MaquinaService {
 
   PGraficaOEEGLOBAL(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);

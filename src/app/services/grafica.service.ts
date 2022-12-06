@@ -64,7 +64,6 @@ export class GraficaService {
 
   PGraficaEficiencia(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
@@ -74,7 +73,6 @@ export class GraficaService {
 
   PGraficaDisponibilidad(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
@@ -84,7 +82,6 @@ export class GraficaService {
 
   PGraficaRendimiento(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
@@ -94,7 +91,6 @@ export class GraficaService {
 
   PGraficaPcalidad(form, token): Observable<any> {
     let params = new HttpParams();
-    params = params.append('idturno', form.idturno);
     params = params.append('idskunow', form.idskunow);
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);

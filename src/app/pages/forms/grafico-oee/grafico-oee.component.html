@@ -22,18 +22,9 @@
                 <div class="widget-numbers">
                   OEE
                   <div class="col-md-1 select-fil">
-                    <select class="form-control " id="idturno" nombre="idturno" formControlName="idturno"
-                      (change)="getOEE()">
-                      <option value="-1" hidden selected>TURNO</option>
-                      <option value="-1" selected>TODOS</option>
-                      <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-1 select-fil">
                     <select class="form-control " id="idskunow" nombre="idskunow" formControlName="idskunow"
                       (change)="getOEE()">
                       <option value="-1" hidden selected>SKU</option>
-                      <option value="-1" selected>TODOS</option>
                       <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
                     </select>
                   </div>
@@ -51,18 +42,9 @@
                 <div class="widget-numbers">
                   OEE GLOBAL
                   <div class="col-md-1 select-fil">
-                    <select class="form-control " id="idturno2" nombre="idturno2" formControlName="idturno"
-                      (change)="getOEEGLOBAL()">
-                      <option value="-1" hidden selected>TURNO</option>
-                      <option value="-1" selected>TODOS</option>
-                      <option *ngFor="let turno of turnos" [value]="turno.idturno">{{turno.turno}}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-1 select-fil">
                     <select class="form-control " id="idskunow2" nombre="idskunow2" formControlName="idskunow"
                       (change)="getOEEGLOBAL()">
                       <option value="-1" hidden selected>SKU</option>
-                      <option value="-1" selected>TODOS</option>
                       <option *ngFor="let prod of productos" [value]="prod.idproducto">{{prod.producto}}</option>
                     </select>
                   </div>

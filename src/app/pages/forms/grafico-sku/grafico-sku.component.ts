@@ -125,7 +125,7 @@ export class GraficoSkuComponent implements OnInit {
       let resp = await this.graficaService.PGraficaSkuProducido(this.formF.value, this.token).toPromise();
       if (resp.code == 200) {
         this.dataGraficaSkuProducido = resp.response;
-        this.SKU(this.dataGraficaSkuProducido);
+        this.getTurnos(this.dataGraficaSkuProducido);
       }
     } catch (e) {
     }
@@ -150,6 +150,7 @@ export class GraficoSkuComponent implements OnInit {
       let resp = await this.turnosService.get("", this.token).toPromise();
       if (resp.code == 200) {
         this.turnos = resp.response;
+        this.SKU(this.turnos,data);
       }
     } catch (e) {
     }
@@ -160,38 +161,108 @@ export class GraficoSkuComponent implements OnInit {
   // SKU PRODUCIDOS POR LINEA
 
   //CHARTDIV2
-  SKU(data) {
-    let chart = am4core.create("SKU", am4charts.XYChart3D);
+  SKU(turnos, data) {
+    let chart = am4core.create("SKU", am4charts.XYChart);
 
-    chart.data = data;
     // Create axes
-    let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "fechaprod";
-
-    categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.renderer.minGridDistance = 30;
-
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.title.text = "Cantidad de Piezas Producidas";
-    valueAxis.renderer.labels.template.adapter.add("text", function (text) {
-      return text + "Un";
-    });
+    valueAxis.title.text = "SKU";
+
+
+    for (var i = 0; i < turnos.length; i++) {
+      createSeries(turnos[i].turno, data, turnos[i].turnodb)
+    }
 
     // Create series
-    let series = chart.series.push(new am4charts.ColumnSeries3D());
-    series.dataFields.valueY = "cantproducida";
-    series.dataFields.categoryX = "fechaprod";
-    series.name = "producto";
-    series.clustered = false;
-    series.columns.template.tooltipText = "Cantidad {category}: [bold]{valueY}[/]";
-    series.columns.template.fillOpacity = 0.9;
+    function createSeries(name, data, turnodb) {
+      let series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.valueY = turnodb;
+      series.dataFields.dateX = "fechater";
+      series.name = name;
+      series.tooltipText = "{name}: {valueY} piezas";
 
-    var bullet = series.bullets.push(new am4charts.LabelBullet())
-    bullet.interactionsEnabled = false
-    bullet.locationY = 0.5;
-    bullet.label.text = '{valueY}'
-    bullet.label.fill = am4core.color('#ffffff')
-    bullet.verticalCenter = "middle";
+      let segment = series.segments.template;
+      segment.interactionsEnabled = true;
+
+      let hoverState = segment.states.create("hover");
+      hoverState.properties.strokeWidth = 3;
+
+      let dimmed = segment.states.create("dimmed");
+      dimmed.properties.stroke = am4core.color("#dadada");
+
+      segment.events.on("over", function (event) {
+        processOver(event.target.parent.parent.parent);
+      });
+
+      segment.events.on("out", function (event) {
+        processOut(event.target.parent.parent.parent);
+      });
+
+      // Make bullets grow on hover
+      let bullet = series.bullets.push(new am4charts.CircleBullet());
+      bullet.circle.strokeWidth = 2;
+      bullet.circle.radius = 4;
+      bullet.circle.fill = am4core.color("#fff");
+
+      let bullethover = bullet.states.create("hover");
+      bullethover.properties.scale = 1.3;
+
+      // Make a panning cursor
+      chart.cursor = new am4charts.XYCursor();
+      chart.cursor.xAxis = dateAxis;
+
+      series.data = data;
+      return series;
+    }
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "right";
+    chart.legend.scrollable = true;
+
+    chart.legend.markers.template.states.create("dimmed").properties.opacity = 0.3;
+    chart.legend.labels.template.states.create("dimmed").properties.opacity = 0.3;
+
+    chart.legend.itemContainers.template.events.on("over", function (event) {
+      processOver(event.target.dataItem.dataContext);
+    })
+
+    chart.legend.itemContainers.template.events.on("out", function (event) {
+      processOut(event.target.dataItem.dataContext);
+    })
+
+    function processOver(hoveredSeries) {
+      hoveredSeries.toFront();
+
+      hoveredSeries.segments.each(function (segment) {
+        segment.setState("hover");
+      })
+
+      hoveredSeries.legendDataItem.marker.setState("default");
+      hoveredSeries.legendDataItem.label.setState("default");
+
+      chart.series.each(function (series) {
+        if (series != hoveredSeries) {
+          hoveredSeries.segments.each(function (segment) {
+            segment.setState("dimmed");
+          })
+          series.bulletsContainer.setState("dimmed");
+          series.legendDataItem.marker.setState("dimmed");
+          series.legendDataItem.label.setState("dimmed");
+        }
+      });
+    }
+
+    function processOut(hoveredSeries) {
+      chart.series.each(function (series) {
+        hoveredSeries.segments.each(function (segment) {
+          segment.setState("default");
+        })
+        series.bulletsContainer.setState("default");
+        series.legendDataItem.marker.setState("default");
+        series.legendDataItem.label.setState("default");
+      });
+    }
   }
 
 }
