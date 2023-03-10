@@ -11,6 +11,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { CardTitleComponent } from '@app/components/card-title/card-title.component';
 import { DatePipe } from '@angular/common';
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
+import { MatTableDataSource } from '@angular/material/table';
 
 am4core.useTheme(am4themes_animated);
 am4core.options.autoDispose = true;
@@ -27,6 +28,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
   @Input() chartData;
   CG;
   Input: string;
+  TablaLinea = [];
   dataGauge = [];
   dataOEE = [];
   dataGraficaSkuProducido = [];
@@ -47,6 +49,13 @@ export class GraficoTiempomuertoComponent implements OnInit {
   score;
   title: string;
   id;
+  addToMemoryFlag: boolean = true;
+  nombre = 'tm-turno';
+  Titulo = 'Tiempo Muerto';
+
+  columnas = [];
+  filas = [];
+  datasource: MatTableDataSource<any[]>;
 
   maxDate: string;
   minDate: string;
@@ -76,6 +85,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
       idskunow: ['-1'],
       linea: ['-1'],
       turno: ['-1'],
+      idproducto: ['-1'],
     });
 
     this.sumarDias(this.date, -7);
@@ -87,6 +97,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
     this.getProductos();
     this.getGraficaTiempomuertoPorDiayTurno();
     this.getMaquina();
+    this.getTablaLinea();
   }
 
   ngOnDestroy() {
@@ -106,8 +117,51 @@ export class GraficoTiempomuertoComponent implements OnInit {
     this.formF.controls['idskunow'].setValue('-1');
     this.formF.controls['linea'].setValue('-1');
     this.formF.controls['turno'].setValue('-1');
+    this.formF.controls['idproducto'].setValue('-1');
     this.getMaquina();
     this.getGraficaTiempomuertoPorDiayTurno();
+    this.getTablaLinea();
+  }
+
+
+  //change
+
+  toggleEvent() {
+
+    this.addToMemoryFlag = !this.addToMemoryFlag;
+
+    if (this.addToMemoryFlag) {
+      this.Titulo = 'Tiempo Muerto'
+      this.nombre = 'tm-turno';
+      this.getMaquina();
+    } else {
+      this.Titulo = 'Costos en Dolares'
+      this.nombre = 'costos';
+      this.getTablaLinea();
+
+    }
+  }
+
+  //Tablas
+
+  async getTablaLinea() {
+    try {
+      let resp = await this.maquinaService.PTablaLinea(this.formF.value, this.token).toPromise();
+      if (resp.code == 200) {
+        this.TablaLinea = resp.response;
+        console.log(this.TablaLinea)
+
+        this.columnas = [];
+        for (let v in this.TablaLinea[0]) {
+          this.columnas.push(v);
+        }
+
+        this.datasource = new MatTableDataSource(this.TablaLinea);
+
+        this.COSTOS(this.turnos, this.TablaLinea);
+      }
+    } catch (e) {
+    }
   }
 
   //Graficas
@@ -175,10 +229,14 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
   //TOTAL DE TIEMPO MUERTO POR FECHA POR TURNO (X=Fecha, Y=Tiempo Muerto, Z= Turno)
   TIEMPOMUERTO(turnos, data) {
+    console.log(data)
     let chart = am4core.create("tm-turno", am4charts.XYChart);
+
 
     // Create axes
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.groupData = true;
+    dateAxis.dateFormats.setKey("day", { "year": "numeric", "month": "short", "day": "numeric" });
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
     for (var i = 0; i < turnos.length; i++) {
@@ -189,9 +247,10 @@ export class GraficoTiempomuertoComponent implements OnInit {
     function createSeries(name, data, turnodb) {
       let series = chart.series.push(new am4charts.LineSeries());
       series.dataFields.valueY = turnodb;
-      series.dataFields.dateX = "fechaprod";
+      series.dataFields.dateX = "fechater";
       series.name = name;
-      series.tooltipText = "{name}: {valueY}";
+
+      series.tooltipText = "{name}\n TM: {valueY}";
 
       let segment = series.segments.template;
       segment.interactionsEnabled = true;
@@ -226,6 +285,145 @@ export class GraficoTiempomuertoComponent implements OnInit {
       series.data = data;
       return series;
     }
+
+    chart.events.on("datavalidated", function (ev) {
+      chart.exporting.getHTML("html", {
+        addColumnNames: true
+      }, false).then(function (html) {
+        let div = document.getElementById("chartdata");
+        div.innerHTML = html;
+      });
+    });
+
+
+    // A button to toggle the data table
+    /* let button = chart.createChild(am4core.SwitchButton);
+     button.align = "right";
+     button.leftLabel.text = "Mostrar Informacion";
+     button.isActive = true;*/
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "right";
+    chart.legend.scrollable = true;
+
+    chart.legend.markers.template.states.create("dimmed").properties.opacity = 0.3;
+    chart.legend.labels.template.states.create("dimmed").properties.opacity = 0.3;
+
+    chart.legend.itemContainers.template.events.on("over", function (event) {
+      processOver(event.target.dataItem.dataContext);
+    })
+
+    chart.legend.itemContainers.template.events.on("out", function (event) {
+      processOut(event.target.dataItem.dataContext);
+    })
+
+    function processOver(hoveredSeries) {
+      hoveredSeries.toFront();
+
+      hoveredSeries.segments.each(function (segment) {
+        segment.setState("hover");
+      })
+
+      hoveredSeries.legendDataItem.marker.setState("default");
+      hoveredSeries.legendDataItem.label.setState("default");
+
+      chart.series.each(function (series) {
+        if (series != hoveredSeries) {
+          hoveredSeries.segments.each(function (segment) {
+            segment.setState("dimmed");
+          })
+          series.bulletsContainer.setState("dimmed");
+          series.legendDataItem.marker.setState("dimmed");
+          series.legendDataItem.label.setState("dimmed");
+        }
+      });
+    }
+
+    function processOut(hoveredSeries) {
+      chart.series.each(function (series) {
+        hoveredSeries.segments.each(function (segment) {
+          segment.setState("default");
+        })
+        series.bulletsContainer.setState("default");
+        series.legendDataItem.marker.setState("default");
+        series.legendDataItem.label.setState("default");
+      });
+    }
+  }
+
+  COSTOS(turnos, data) {
+    console.log(data)
+    let chart = am4core.create("costos", am4charts.XYChart);
+
+
+    // Create axes
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.groupData = true;
+    dateAxis.dateFormats.setKey("day", { "year": "numeric", "month": "short", "day": "numeric" });
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+    for (var i = 0; i < turnos.length; i++) {
+      createSeries(turnos[i].turno, data, turnos[i].turnodb)
+    }
+
+    // Create series
+    function createSeries(name, data, turnodb) {
+      let series = chart.series.push(new am4charts.LineSeries());
+      series.dataFields.valueY = turnodb;
+      series.dataFields.dateX = "Fecha";
+      series.name = name;
+
+      series.tooltipText = "{name}\n Costos: {valueY}";
+
+      let segment = series.segments.template;
+      segment.interactionsEnabled = true;
+
+      let hoverState = segment.states.create("hover");
+      hoverState.properties.strokeWidth = 3;
+
+      let dimmed = segment.states.create("dimmed");
+      dimmed.properties.stroke = am4core.color("#dadada");
+
+      segment.events.on("over", function (event) {
+        processOver(event.target.parent.parent.parent);
+      });
+
+      segment.events.on("out", function (event) {
+        processOut(event.target.parent.parent.parent);
+      });
+
+      // Make bullets grow on hover
+      let bullet = series.bullets.push(new am4charts.CircleBullet());
+      bullet.circle.strokeWidth = 2;
+      bullet.circle.radius = 4;
+      bullet.circle.fill = am4core.color("#fff");
+
+      let bullethover = bullet.states.create("hover");
+      bullethover.properties.scale = 1.3;
+
+      // Make a panning cursor
+      chart.cursor = new am4charts.XYCursor();
+      chart.cursor.xAxis = dateAxis;
+
+      series.data = data;
+      return series;
+    }
+
+    chart.events.on("datavalidated", function (ev) {
+      chart.exporting.getHTML("html", {
+        addColumnNames: true
+      }, false).then(function (html) {
+        let div = document.getElementById("chartdata");
+        div.innerHTML = html;
+      });
+    });
+
+
+    // A button to toggle the data table
+    /* let button = chart.createChild(am4core.SwitchButton);
+     button.align = "right";
+     button.leftLabel.text = "Mostrar Informacion";
+     button.isActive = true;*/
 
     chart.legend = new am4charts.Legend();
     chart.legend.position = "right";
@@ -286,7 +484,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
 
     // Create axes
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "fechaprod";
+    categoryAxis.dataFields.category = "fechater";
     categoryAxis.title.text = "Líneas de Producción";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 20;
@@ -301,7 +499,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
     function createSeries(value, data, name, stacked) {
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueY = value;
-      series.dataFields.categoryX = "fechaprod";
+      series.dataFields.categoryX = "fechater";
       series.name = name;
       series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
       series.stacked = stacked;
@@ -334,7 +532,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
     chart.legend.labels.template.maxWidth = 95
 
     let xAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-    xAxis.dataFields.category = 'fechaprod'
+    xAxis.dataFields.category = 'fechater'
     xAxis.renderer.cellStartLocation = 0.1
     xAxis.renderer.cellEndLocation = 0.9
     xAxis.renderer.grid.template.location = 0;
@@ -345,7 +543,7 @@ export class GraficoTiempomuertoComponent implements OnInit {
     function createSeries(value, data, name) {
       let series = chart.series.push(new am4charts.ColumnSeries())
       series.dataFields.valueY = value
-      series.dataFields.categoryX = 'fechaprod'
+      series.dataFields.categoryX = 'fechater'
       series.name = name
       series.columns.template.tooltipText = "{name} = {valueY}";
       series.events.on("hidden", arrangeColumns);

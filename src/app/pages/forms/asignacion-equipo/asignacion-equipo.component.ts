@@ -121,14 +121,16 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
   async getProductosMaquina(idmaquina) {
     try {
       this.getRmt(idmaquina);
-      let resp = await this.skuService.getProductosMaquina(idmaquina,this.auth.token).toPromise();
+      let resp = await this.skuService.getProductosMaquina(idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.ListaProductosByMaquina = resp.response;
-        this.listap = JSON.stringify(this.ListaProductosByMaquina);
+        for (let i = 0; i < this.ListaProductosByMaquina.length; i++) {
+          this.listap = JSON.stringify(this.ListaProductosByMaquina[i]);
           this.listap = this.listap.split(/]|{|}|"|idproducto|ciclo_producto|producto|intervalo_tm|te_producto|:|/g).join('');
           this.listap = this.listap.split("[").join('');
           this.listap = this.listap.split(",").join('?');
           this.SendProductosMQTT(this.listap);
+        }
       }
     } catch (e) {
     }
@@ -136,7 +138,7 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
 
   async getRmt(idmaquina) {
     try {
-      let resp = await this.skuService.getRmt(idmaquina,this.auth.token).toPromise();
+      let resp = await this.skuService.getRmt(idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.Rmt = resp.response;
         this.MQTT.controls['topic'].setValue(this.Rmt[0].serialrmt);
@@ -146,10 +148,10 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
   }
 
   async SendProductosMQTT(info) {
-    this.MQTT.value.message =  'SKU:'+ info +'/Fin';
+    this.MQTT.value.message = 'SKU:' + info + '/Fin';
     try {
       let resp = await this.skuService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -186,7 +188,7 @@ export class AsignacionEquipoComponent extends Dialog implements OnInit {
             Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
             this.getSKU();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }

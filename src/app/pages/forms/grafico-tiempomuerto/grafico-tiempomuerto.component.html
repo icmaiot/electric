@@ -4,12 +4,14 @@
       <form [formGroup]="formF">
         <div class="mx-5 div-flex">
           <div class="c row">
-            <a class="label">Desde: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep"
-              (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()" />
+            <a class="label">Desde: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep" (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()"
+              (change)="getTablaLinea()" />
           </div>
           <div class="c row">
-            <a class="label">Hasta: </a> <input class="form-control select-filter" type="date" formControlName="fechaprep2"
-              (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()" [(max)]="maxDate" />
+            <a class="label">Hasta: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep2" (change)="getMaquina()" (change)="getGraficaTiempomuertoPorDiayTurno()"
+              (change)="getTablaLinea()" [(max)]="maxDate" />
           </div>
           <!-- <div class="col-md-1">
             <select class="form-control " id="idlineaprod" nombre="idlineaprod" formControlName="idlineaprod"
@@ -28,19 +30,45 @@
               <div class="card-hover-shadow-2x mb-3 card">
                 <div class="widget-chart-content">
                   <div class="widget-numbers">
-                    Tiempo muerto total
-                    <div class="col-md-1 select-fil">
+                    {{Titulo}}
+                    <div class="col-md-2 select-fil">
                       <select class="form-control " id="linea" nombre="linea" formControlName="linea"
-                        (change)="getMaquina()">
+                        (change)="getMaquina()" (change)="getTablaLinea()" >
                         <option value="-1" hidden selected>Lineas</option>
                         <option *ngFor="let linea of lineas" [value]="linea.idmaquina">{{linea.maquina}}</option>
                       </select>
                     </div>
+                    <div class="col-md-2 select-fil">
+                      <select class="form-control " id="sku" nombre="sku" formControlName="idproducto"
+                      (change)="getMaquina()" (change)="getTablaLinea()">
+                        <option value="-1" hidden selected>SKU</option>
+                        <option *ngFor="let producto of productos " [value]="producto.idproducto">{{producto.producto}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-1.5 select-fil">
+                      <button class="btn btn-info" (click)="toggleEvent()">
+                        {{addToMemoryFlag ? 'Tiempo Muerto' : 'Costos'}}
+                      </button>
+                    </div>
                   </div>
                   <div class="widget-subheading">
-                    <div id="tm-turno" class="chart"></div>
+                    <div id="{{addToMemoryFlag ? 'tm-turno' : 'costos'}}" class="chart"></div>
+                    <div id="chartdata" class="chartdata"></div>
                   </div>
                 </div>
+
+          <!--     <mat-table #table [dataSource]="datasource" class="mat-elevation-z8">
+
+                  <ng-container *ngFor="let disCol of columnas; let colIndex = index" matColumnDef="{{disCol}}">
+                    <mat-header-cell *matHeaderCellDef>{{disCol}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element "> {{element[disCol]}}
+                    </mat-cell>
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+                </mat-table>
+ --> 
               </div>
             </div>
           </div>

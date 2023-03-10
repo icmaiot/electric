@@ -272,7 +272,7 @@ export class ProgramaDeProduccionComponent implements OnInit {
             this.form.reset({});
             this.getFiltro();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }

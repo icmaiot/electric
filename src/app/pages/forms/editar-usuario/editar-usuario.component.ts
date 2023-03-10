@@ -92,11 +92,14 @@ export class EditarUsuarioComponent extends Dialog implements OnInit {
       let resp = await this.usuarioService.getUsuariosAct(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.usr = resp.response;
-        this.usrSend = JSON.stringify(this.usr);
-        this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_linea|:|/g).join('');
-        this.usrSend = this.usrSend.split("[").join('');
-        this.usrSend = this.usrSend.split(",").join('?');
-        this.SendUsuariosMQTT(this.usrSend)
+        for(let i = 0; i < this.usr.length ; i++){
+          this.usrSend = JSON.stringify(this.usr[i]);
+          this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_evento|permitir_linea|:|/g).join('');
+          this.usrSend = this.usrSend.split("[").join('');
+          this.usrSend = this.usrSend.split(",").join('?');
+          this.SendUsuariosMQTT(this.usrSend)
+            console.log(this.usrSend)
+          }
       }
     } catch (e) {
     }

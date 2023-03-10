@@ -22,7 +22,7 @@ export class ModuloRMTComponent implements OnInit {
 
   listNav = [
     { "name": "Equipos", "router": "/maquina" },
-    { "name": "Modulo RMT", "router": "/modulo-RMT" },
+    { "name": "Módulo RMT", "router": "/modulo-RMT" },
   ]
 
   constructor(
@@ -73,7 +73,7 @@ export class ModuloRMTComponent implements OnInit {
         this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -89,7 +89,7 @@ export class ModuloRMTComponent implements OnInit {
             Swal.fire('Eliminado', 'El modulo ha sido borrado!', 'success');
             this.getModulo('');
           } else {
-            Swal.fire('Error', 'No fue posible borrar el modulo!', 'error');
+            Swal.fire('Error', 'Error al borrar el modulo!', 'error');
           }
         });
       }

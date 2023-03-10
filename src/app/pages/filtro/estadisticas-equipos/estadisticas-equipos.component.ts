@@ -4,12 +4,12 @@ import { AuthService } from '@app/services/auth.service';
 import * as environment from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-estadisticas',
-  templateUrl: './estadisticas.component.html',
-  styleUrls: ['./estadisticas.component.css']
+  selector: 'app-estadisticas-equipos',
+  templateUrl: './estadisticas-equipos.component.html',
+  styleUrls: ['./estadisticas-equipos.component.css']
 })
 
-export class EstadisticasComponent implements OnInit {
+export class EstadisticasEquipoComponent implements OnInit {
 
   estadisCards: Array<object> = [];
   
@@ -33,76 +33,35 @@ export class EstadisticasComponent implements OnInit {
     this.estadisCards = [
       {
         icon: this.URLMantenimiento,
-        text: 'Estadisticas de Matenimeinto',
-        function: '/mntto',
+        text: 'Estadísticas de Matenimeinto',
+        function: '/mantenimiento',
         class: 'blue-bg',
       },
       {
         icon: this.URLMateriales,
-        text: 'Estadisticas de Materiales',
-        function: '/mats',
+        text: 'Estadísticas de Materiales',
+        function: '/materiales',
         class: 'orange-bg',
       },
       {
         icon: this.URLIngeneria,
-        text: 'Estadisticas de Ingenerias',
-        function: '/ing',
+        text: 'Estadísticas de Ingenerías',
+        function: '/ingenieria',
         class: 'blue-lite-bg',
       },
       {
         icon: this.URLProduccion,
-        text: 'Estadisticas de Producción',
-        function: '/prod',
+        text: 'Estadísticas de Producción',
+        function: '/produccion',
         class: 'red-low-bg',
       },
       {
         icon: this.URLCalidad,
-        text: 'Estadisticas de Calidad',
+        text: 'Estadísticas de Calidad',
         function: '/calidad',
         class: 'pink-bg',
       },
-      {
-        icon: this.URLTM,
-        text: 'Estadisticas de Tiempo Muerto',
-        function: '/tiempomuerto',
-        class: 'green-two-bg',
-      },
-      {
-        icon: this.URLSKU,
-        text: 'Estadisticas de SKU',
-        function: '/sku',
-        class: 'gray-bg',
-      },  
-      {
-        icon: this.URLOEE,
-        text: 'Estadisticas de %OEE',
-        function: '/oee',
-        class: 'red-bg',
-      },
-      {
-        icon: this.URLEficiencia,
-        text: 'Estadisticas de %Eficiencia',
-        function: '/eficiencia',
-        class: 'be-bg',
-      },
-      {
-        icon: this.URLDisponibilidad,
-        text: 'Estadisticas de %Disponibilidad',
-        function: '/disponibilidad',
-        class: 'bluemidas',
-      },
-      {
-        icon: this.URLRendimiento,
-        text: 'Estadisticas de %Rendimiento',
-        function: '/rendimiento',
-        class: 'bluesmidas',
-      },
-      {
-        icon: this.URLPcalidad,
-        text: 'Estadisticas de %Calidad',
-        function: '/pcalidad',
-        class: 'purplemidas',
-      },
+     
     ];
   }
 }

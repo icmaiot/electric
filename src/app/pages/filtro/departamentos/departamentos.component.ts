@@ -19,7 +19,8 @@ export class DepartamentosComponent implements OnInit {
   departamentos: Departamento[];
   total: number;
   listNav = [
-    { "name": "Departamento", "router": "/departamento" },
+    { "name": "Departamentos", "router": "/departamento" },
+    { "name": "Equipo", "router": "/maquina" },
   ]
   constructor(private deptoService: DepartamentoService,
     private dialog: MatDialog, private spinner: NgxSpinnerService,
@@ -48,7 +49,7 @@ export class DepartamentosComponent implements OnInit {
         title: 'Agregar departamento',
         btnText: 'Guardar',
         alertSuccesText: 'Departamento creado!',
-        alertErrorText: "No se puedo crear el departamento",
+        alertErrorText: "Error al crear el departamento",
         modalMode: 'create'
       }
     });
@@ -65,7 +66,7 @@ export class DepartamentosComponent implements OnInit {
         title: 'Editar departamento',
         btnText: 'Guardar',
         alertSuccesText: 'Departamento modificado correctamente',
-        alertErrorText: "No se puedo modificar el departamento",
+        alertErrorText: "Error al modificar el departamento",
         modalMode: 'edit',
         depto
       }
@@ -88,7 +89,7 @@ export class DepartamentosComponent implements OnInit {
             Swal.fire('Eliminado', 'El departamento ha sido eliminado correctamente', 'success');
             this.getDeptos("");
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el departamento', 'error');
+            Swal.fire('Error', 'Error al eliminar el departamento', 'error');
           }
         });
       }
@@ -116,7 +117,7 @@ export class DepartamentosComponent implements OnInit {
         title: 'Agregar usuario',
         btnText: 'Agregar',
         alertSuccesText: 'Usuario creado!',
-        alertErrorText: "No se puedo crear el usuario",
+        alertErrorText: "Error al crear el usuario",
         modalMode: 'create',
         idDepto
       }

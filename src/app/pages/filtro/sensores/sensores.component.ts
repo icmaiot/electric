@@ -42,7 +42,7 @@ export class SensoresComponent implements OnInit {
         title: 'Agregar sensor',
         btnText: 'Guardar',
         alertSuccesText: 'Sensor creado!',
-        alertErrorText: "No se puedo crear el sensor",
+        alertErrorText: "Error al crear el sensor",
         modalMode: 'create'
       }
     });
@@ -59,7 +59,7 @@ export class SensoresComponent implements OnInit {
         title: 'Editar sensor',
         btnText: 'Guardar',
         alertSuccesText: 'Sensor modificado correctamente',
-        alertErrorText: "No se puedo modificar el sensor",
+        alertErrorText: "Error al modificar el sensor",
         modalMode: 'edit',
         _sensor
       }
@@ -82,7 +82,7 @@ export class SensoresComponent implements OnInit {
             Swal.fire('Eliminado', 'El sensor ha sido eliminado correctamente', 'success');
             this.getSensores("");
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el sensor', 'error');
+            Swal.fire('Error', 'Error al eliminar el sensor', 'error');
           }
         });
       }

@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ViewEncapsulation } from '@angular/core';
 import { Dialog } from '@app/classes/Dialog';
 import { AuthService } from '@app/services/auth.service';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-nuevo-usuario',
@@ -29,7 +30,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
   auxnip2: string = '';
   auxpassword2: string = '';
   statusUsu: string;
-  
+
   usr = [];
   usrSend: string;
 
@@ -57,7 +58,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         celular: ['',],
         activousr: ['', Validators.required],
-        permitir_linea: ['', Validators.required],
+        permitir_linea: [''],
       },
         { validator: [this.MustMatch('password', 'password2'), this.MustMatch('nip', 'nip2')] });
     } else {
@@ -73,7 +74,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
     }
     this.token = this.auth.token;
     this.getDeptos();
-    
+
   }
 
   async getDeptos() {
@@ -91,23 +92,26 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
       let resp = await this.usuarioService.getUsuariosAct(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.usr = resp.response;
-        this.usrSend = JSON.stringify(this.usr);
-        this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_linea|:|/g).join('');
-        this.usrSend = this.usrSend.split("[").join('');
-        this.usrSend = this.usrSend.split(",").join('?');
-        this.SendUsuariosMQTT(this.usrSend)
-        //console.log(this.usrSend)
+        console.log(this.usr)
+        for (let i = 0; i < this.usr.length; i++) {
+          this.usrSend = JSON.stringify(this.usr[i]);
+          this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_evento|permitir_linea|:|/g).join('');
+          this.usrSend = this.usrSend.split("[").join('');
+          this.usrSend = this.usrSend.split(",").join('?');
+          this.SendUsuariosMQTT(this.usrSend)
+          console.log(this.usrSend)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendUsuariosMQTT(info) {
-    this.MQTT.value.message =  'Ids:'+ info +'/Fin';
+    this.MQTT.value.message = 'Ids:' + info + '/Fin';
     //console.log(this.MQTT.value)
     try {
       let resp = await this.usuarioService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -115,16 +119,19 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
   get f() { return this.usuarioForm.controls; }
 
   onSubmit() {
-
+    console.log(this.usuarioForm)
+    console.log(this.usuarioForm.controls)
     this.submitted = true;
-    if (this.usuarioForm.invalid) {
+    if (this.usuarioForm.status == 'INVALID') {
       return;
     } else {
+      console.log('entro')
       this.guardar();
     }
   }
 
   async guardar() {
+    console.log(this.sistema)
     if (this.sistema) {
       try {
         let response = await this.usuarioService.create(this.usuario, this.token).toPromise();
@@ -141,7 +148,7 @@ export class NuevoUsuarioComponent extends Dialog implements OnInit {
       }
     } else {
       try {
-        let response = await this.usuarioService.createInf(this.usuario, this.token).toPromise();
+        let response = await this.usuarioService.createInf(this.usuarioForm.value, this.token).toPromise();
         if (response.code = 200) {
           this.showAlert(this.alertSuccesText, true);
           this.closeModal();

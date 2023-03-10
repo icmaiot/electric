@@ -1,5 +1,5 @@
 <div class="mt-3">
-    <app-header-table [search]="false" [renderButton]="false" [titleHeader]="'Programa de produccion'"
+    <app-header-table [search]="false" [renderButton]="false" [titleHeader]="'Programa de producción'"
         [titleSelect]="'Buscar ..'" (buttonOutput)="null" (searchOutput)="null" [listNav]="listNav">
     </app-header-table>
 </div>
@@ -7,7 +7,7 @@
     <div class="card-header">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
             <div class="col-md-2">
-                <label for="idlineaprod" class="form-label">Linea de producción</label>
+                <label for="idlineaprod" class="form-label">Línea de producción</label>
                 <select class="form-control " id="idlineaprod" nombre="idlineaprod" formControlName="idlineaprod">
                     <option *ngFor="let li of maq" [value]="li.idmaquina">{{li.maquina}}
                     </option>

@@ -87,7 +87,8 @@ import { MateriaPrimaComponent } from './pages/filtro/materia-prima/materia-prim
 import { TurnosProductivosComponent } from './pages/filtro/turnos/registro-turnos-productivos.component';
 import { ModuloRMTComponent } from './pages/filtro/modulo-rmt/modulo-rmt.component';
 import { TipoEquipoComponent } from './pages/filtro/tipo-equipo/tipo-equipo.component';
-import { EstadisticasComponent } from '@app/pages/filtro/estadisticas/estadisticas.component';
+import { EstadisticasLineaComponent } from '@app/pages/filtro/estadisticas-lineas/estadisticas-lineas.component';
+import { EstadisticasEquipoComponent } from '@app/pages/filtro/estadisticas-equipos/estadisticas-equipos.component';
 
 import { BoardComponent } from './pages/board/board.component';
 
@@ -270,7 +271,8 @@ registerLocaleData(localeEsMX, 'es-Mx');
     NuevoTMComponent,
     NuevoEventoasignacionfallaComponent,
     AsignacionCorreoComponent,
-    EstadisticasComponent,
+    EstadisticasLineaComponent,
+    EstadisticasEquipoComponent,
     GraficoMnttoComponent,
     GraficoMatsComponent,
     GraficoIngComponent,

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       if (response.code == 200) {
         let usuario = response.dataUser;
         if (!usuario.token) {
-          this.alertRegister = "No se pudo iniciar sesión.";
+          this.alertRegister = "Error al iniciar sesión.";
         } else {
           this.auth.guardarUsuarioToken(usuario.token, usuario.id, usuario.expires, usuario.idcia);
           this.router.navigate(['/']);

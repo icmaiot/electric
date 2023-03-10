@@ -10,7 +10,13 @@ import { TipoEquipo } from '../models/tipoEquipo';
 export class TipoEquipoService {
 
   private url: string = environment.environment.urlEndPoint + '/tipoEquipo';
+  private urlmqtt: string = environment.environment.urlMQTT;
   constructor(private http: HttpClient) { }
+
+  MQTTEncoder(MQTT): Observable<any> {
+    const headers: HttpHeaders = new HttpHeaders();
+    return this.http.get(`${this.urlmqtt + '/sendTipoEquipos?'}topic=${MQTT.topic}&message=${MQTT.message}`, { headers });
+  }
 
   getTipos(token): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });

@@ -98,7 +98,7 @@ export class AsignacionMaquinaComponent extends Dialog implements OnInit {
 
   async getSUB() {
     try {
-      let resp = await this.subService.get(this.idsubens,this.auth.token).toPromise();
+      let resp = await this.subService.get(this.idsubens, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.listaSUB = resp.response;
         let sub = this.listaSUB[this.listaSUB.length - 1];
@@ -120,17 +120,18 @@ export class AsignacionMaquinaComponent extends Dialog implements OnInit {
   async getSubensambleMaquina(id_maquina) {
     try {
       this.getRmt(id_maquina);
-      let resp = await this.subService.getSubensambleMaquina(id_maquina,this.auth.token).toPromise();
+      let resp = await this.subService.getSubensambleMaquina(id_maquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.ListaSubensambleByMaquina = resp.response;
-        this.listap = JSON.stringify(this.ListaSubensambleByMaquina);
+        for (let i = 0; i < this.ListaSubensambleByMaquina.length; i++) {
+          this.listap = JSON.stringify(this.ListaSubensambleByMaquina[i]);
           this.listap = this.listap.split(/]|{|}|idsubens:|subensamble:|"|/g).join('');
           this.listap = this.listap.split("idsubens:").join('');
           this.listap = this.listap.split("subensamble:").join('');
           this.listap = this.listap.split("[").join('');
           this.listap = this.listap.split(",").join('?');
-
-         this.SendSubensambleMQTT(this.listap);
+          this.SendSubensambleMQTT(this.listap);
+        }
       }
     } catch (e) {
     }
@@ -138,7 +139,7 @@ export class AsignacionMaquinaComponent extends Dialog implements OnInit {
 
   async getRmt(id_maquina) {
     try {
-      let resp = await this.subService.getRmt(id_maquina,this.auth.token).toPromise();
+      let resp = await this.subService.getRmt(id_maquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.Rmt = resp.response;
         this.MQTT.controls['topic'].setValue(this.Rmt[0].serialrmt);
@@ -148,10 +149,10 @@ export class AsignacionMaquinaComponent extends Dialog implements OnInit {
   }
 
   async SendSubensambleMQTT(info) {
-    this.MQTT.value.message =  'SUB:'+ info +'/Fin';
+    this.MQTT.value.message = 'SUB:' + info + '/Fin';
     try {
       let resp = await this.subService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -188,7 +189,7 @@ export class AsignacionMaquinaComponent extends Dialog implements OnInit {
             Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
             this.getSUB();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }

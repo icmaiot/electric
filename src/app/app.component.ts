@@ -20,7 +20,6 @@ export class AppComponent implements AfterViewInit {
     //console.log(event.constructor.name)
     if (event.constructor.name) {
       this.currentComponent = event.constructor.name;
-      console.log(typeof(this.currentComponent))
     } else {
       this.currentComponent = null;
     }

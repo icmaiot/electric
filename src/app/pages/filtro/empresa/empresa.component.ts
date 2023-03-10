@@ -119,7 +119,7 @@ export class EmpresaComponent implements OnInit {
                   Swal.fire('Actualizado', 'La Empresa ha sido cambiada a Inactiva', 'success');
                   this.getEmpresa();
                 } else {
-                  Swal.fire('Error', 'No fue posible cambiar el estado', 'error');
+                  Swal.fire('Error', 'Error al cambiar el estado', 'error');
                 }
               });
             }
@@ -136,7 +136,7 @@ export class EmpresaComponent implements OnInit {
                   Swal.fire('Eliminado', 'La Empresa ha sido eliminada correctamente', 'success');
                   this.getEmpresa();
                 } else {
-                  Swal.fire('Error', 'No fue posible eliminar la empresa', 'error');
+                  Swal.fire('Error', 'Error al eliminar la empresa', 'error');
                 }
               });
               this.contempService.deleteall(id, this.auth.token).subscribe(res => {

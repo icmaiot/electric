@@ -81,11 +81,22 @@ export class MaquinaService {
     return this.http.get(this.url + '/filtroDefectos', { headers, params: params });
   }
 
+  PTablaLinea(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    params = params.append('linea', form.linea);
+    params = params.append('idproducto', form.idproducto);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PTablaLinea', { headers, params: params });
+  }
+  
   PGraficaLinea(form, token): Observable<any> {
     let params = new HttpParams();
     params = params.append('fechaprep', form.fechaprep);
     params = params.append('fechaprep2', form.fechaprep2);
     params = params.append('linea', form.linea);
+    params = params.append('idproducto', form.idproducto);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/PGraficaLinea', { headers, params: params });
   }

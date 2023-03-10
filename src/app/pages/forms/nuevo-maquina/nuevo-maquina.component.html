@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <label for="idarea" class="form-label">Area</label>
+        <label for="idarea" class="form-label">Área</label>
         <select class="form-control" id="idarea" nombre="idarea" formControlName="idarea"
           [ngClass]="{ 'is-invalid': submitted && f.idarea.errors }">
           <option *ngFor="let ar of AS" [value]="ar.idarea">
@@ -19,42 +19,52 @@
           </option>
         </select>
         <div *ngIf="submitted && f.idarea.errors" class="invalid-feedback">
-          <div *ngIf="f.idarea.errors.required">El Turno es requerido</div>
+          <div *ngIf="f.idarea.errors.required">El Área es requerido</div>
         </div>
       </div>
       <div class="col-md-6">
         <label for="tipoequipo3" class="form-label">Tipo de Equipo</label>
-        <select class="form-control" id="tipoequipo0" nombre="tipoequipo." formControlName="tipoequipo"
+        <select class="form-control" id="tipoequipo0" nombre="tipoequipo" formControlName="tipoequipo"
           [ngClass]="{ 'is-invalid': submitted && f.tipoequipo.errors }">
           <option *ngFor="let tp of TP" [value]="tp.idtipo">{{tp.tipoequipo}}
           </option>
         </select>
         <div *ngIf="submitted && f.tipoequipo.errors" class="invalid-feedback">
-          <div *ngIf="f.tipoequipo.errors.required">El Turno es requerido</div>
+          <div *ngIf="f.tipoequipo.errors.required">El Tipo de Equipo es requerido</div>
         </div>
       </div>
       <div class="col-md-6">
-        <label for="serial" class="form-label">Modulo Interfaz : {{serial}}</label>
-        <select class="form-control" id="serial1" nombre="serial1" formControlName="idmodulo"
-          [ngClass]="{ 'is-invalid': submitted && f.idmodulo.errors }">
-          <option value="0">{{serial}}</option>
-          <option *ngFor="let mi of MIlista" [value]="mi.idmodulo">{{mi.serial}}
+        <label for="idmodulo1" class="form-label">Módulo Interfaz </label>
+        <select class="form-control" id="idmodulo1" nombre="idmodulo1" formControlName="idmodulo"
+          >
+          <option *ngFor="let mi of MIlista" [value]="mi.idmodulo">
+            {{mi.serial}}
           </option>
         </select>
         <div *ngIf="submitted && f.idmodulo.errors" class="invalid-feedback">
-          <div *ngIf="f.idmodulo.errors.required">El Turno es requerido</div>
+          <div *ngIf="f.idmodulo.errors.required">El Módulo Interfaz es requerido</div>
         </div>
       </div>
       <div class="col-md-6">
-        <label for="idrmt" class="form-label">Modulo RMT : {{serialrmt}}</label>
-        <select class="form-control" id="idrmt1" nombre="idrmt1" formControlName="idrmt"
-          [ngClass]="{ 'is-invalid': submitted && f.idrmt.errors }">
-          <option value="0">{{serialrmt}}</option>
-          <option *ngFor="let mrl of MRMTlista" [value]="mrl.idrmt">{{mrl.serialrmt}}
+        <label for="idrmt1" class="form-label">Modulo RMT  </label>
+        <select class="form-control" id="idrmt1" nombre="idrmt1" formControlName="idrmt">
+          <option *ngFor="let mrl of MRMTlista" [value]="mrl.idrmt">
+            {{mrl.serialrmt}}
           </option>
         </select>
         <div *ngIf="submitted && f.idrmt.errors" class="invalid-feedback">
           <div *ngIf="f.idrmt.errors.required">El Turno es requerido</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="progprod" class="form-label">Programa</label>
+        <select class="form-control" id="progprod" nombre="progprod" formControlName="progprod"
+          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
+          <option *ngFor="let prog of programa" [value]="prog.id">{{prog.progprod}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
+          <div *ngIf="f.progprod.errors.required">El Turno es requerido</div>
         </div>
       </div>
       <div class="form-group col-md-12">
@@ -62,7 +72,7 @@
         <textarea name="descripcion" id="descripcion" rows="3" formControlName="Descripcion" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && f.Descripcion.errors }"></textarea>
         <div *ngIf="submitted && f.Descripcion.errors" class="invalid-feedback">
-          <div *ngIf="f.Descripcion.errors.required">Descripción es requerido</div>
+          <div *ngIf="f.Descripcion.errors.required">La Descripción es requerida</div>
         </div>
       </div>
     </div>

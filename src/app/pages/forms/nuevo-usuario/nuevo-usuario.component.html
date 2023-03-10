@@ -54,7 +54,7 @@
       <div class="col-md-6 toggle">
         Status <mat-slide-toggle id="activousr" nombre="activousr" (change)="ToggleStatusUsu()"
           [(ngModel)]="usuario.activousr" formControlName="activousr"
-          [ngClass]="{ 'is-invalid': submitted && f.activousr.errors }">
+          >
           {{statusUsu}}
         </mat-slide-toggle>
         <div *ngIf="submitted && f.activousr.errors" class="invalid-feedback">

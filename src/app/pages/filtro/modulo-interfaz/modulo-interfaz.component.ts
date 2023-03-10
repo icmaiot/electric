@@ -19,8 +19,7 @@ export class ModuloInterfazComponent implements OnInit {
   total: number;
   listNav = [
     { "name": "Equipos", "router": "/maquina" },
-    { "name": "Modulo Interfaz", "router": "/moduloInterfaz" },
-    { "name": "Perfil configuración", "router": "/perfilConfig" }
+    { "name": "Módulo Interfaz", "router": "/moduloInterfaz" },
   ]
   constructor(private moduloService: ModuloInterfazService,
     private dialog: MatDialog, private spinner: NgxSpinnerService,
@@ -70,7 +69,7 @@ export class ModuloInterfazComponent implements OnInit {
         title: 'Editar modulo interfaz',
         btnText: 'Guardar',
         alertSuccesText: 'Modulo interfaz modificado correctamente',
-        alertErrorText: "No se puedo modificar el modulo interfaz",
+        alertErrorText: "Error al modificar el modulo interfaz",
         modalMode: 'edit',
         _modulo: modulo
       }
@@ -94,7 +93,7 @@ export class ModuloInterfazComponent implements OnInit {
             Swal.fire('Eliminado', 'El modulo interfaz ha sido desactivado correctamente', 'success');
             this.getModulo('');
           } else {
-            Swal.fire('Error', 'No fue posible desactivar el modulo interfaz', 'error');
+            Swal.fire('Error', 'Error al desactivar el modulo interfaz', 'error');
           }
         });
       }
@@ -118,7 +117,7 @@ export class ModuloInterfazComponent implements OnInit {
         title: 'Agregar usuario',
         btnText: 'Agregar',
         alertSuccesText: 'Usuario creado!',
-        alertErrorText: "No se puedo crear el usuario",
+        alertErrorText: "Error al crear el usuario",
         modalMode: 'create',
         idDepto
       }

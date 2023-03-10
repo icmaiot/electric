@@ -20,8 +20,8 @@ export class AreasComponent implements OnInit {
   total: number = 0;
   render = true;
   listNav = [
-    { "name": "Equipo", "router": "/maquina" },
-    { "name": "Área", "router": "/area" },
+    { "name": "Equipos", "router": "/maquina" },
+    { "name": "Áreas", "router": "/area" },
   ]
   constructor(private areaService: AreaService, private auth: AuthService,
     private dialog: MatDialog, private spinner: NgxSpinnerService) { }
@@ -47,8 +47,8 @@ export class AreasComponent implements OnInit {
       data: {
         title: 'Agregar área',
         btnText: 'Agregar',
-        alertSuccesText: 'Área creada!',
-        alertErrorText: "No se puedo crear el área",
+        alertSuccesText: 'Área creada',
+        alertErrorText: "Error al crear el área",
         modalMode: 'create'
       }
     });
@@ -65,7 +65,7 @@ export class AreasComponent implements OnInit {
         title: 'Agregar equipo ',
         btnText: 'Agregar',
         alertSuccesText: 'Equipo creado!',
-        alertErrorText: "No se puedo crear el equipo",
+        alertErrorText: "Error al crear el equipo",
         modalMode: 'create',
         idArea
       }
@@ -84,7 +84,7 @@ export class AreasComponent implements OnInit {
         title: 'Editar área: ' + _area.area,
         btnText: 'Guardar',
         alertSuccesText: 'Área modificada correctamente',
-        alertErrorText: "No se puedo modificar el área",
+        alertErrorText: "Error al modificar el área",
         modalMode: 'edit',
         _area
       }
@@ -107,7 +107,7 @@ export class AreasComponent implements OnInit {
             Swal.fire('Eliminado', 'El área ha sido eliminado correctamente', 'success');
             this.getAreas("");
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el área', 'error');
+            Swal.fire('Error', 'Error al eliminar el área', 'error');
           }
         });
       }

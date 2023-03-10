@@ -156,7 +156,7 @@ export class PersonalOperativoComponent implements OnInit {
             Swal.fire('Eliminado', 'El usuario se ha sido eliminado correctamente', 'success');
             this.getUsuarios('');
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el usuario', 'error');
+            Swal.fire('Error', 'Error al eliminar el usuario', 'error');
           }
         });
       }
@@ -199,7 +199,7 @@ export class PersonalOperativoComponent implements OnInit {
         this.formUser.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 

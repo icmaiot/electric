@@ -114,7 +114,7 @@ export class NuevoWoComponent implements OnInit {
         this.form.reset();
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -125,7 +125,7 @@ export class NuevoWoComponent implements OnInit {
         title: 'Nuevo status',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });
@@ -142,7 +142,7 @@ export class NuevoWoComponent implements OnInit {
         title: 'Editar ',
         btnText: 'Guardar',
         alertSuccesText: 'Orden modificada correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _wosub: wosub
       }
@@ -221,7 +221,7 @@ export class NuevoWoComponent implements OnInit {
         Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
         this.getWosub();
       } else {
-        Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+        Swal.fire('Error', 'Error al borrar el registro!', 'error');
       }
     });
   }

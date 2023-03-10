@@ -28,11 +28,11 @@
                 </td>
                 <td>
                     <select name="maquina" id="maquina" formControlName="maquina" class="form-control select-filter" [ngClass]="{ 'is-invalid': submitted && f.maquina.errors}">
-                        <option [selected]="true">Seleccionar maquina</option>
+                        <option [selected]="true">Seleccionar máquina</option>
                         <option *ngFor="let o of opt" [value]="o.maquina"> {{ o.maquina }}</option>
                     </select>
                     <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
-                        <div *ngIf="f.maquina.errors.required">Selecciona la maquina a graficar</div>
+                        <div *ngIf="f.maquina.errors.required">Selecciona la máquina a graficar</div>
                     </div>
                 </td>
                 <td></td>

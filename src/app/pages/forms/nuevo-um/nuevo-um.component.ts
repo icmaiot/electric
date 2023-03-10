@@ -101,7 +101,7 @@ export class NuevoUmComponent extends Dialog implements OnInit {
             Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
             this.getUm();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }

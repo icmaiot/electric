@@ -15,7 +15,7 @@
         <input type="number" class="form-control" id="numturno" nombre="numturno" formControlName="numturno"
           [ngClass]="{ 'is-invalid': submitted && f.numturno.errors }">
         <div *ngIf="submitted && f.numturno.errors" class="invalid-feedback">
-          <div *ngIf="f.numturno.errors.required">Numero del turno es requerido</div>
+          <div *ngIf="f.numturno.errors.required">Número del turno es requerido</div>
         </div>
       </div>
       <div class="col-md-3">

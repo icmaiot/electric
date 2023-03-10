@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="form-group col-md-6">
-                <label for="dolar_minuto">Costo en dolares por minuto de paro</label>
+                <label for="dolar_minuto">Costo en dolares por minuto de paro no programado</label>
                 <input type="number" class="form-control" id="dolar_minuto" nombre="dolar_minuto"
                     formControlName="dolar_minuto" [ngClass]="{ 'is-invalid': submitted && f.dolar_minuto.errors }">
                 <div *ngIf="submitted && f.dolar_minuto.errors" class="invalid-feedback">

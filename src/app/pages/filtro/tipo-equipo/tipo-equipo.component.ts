@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TipoEquipoService } from '@app/services/tipo-equipo.service';
+import { MaquinaService } from '@app/services/maquina.service';
 import { TipoEquipo } from '@app/models/tipoEquipo';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@app/services/auth.service';
 import { NuevoTipoEquipoComponent } from '@app/pages/forms/nuevo-tipo-equipo/nuevo-tipo-equipo.component';
@@ -17,7 +19,12 @@ import { NuevoEventoasignacionfallaComponent } from '@app/pages/forms/nuevo-even
 export class TipoEquipoComponent implements OnInit {
 
   nombre: string;
+  idmaquina;
   tipos: TipoEquipo[];
+  moduloi = [];
+  causas = [];
+  MQTT: FormGroup;
+  causasproceso:string;
   total: number = 0;
   urlOperando: string;
   urlIngenieria: string;
@@ -30,9 +37,16 @@ export class TipoEquipoComponent implements OnInit {
     { "name": "Tipo de equipo", "router": "/tipoEquipo" },
   ]
   constructor(private tipoService: TipoEquipoService,
+    private maquinaService: MaquinaService,
+    private formBuilder: FormBuilder,
     private dialog: MatDialog, private auth: AuthService) { }
 
   ngOnInit() {
+    this.MQTT = this.formBuilder.group({
+      topic: [''],
+      message: [],
+    });
+
     this.getTipos("");
 
     this.urlOperando = "../../../assets/img/OPERANDO - FONDO BLANCO.png";
@@ -55,7 +69,7 @@ export class TipoEquipoComponent implements OnInit {
   }
 
   onSearchChange(searchValue: string) {
-     this.getTipos(searchValue);
+    this.getTipos(searchValue);
   }
 
   add() {
@@ -65,7 +79,7 @@ export class TipoEquipoComponent implements OnInit {
         title: 'Agregar tipo de equipo',
         btnText: 'Guardar',
         alertSuccesText: 'Tipo de equipo creado!',
-        alertErrorText: "No se puedo crear el tipo de equipo",
+        alertErrorText: "Error al crear el tipo de equipo",
         modalMode: 'create'
       }
     });
@@ -83,7 +97,7 @@ export class TipoEquipoComponent implements OnInit {
         title: 'Editar tipo de equipo',
         btnText: 'Guardar',
         alertSuccesText: 'Tipo de equipo modificado correctamente',
-        alertErrorText: "No se puedo modificar el tipo de equipo",
+        alertErrorText: "Error al modificar el tipo de equipo",
         modalMode: 'edit',
         _tipo
       }
@@ -106,14 +120,14 @@ export class TipoEquipoComponent implements OnInit {
             Swal.fire('Eliminado', 'El tipo ha sido eliminado correctamente', 'success');
             this.getTipos("");
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el tipo', 'error');
+            Swal.fire('Error', 'Error al eliminar el tipo', 'error');
           }
         });
       }
     });
   }
 
-  Eventoc(number,id_equipo) {
+  Eventoc(number, id_equipo) {
     if (number == 4) {
       this.nombre = 'Mantenimiento'
     } else if (number == 5) {
@@ -132,14 +146,14 @@ export class TipoEquipoComponent implements OnInit {
         title: 'Catalago de fallos - ' + this.nombre,
         btnText: 'Guardar',
         alertSuccesText: 'Evento de causa modificada correctamente',
-        alertErrorText: "No se puedo modificar el evento de causa",
+        alertErrorText: "Error al modificar el evento de causa",
         modalMode: 'edit',
         idevento: number,
-        idequipo : id_equipo,
+        idequipo: id_equipo,
       }
     });
   }
-  
+
   Eventoasg(number) {
     if (number == 4) {
       this.nombre = 'Mantenimiento'
@@ -153,17 +167,60 @@ export class TipoEquipoComponent implements OnInit {
       this.nombre = 'Calidad'
     }
 
-  const dialogRef = this.dialog.open(NuevoEventoCausaComponent, {
-    width: '50rem',
-    data: {
-      title: 'Historial de fallos - ' + this.nombre,
-      btnText: 'Guardar',
-      alertSuccesText: 'Evento de causa modificada correctamente',
-      alertErrorText: "No se puedo modificar el evento de causa",
-      modalMode: 'edit',
-      idevento: number,
-     
+    const dialogRef = this.dialog.open(NuevoEventoCausaComponent, {
+      width: '50rem',
+      data: {
+        title: 'Historial de fallos - ' + this.nombre,
+        btnText: 'Guardar',
+        alertSuccesText: 'Evento de causa modificada correctamente',
+        alertErrorText: "Error al modificar el evento de causa",
+        modalMode: 'edit',
+        idevento: number,
+
+      }
+    });
+  }
+/*
+  //Obtener serialrmt
+  async Serial(idmaquina) {
+    this.idmaquina = idmaquina;
+    try {
+      let resp = await this.maquinaService.getInterfaz(this.idmaquina, this.auth.token).toPromise();
+      if (resp.code == 200) {
+        this.moduloi = resp.response;
+        this.getprodAct(this.moduloi[0].serialrmt);
+      }
+    } catch (e) {
     }
-  });
- }
+  }
+
+  //PRODUCTOS
+  async getprodAct(serialrmt) {
+    try {
+      let resp = await this.tipoService.getCausas(this.idmaquina, this.auth.token).toPromise();
+      if (resp.code == 200) {
+        this.causas = resp.response;
+        for (let i = 0; i < this.causas.length; i++) {
+          this.causasproceso = JSON.stringify(this.causas[i]);
+          this.causasproceso = this.causasproceso.split(/]|{|}|"|id|producto|te_|intervalo_tm|ciclo_|:|/g).join('');
+          this.causasproceso = this.causasproceso.split("[").join('');
+          this.causasproceso = this.causasproceso.split(",").join('?');
+          this.MQTT.value.topic = serialrmt;
+          this.SendProductosMQTT(this.causasproceso)
+        }
+      }
+    } catch (e) {
+    }
+  }
+
+  async SendProductosMQTT(info) {
+    this.MQTT.value.message = 'SKU:' + info + '/Fin';
+    try {
+      let resp = await this.skumaquinaService.MQTTEncoder(this.MQTT.value).toPromise();
+
+    } catch (e) {
+    }
+  }
+*/
+
 }

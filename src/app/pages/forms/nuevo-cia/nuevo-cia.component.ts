@@ -66,7 +66,7 @@ export class NuevoCiaComponent implements OnInit {
         this.imgURL = this.url2 + '/cia/get-image/' + this.cia.image
       }
     } catch (e) {
-      Swal.fire('Error', 'No se pudo obtener la empresa', 'error');
+      Swal.fire('Error', 'Error al obtener la empresa', 'error');
     }
   }
 
@@ -93,17 +93,17 @@ export class NuevoCiaComponent implements OnInit {
             this.fileToUpload = null;
             return;
           }).catch(error => {
-            Swal.fire('Error', 'No fue posible modificar la empresa', 'error');
+            Swal.fire('Error', 'Error al modificar la empresa', 'error');
           })
         }
         Swal.fire('', 'Registro modificado', 'success');
         //this.router.navigate(['/home']);
       }
       else {
-        Swal.fire('Error', 'No fue posible modificar la empresa', 'error');
+        Swal.fire('Error', 'Error al modificar la empresa', 'error');
       }
     } catch (e) {
-      Swal.fire('Error', 'No fue posible modificar la empresa', 'error');
+      Swal.fire('Error', 'Error al modificar la empresa', 'error');
     }
   }
 

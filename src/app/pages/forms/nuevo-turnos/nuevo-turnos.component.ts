@@ -25,7 +25,7 @@ export class NuevoTurnosComponent implements OnInit {
   turnodescanso = [];
   idurl;
   token;
-  
+
 
   listNav = [
     { "name": "Turnos Productivos", "router": "/TurnosProductivos" },
@@ -82,26 +82,27 @@ export class NuevoTurnosComponent implements OnInit {
       let resp = await this.progprodlineaService.getseleccionturno(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.turnodescanso = resp.response;
-        this.turnod = JSON.stringify(this.turnodescanso);
-        this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
-        this.turnod = this.turnod.split("idturdesc:").join('');
-        this.turnod = this.turnod.split("descansos:"). join('');
-        this.turnod = this.turnod.split("Turno:"). join('');
-        this.turnod = this.turnod.split("[").join('');
-        this.turnod = this.turnod.split(",").join('?');
-        this.SendProductosMQTT(this.turnod)
-
+        for (let i = 0; i < this.turnodescanso.length; i++) {
+          this.turnod = JSON.stringify(this.turnodescanso[i]);
+          this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
+          this.turnod = this.turnod.split("idturdesc:").join('');
+          this.turnod = this.turnod.split("descansos:").join('');
+          this.turnod = this.turnod.split("Turno:").join('');
+          this.turnod = this.turnod.split("[").join('');
+          this.turnod = this.turnod.split(",").join('?');
+          this.SendProductosMQTT(this.turnod)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendProductosMQTT(info) {
-    this.MQTT.value.message =  'Turno:'+ info +'/Fin';
+    this.MQTT.value.message = 'Turno:' + info + '/Fin';
     //console.log(this.MQTT.value)
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -119,7 +120,7 @@ export class NuevoTurnosComponent implements OnInit {
 
   async save() {
     try {
-      
+
       this.form.value.idturno = this.idurl;
       //console.log(this.form.value)
       let response = await this.turnoService.create(this.form.value, this.auth.token).toPromise();
@@ -131,7 +132,7 @@ export class NuevoTurnosComponent implements OnInit {
         this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -142,7 +143,7 @@ export class NuevoTurnosComponent implements OnInit {
         title: 'Editar descanso: ' + turno.numdesc,
         btnText: 'Guardar',
         alertSuccesText: 'Tiempo efectivo modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _turno: turno
       }
@@ -167,7 +168,7 @@ export class NuevoTurnosComponent implements OnInit {
             Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
             this.getTurno();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }

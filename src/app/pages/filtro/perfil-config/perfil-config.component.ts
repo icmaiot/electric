@@ -29,7 +29,7 @@ export class PerfilConfigComponent implements OnInit {
   lista: PerfilConfig[];
   total: number;
   listNav = [
-    { "name": "Modulo Interfaz", "router": "/moduloInterfaz" },
+    { "name": "Módulo Interfaz", "router": "/moduloInterfaz" },
     { "name": "Perfil configuración", "router": "/perfilConfig" }
   ]
 
@@ -84,7 +84,7 @@ export class PerfilConfigComponent implements OnInit {
         title: 'Editar perfil configuración',
         btnText: 'Guardar',
         alertSuccesText: 'Perfil configuración modificado correctamente',
-        alertErrorText: "No se puedo modificar el modulo interfaz",
+        alertErrorText: "Error al modificar el modulo interfaz",
         modalMode: 'edit',
         _perfilConfig: perfil
       }
@@ -107,7 +107,7 @@ export class PerfilConfigComponent implements OnInit {
             Swal.fire('Eliminado', 'El perfil configuración ha sido eliminado correctamente', 'success');
             this.getPerfil('');
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el perfil', 'error');
+            Swal.fire('Error', 'Error al eliminar el perfil', 'error');
           }
         });
       }

@@ -49,7 +49,7 @@ export class MaquinasComponent implements OnInit {
   total: number = 0;
 
   idmaquina;
-  MBP: any [];
+  MBP: any[];
   MQTT: FormGroup;
   MQTTt: FormGroup;
   MQTTs: FormGroup;
@@ -71,8 +71,8 @@ export class MaquinasComponent implements OnInit {
     { "name": "Equipos", "router": "/maquina" },
     { "name": "Área", "router": "/area" },
     { "name": "Tipo de equipo", "router": "/tipoEquipo" },
-    { "name": "Modulo Interfaz", "router": "/moduloInterfaz" },
-    { "name": "Modulo RMT", "router": "/modulo-RMT" },
+    { "name": "Módulo Interfaz", "router": "/moduloInterfaz" },
+    { "name": "Módulo RMT", "router": "/modulo-RMT" },
   ]
 
   constructor(
@@ -142,49 +142,49 @@ export class MaquinasComponent implements OnInit {
     this.getModuloRMT();
   }
 
-  //EMPIEZA ENVIAR A MTQQ
+  //EMPIEZA ENVIAR A MQTT
 
-  //oBTENER RMT TOPIC
+  //OBTENER RMT TOPIC
 
   async Serial(idmaquina) {
-      this.idmaquina = idmaquina;
+    this.idmaquina = idmaquina;
     try {
-         let resp = await this.maquinaService.getInterfaz(this.idmaquina, this.auth.token).toPromise();
-         if (resp.code == 200) {
-            this.moduloi = resp.response;
-            this.getprodAct(this.moduloi[0].serialrmt);
-            this.getTurnoDescanso(this.moduloi[0].serialrmt);
-            this.getUsrAct(this.moduloi[0].serialrmt);
-            this.getsubAct(this.moduloi[0].serialrmt);
-         
-        }
-       } catch (e) {
-       }
-
+      let resp = await this.maquinaService.getInterfaz(this.idmaquina, this.auth.token).toPromise();
+      if (resp.code == 200) {
+        this.moduloi = resp.response;
+        this.getprodAct(this.moduloi[0].serialrmt);
+        this.getTurnoDescanso(this.moduloi[0].serialrmt);
+        this.getUsrAct(this.moduloi[0].serialrmt);
+        this.getsubAct(this.moduloi[0].serialrmt);
+      }
+    } catch (e) {
+    }
   }
   //PRODUCTOS
 
   async getprodAct(serialrmt) {
     try {
-      let resp = await this.skumaquinaService.getProductosMaquina(this.idmaquina,this.auth.token).toPromise();
+      let resp = await this.skumaquinaService.getProductosMaquina(this.idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.prod = resp.response;
-        this.prodSend = JSON.stringify(this.prod);
-        this.prodSend = this.prodSend.split(/]|{|}|"|id|producto|te_|intervalo_tm|ciclo_|:|/g).join('');
-        this.prodSend = this.prodSend.split("[").join('');
-        this.prodSend = this.prodSend.split(",").join('?');
-        this.MQTT.value.topic = serialrmt;
-        this.SendProductosMQTT(this.prodSend)
+        for (let i = 0; i < this.prod.length; i++) {
+          this.prodSend = JSON.stringify(this.prod[i]);
+          this.prodSend = this.prodSend.split(/]|{|}|"|id|producto|te_|intervalo_tm|ciclo_|:|/g).join('');
+          this.prodSend = this.prodSend.split("[").join('');
+          this.prodSend = this.prodSend.split(",").join('?');
+          this.MQTT.value.topic = serialrmt;
+          this.SendProductosMQTT(this.prodSend)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendProductosMQTT(info) {
-    this.MQTT.value.message =  'SKU:'+ info +'/Fin';
+    this.MQTT.value.message = 'SKU:' + info + '/Fin';
     try {
       let resp = await this.skumaquinaService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -196,26 +196,27 @@ export class MaquinasComponent implements OnInit {
       let resp = await this.progprodlineaService.getseleccionturno(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.turnodescanso = resp.response;
-        this.turnod = JSON.stringify(this.turnodescanso);
-        this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
-        this.turnod = this.turnod.split("idturdesc:").join('');
-        this.turnod = this.turnod.split("descansos:"). join('');
-        this.turnod = this.turnod.split("Turno:"). join('');
-        this.turnod = this.turnod.split("[").join('');
-        this.turnod = this.turnod.split(",").join('?');
-        this.MQTTt.value.topic = serialrmt;
-        this.SendTurnosMQTT(this.turnod)
-
+        for (let i = 0; i < this.turnodescanso.length; i++) {
+          this.turnod = JSON.stringify(this.turnodescanso[i]);
+          this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
+          this.turnod = this.turnod.split("idturdesc:").join('');
+          this.turnod = this.turnod.split("descansos:").join('');
+          this.turnod = this.turnod.split("Turno:").join('');
+          this.turnod = this.turnod.split("[").join('');
+          this.turnod = this.turnod.split(",").join('?');
+          this.MQTTt.value.topic = serialrmt;
+          this.SendProductosMQTT(this.turnod)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendTurnosMQTT(info) {
-    this.MQTTt.value.message =  'Turno:'+ info +'/Fin';
+    this.MQTTt.value.message = 'Turno:' + info + '/Fin';
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTTt.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -227,22 +228,23 @@ export class MaquinasComponent implements OnInit {
       let resp = await this.usuarioService.getUsuariosAct(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.usr = resp.response;
-        this.usrSend = JSON.stringify(this.usr);
-        this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_linea|:|/g).join('');
-        this.usrSend = this.usrSend.split("[").join('');
-        this.usrSend = this.usrSend.split(",").join('?');
-        this.MQTTu.value.topic = serialrmt;
-        this.SendUsuariosMQTT(this.usrSend)
+        for (let i = 0; i < this.usr.length; i++) {
+          this.usrSend = JSON.stringify(this.usr[i]);
+          this.usrSend = this.usrSend.split(/]|{|}|"|id|evento|nip|permitir_evento|permitir_linea|:|/g).join('');
+          this.usrSend = this.usrSend.split("[").join('');
+          this.usrSend = this.usrSend.split(",").join('?');
+          this.SendUsuariosMQTT(this.usrSend)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendUsuariosMQTT(info) {
-    this.MQTTu.value.message =  'Ids:'+ info +'/Fin';
+    this.MQTTu.value.message = 'Ids:' + info + '/Fin';
     try {
       let resp = await this.usuarioService.MQTTEncoder(this.MQTTu.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -252,33 +254,35 @@ export class MaquinasComponent implements OnInit {
 
   async getsubAct(serialrmt) {
     try {
-      let resp = await this.submaquinaService.getSubensambleMaquina(this.idmaquina,this.auth.token).toPromise();
+      let resp = await this.submaquinaService.getSubensambleMaquina(this.idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.prod = resp.response;
-        this.prodSend = JSON.stringify(this.prod);
-        this.prodSend = this.prodSend.split(/]|{|}|"|idsubens:|subensamble:|/g).join('');
-        this.prodSend = this.prodSend.split("idsubens:").join('');
-        this.prodSend = this.prodSend.split("subensamble:").join('');
-        this.prodSend = this.prodSend.split("[").join('');
-        this.prodSend = this.prodSend.split(",").join('?');
-        this.MQTTs.value.topic = serialrmt;
-        this.SendSubMQTT(this.prodSend)
+        for (let i = 0; i < this.prod.length; i++) {
+          this.prodSend = JSON.stringify(this.prod[i]);
+          this.prodSend = this.prodSend.split(/]|{|}|"|idsubens:|subensamble:|/g).join('');
+          this.prodSend = this.prodSend.split("idsubens:").join('');
+          this.prodSend = this.prodSend.split("subensamble:").join('');
+          this.prodSend = this.prodSend.split("[").join('');
+          this.prodSend = this.prodSend.split(",").join('?');
+          this.MQTTs.value.topic = serialrmt;
+          this.SendSubMQTT(this.prodSend)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendSubMQTT(info) {
-    this.MQTTs.value.message =  'SUB:'+ info +'/Fin';
+    this.MQTTs.value.message = 'SUB:' + info + '/Fin';
     try {
       let resp = await this.submaquinaService.MQTTEncoder(this.MQTTs.value).toPromise();
-      
+
     } catch (e) {
     }
   }
 
 
-// FINALIZA ENVIADA A MTQQ
+  // FINALIZA ENVIADA A MTQQ
 
   async getMaquinaLista2() {
     try {
@@ -330,6 +334,7 @@ export class MaquinasComponent implements OnInit {
       let resp = await this.maquinaService.getMaquinaLista(this.formFilter.value, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.maquinalista = resp.response;
+        console.log(this.maquinalista)
       }
     } catch (e) {
     }
@@ -394,17 +399,19 @@ export class MaquinasComponent implements OnInit {
   }
 
   async save() {
+    if (this.form.value.progprod == 1) {
+      this.form.value.progprod = 'Línea'
+    } else { this.form.value.progprod = 'Equipo' }
     try {
       let response = await this.maquinaService.create(this.form.value, this.token).toPromise();
       if (response.code == 200) {
         Swal.fire('Guardado', 'El registro ha sido guardado!', 'success');
         this.submitted = false;
-        this.form.reset({});
         this.getMaquinaLista();
-        this.cdRef.detectChanges();
+        this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No se pudo guardar el registro', error.error);
+      Swal.fire('Error', 'Error al guardar el registro', error.error);
     }
   }
 
@@ -415,7 +422,7 @@ export class MaquinasComponent implements OnInit {
         title: 'Editar equipo: ' + _maquina.maquina,
         btnText: 'Guardar',
         alertSuccesText: 'Equipo modificado correctamente',
-        alertErrorText: "No se puedo modificar el equipo",
+        alertErrorText: "Error al modificar el equipo",
         modalMode: 'edit',
         _maquina
       }
@@ -442,7 +449,7 @@ export class MaquinasComponent implements OnInit {
             Swal.fire('Eliminado', 'El equipo ha sido eliminado correctamente', 'success');
             this.getMaquinaLista();
           } else {
-            Swal.fire('Error', 'No fue posible eliminar el equipo', 'error');
+            Swal.fire('Error', 'Error al eliminar el equipo', 'error');
           }
         });
       }
@@ -474,7 +481,7 @@ export class MaquinasComponent implements OnInit {
         title: 'Agregar sensor',
         btnText: 'Agregar',
         alertSuccesText: 'Sensor creado!',
-        alertErrorText: "No se pudo crear el sensor",
+        alertErrorText: "Error al crear el sensor",
         modalMode: 'create',
         idMaquina
       }
@@ -492,9 +499,9 @@ export class MaquinasComponent implements OnInit {
         title: 'Asignar correo de usuario',
         btnText: 'Agregar',
         alertSuccesText: 'Correo asignado a la linea!',
-        alertErrorText: "No se pudo asignar",
+        alertErrorText: "Error al asignar",
         obj,
-        linea : obj.idmaquina,
+        linea: obj.idmaquina,
       }
     });
 

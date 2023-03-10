@@ -1,0 +1,12 @@
+<div class="home card card-shadow h-100 d-flex mx-5 mb-5">
+    <div class="card-body-custom">
+        <div>
+            <div class="cards-row" >
+                <div *ngFor="let card of estadisCards" class="item-container {{ card.class }}" routerLink=" {{card.function}}" >
+                    <i class="material-icons" >   <img src="{{ card.icon }}" width="85px" height="85px"></i>
+                    <div> {{ card.text }} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

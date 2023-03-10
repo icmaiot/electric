@@ -1,5 +1,5 @@
 <div class="mt-3">
-  <app-header-table [renderButton]="false" [titleHeader]="'Programa de produccion'" [titleSelect]="false"
+  <app-header-table [renderButton]="false" [titleHeader]="'Programa de producción'" [titleSelect]="false"
     (buttonOutput)="false" (searchOutput)="false" [listNav]="listNav">
   </app-header-table>
 </div>
@@ -7,11 +7,11 @@
   <div class="card-header">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
       <div class="col">
-        <label for="numdesc" class="form-label">Numero de descanso</label>
+        <label for="numdesc" class="form-label">Número de descanso</label>
         <input type="number" class="form-control" id="numdesc" nombre="numdesc" formControlName="numdesc"
           [ngClass]="{ 'is-invalid': submitted && f.numdesc.errors }">
         <div *ngIf="submitted && f.numdesc.errors" class="invalid-feedback">
-          <div *ngIf="f.numdesc.errors.required">Numero de descanso es requerido</div>
+          <div *ngIf="f.numdesc.errors.required">Número de descanso es requerido</div>
         </div>
       </div>
       <div class="col">

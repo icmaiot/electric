@@ -368,7 +368,7 @@ export class RegistroProduccionLineaComponent implements OnInit {
         }
       }
     } catch (error) {
-      Swal.fire('Error', 'No se pudo guardar el registro', error.error);
+      Swal.fire('Error', 'Error al guardar el registro', error.error);
     }
   }
 
@@ -475,7 +475,7 @@ export class RegistroProduccionLineaComponent implements OnInit {
         title: 'Registro de modos e falla para la orden ' + obj.idprogprodlinea,
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new',
         obj: obj,
         tname: 'lote' + this.idprogprodlinea,
@@ -494,7 +494,7 @@ export class RegistroProduccionLineaComponent implements OnInit {
         title: 'Registro de scrap para la orden ' + obj.idprogprodlinea,
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new',
         obj: obj,
       }

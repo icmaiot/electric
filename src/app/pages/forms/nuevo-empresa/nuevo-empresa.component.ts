@@ -177,7 +177,7 @@ export class NuevoEmpresaComponent implements OnInit {
         this.formc.reset({});
       }
     } catch (e) {
-      Swal.fire('', 'No fue posible guardar el contacto', 'error');
+      Swal.fire('', 'Error al guardar el contacto', 'error');
     }
   }
 
@@ -188,7 +188,7 @@ export class NuevoEmpresaComponent implements OnInit {
         title: 'Editar Contacto: ' + contemp.nomcontemp,
         btnText: 'Guardar',
         alertSuccesText: 'Contacto modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _contemp: contemp
       }
@@ -324,7 +324,7 @@ export class NuevoEmpresaComponent implements OnInit {
         this.submitted = false;
       }
     } catch (e) {
-      Swal.fire('Error', 'No fue posible guardar la empresa', 'error');
+      Swal.fire('Error', 'Error al guardar la empresa', 'error');
     }
   }
 
@@ -340,7 +340,7 @@ export class NuevoEmpresaComponent implements OnInit {
       }
     }
     catch (error) {
-      Swal.fire('Error', 'No fue posible actualizar la empresa', 'error');
+      Swal.fire('Error', 'Error al actualizar la empresa', 'error');
     }
   }
 
@@ -354,7 +354,7 @@ export class NuevoEmpresaComponent implements OnInit {
             Swal.fire('Guardada', 'Empresa guardada correctamente', 'success');
           }
           else {
-            Swal.fire('Error', 'No fue posible guardar la empresa', 'error');
+            Swal.fire('Error', 'Error al guardar la empresa', 'error');
           }
           break;
 
@@ -370,13 +370,13 @@ export class NuevoEmpresaComponent implements OnInit {
             this.getEmpresa();
           }
           else {
-            Swal.fire('Error', 'No fue posible actualizar la empresa', 'error');
+            Swal.fire('Error', 'Error al actualizar la empresa', 'error');
           }
           break;
       }
     }
     catch (e) {
-      Swal.fire('Error', 'No fue posible actualizar la empresa', 'error');
+      Swal.fire('Error', 'Error al actualizar la empresa', 'error');
     }
 
   }
@@ -393,7 +393,7 @@ export class NuevoEmpresaComponent implements OnInit {
             Swal.fire('Eliminado', 'El Contacto ha sido eliminado correctamente', 'success');
             this.getContemp();
           } else {
-            Swal.fire('Error', 'No fue posible eliminar la empresa', 'error');
+            Swal.fire('Error', 'Error al eliminar la empresa', 'error');
           }
         });
       }
@@ -407,7 +407,7 @@ export class NuevoEmpresaComponent implements OnInit {
         title: 'Nueva relación comercial',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });
@@ -424,7 +424,7 @@ export class NuevoEmpresaComponent implements OnInit {
         title: 'Nueva condición de pago',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });

@@ -96,15 +96,21 @@ export class HomeComponent implements OnInit {
       },
       {
         icon: 'book',
-        text: 'Programa de Produccion',
+        text: 'Programa de Producción',
         function: '/programa-de-produccion',
         class: 'orange-bg'
       },
       {
         icon: 'equalizer',
-        text: 'Estadísticas',
-        function: '/estadistica',
+        text: 'Estadísticas Líneas',
+        function: '/estadisticas-lineas',
         class: 'gray-bg'
+      },
+      {
+        icon: 'equalizer',
+        text: 'Estadísticas Equipos',
+        function: '/estadisticas-equipos',
+        class: 'be-bg'
       }
     ];
 

@@ -37,6 +37,11 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
   serial;
   serialrmt;
 
+  programa: any[] = [
+    { id: 1, progprod: 'Línea' },
+    { id: 2, progprod: 'Equipo' },
+  ];
+
   constructor(private maquinaService: MaquinaService,
     private areaService: AreaService,
     private formBuilder: FormBuilder,
@@ -61,7 +66,7 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
       idmodulo: [''],
       Descripcion: ['', Validators.required],
       idrmt: ['', Validators.required],
-      // progprod: ['', Validators.required],
+       progprod: ['', Validators.required],
     });
     this.token = this.auth.token;
     this.loadModalTexts();
@@ -72,13 +77,22 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     this.getUsuario();
   }
 
-  async getModuloRMT() {
-    try {
-      let resp = await this.maquinaService.getModrmt(this.auth.token).toPromise();
-      if (resp.code == 200) {
-        this.MRMTlista = resp.response;
-      }
-    } catch (e) {
+
+  loadModalTexts() {
+    const { title, btnText, alertErrorText, alertSuccesText, modalMode, _maquina } = this.data;
+    this.title = title;
+    this.btnText = btnText;
+    this.alertSuccesText = alertSuccesText;
+    this.alertErrorText = alertErrorText;
+    this.modalMode = modalMode;
+    this.serial = _maquina.serial;
+    this.serialrmt = _maquina.serialrmt;
+    _maquina.tipoequipo = _maquina.idtipo;
+
+    if (_maquina) {
+      //this.maquina = _maquina;
+      const { idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, idrmt, serial, progprod  } = _maquina;
+      this.maquinaForm.patchValue({ idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, serial, idrmt, progprod  });
     }
   }
 
@@ -112,15 +126,30 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     }
   }
 
+  async getModuloRMT() {
+    try {
+      let resp = await this.maquinaService.getModrmt(this.auth.token).toPromise();
+      if (resp.code == 200) {
+        this.MRMTlista = resp.response;
+        if (this.serialrmt != null){
+        this.MRMTlista.push({idrmt: this.maquinaForm.value.idrmt, serialrmt: this.serialrmt})}
+      }
+    } catch (e) {
+    }
+  }
+
   async getModulo() {
     try {
       let resp = await this.moduloService.getModuloInterfazLista(this.token).toPromise();
       if (resp.code == 200) {
         this.MIlista = resp.modulo;
+        if (this.serial != null){
+        this.MIlista.push({idmodulo: this.maquinaForm.value.idmodulo, serial: this.serial})}
       }
-    } catch (error) { }
+    } catch (error) {
+    }
   }
-
+  
   get f() { return this.maquinaForm.controls; }
 
   onSubmit() {
@@ -132,13 +161,19 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     }
   }
 
+  borrarrmt(){
+    
+  }
+
   async guardar() {
     try {
       let response;
       response = await this.maquinaService.update(this.maquinaForm.value, this.token).toPromise();
       if (response.code = 200) {
+        console.log(this.maquinaForm.value)
         this.showAlert(this.alertSuccesText, true);
         this.closeModal();
+
       }
       else {
         this.showAlert(this.alertErrorText, false);
@@ -148,23 +183,6 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     }
   }
 
-  loadModalTexts() {
-    const { title, btnText, alertErrorText, alertSuccesText, modalMode, _maquina } = this.data;
-    this.title = title;
-    this.btnText = btnText;
-    this.alertSuccesText = alertSuccesText;
-    this.alertErrorText = alertErrorText;
-    this.modalMode = modalMode;
-    this.serial = _maquina.serial;
-    this.serialrmt = _maquina.serialrmt;
-    _maquina.tipoequipo = _maquina.idtipo;
-
-    if (_maquina) {
-      //this.maquina = _maquina;
-      const { idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, idrmt, serial  } = _maquina;
-      this.maquinaForm.patchValue({ idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, serial, idrmt  });
-    }
-  }
 
   closeModal() {
     this.dialogRef.close();

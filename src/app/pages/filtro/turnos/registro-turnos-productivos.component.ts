@@ -74,14 +74,16 @@ export class TurnosProductivosComponent implements OnInit {
       let resp = await this.progprodlineaService.getseleccionturno(this.auth.token).toPromise();
       if (resp.code == 200) {
         this.turnodescanso = resp.response;
-        this.turnod = JSON.stringify(this.turnodescanso);
-        this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
-        this.turnod = this.turnod.split("idturdesc:").join('');
-        this.turnod = this.turnod.split("descansos:"). join('');
-        this.turnod = this.turnod.split("Turno:"). join('');
-        this.turnod = this.turnod.split("[").join('');
-        this.turnod = this.turnod.split(",").join('?');
-        this.SendProductosMQTT(this.turnod)
+        for (let i = 0; i < this.turnodescanso.length; i++) {
+          this.turnod = JSON.stringify(this.turnodescanso[i]);
+          this.turnod = this.turnod.split(/]|{|}|"|/g).join('');
+          this.turnod = this.turnod.split("idturdesc:").join('');
+          this.turnod = this.turnod.split("descansos:").join('');
+          this.turnod = this.turnod.split("Turno:").join('');
+          this.turnod = this.turnod.split("[").join('');
+          this.turnod = this.turnod.split(",").join('?');
+          this.SendProductosMQTT(this.turnod)
+        }
 
       }
     } catch (e) {
@@ -89,10 +91,10 @@ export class TurnosProductivosComponent implements OnInit {
   }
 
   async SendProductosMQTT(info) {
-    this.MQTT.value.message =  'Turno:'+ info +'/Fin';
+    this.MQTT.value.message = 'Turno:' + info + '/Fin';
     try {
       let resp = await this.turnoService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -114,7 +116,7 @@ export class TurnosProductivosComponent implements OnInit {
 
   async save() {
     this.form.value.turnodb = this.form.value.turno;
-      this.form.value.turnodb = this.form.value.turnodb.split(" ").join('_');
+    this.form.value.turnodb = this.form.value.turnodb.split(" ").join('_');
     try {
       let response = await this.turnosproductivosService.create(this.form.value, this.auth.token).toPromise();
       if (response.code == 200) {
@@ -124,7 +126,7 @@ export class TurnosProductivosComponent implements OnInit {
         this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -135,7 +137,7 @@ export class TurnosProductivosComponent implements OnInit {
         title: 'Editar descanso: ' + turno.turno,
         btnText: 'Guardar',
         alertSuccesText: 'Tiempo efectivo modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _turno: turno
       }
@@ -160,7 +162,7 @@ export class TurnosProductivosComponent implements OnInit {
             this.getTurnos('');
             this.getTurnoDescanso();
           } else {
-            Swal.fire('Error', 'No fue posible borrar el turno!', 'error');
+            Swal.fire('Error', 'Error al borrar el turno!', 'error');
           }
         });
       }

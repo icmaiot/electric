@@ -37,7 +37,8 @@ import { HistoricoProduccionComponent } from '@app/pages/filtro/historico-produc
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { EstadisticasComponent } from '@app/pages/filtro/estadisticas/estadisticas.component';
+import { EstadisticasLineaComponent } from '@app/pages/filtro/estadisticas-lineas/estadisticas-lineas.component';
+import { EstadisticasEquipoComponent } from '@app/pages/filtro/estadisticas-equipos/estadisticas-equipos.component';
 import { GraficoMnttoComponent } from '@app/pages/forms/grafico-mntto/grafico-mntto.component';
 import { GraficoMatsComponent } from '@app/pages/forms/grafico-mats/grafico-mats.component';
 import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.component';
@@ -86,19 +87,20 @@ const routes: Routes = [
   { path: 'produccion-ejecucion', component: ProduccionEjecucionComponent, canActivate: [AuthGuard] },
   { path: 'historico-produccion', component: HistoricoProduccionComponent, canActivate: [AuthGuard] },
   { path: 'graficas/:idMaquina', component: GraficaEventoComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica', component: EstadisticasComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/mntto', component: GraficoMnttoComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/mats', component: GraficoMatsComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/ing', component: GraficoIngComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/prod', component: GraficoProdComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/calidad', component: GraficoCalidadComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/tiempomuerto', component: GraficoTiempomuertoComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/eficiencia', component: GraficoEficienciaComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/sku', component: GraficoSkuComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/oee', component: GraficoOEEComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/disponibilidad', component: GraficoDisponibilidadComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/rendimiento', component: GraficoRendimientoComponent, canActivate: [AuthGuard] },
-  { path: 'estadistica/:/pcalidad', component: GraficoPcalidadComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos', component: EstadisticasEquipoComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas', component: EstadisticasLineaComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos/:/mantenimiento', component: GraficoMnttoComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos/:/materiales', component: GraficoMatsComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos/:/ingenieria', component: GraficoIngComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos/:/produccion', component: GraficoProdComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-equipos/:/calidad', component: GraficoCalidadComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/tiempo-muerto', component: GraficoTiempomuertoComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/eficiencia', component: GraficoEficienciaComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/sku', component: GraficoSkuComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/oee', component: GraficoOEEComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/disponibilidad', component: GraficoDisponibilidadComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/rendimiento', component: GraficoRendimientoComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/porcentaje-de-calidad', component: GraficoPcalidadComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

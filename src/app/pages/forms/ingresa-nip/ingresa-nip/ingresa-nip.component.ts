@@ -65,19 +65,19 @@ export class IngresaNipComponent extends Dialog implements OnInit {
   }
   async addUsuario() {
     const dialogRef = this.dialog.open(NuevoUsuarioComponent, {
-      //width: '25rem',
+      width: '41rem',
       data: {
         title: 'Datos adicionales',
         btnText: 'Guardar',
         alertSuccesText: 'Usuario creado!',
-        alertErrorText: "No se puedo crear el usuario",
+        alertErrorText: "Error al crear el usuario",
         modalMode: 'create',
         username: this.data.username,
         Username_last: this.data.Username_last,
         iddep: this.data.iddep,
         idevento: this.data.idevento,
         tipousuario: this.data.tipousuario,
-        //usuario: this.usuario,
+        usuario: this.usuario,
       }
     });
     dialogRef.afterClosed().subscribe(data => {

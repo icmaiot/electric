@@ -34,8 +34,8 @@ export class ProductosComponent implements OnInit {
   submitted = false;
   listaEmpresa: [];
   VPL: [];
-  
-  MBP: any [];
+
+  MBP: any[];
   MQTT: FormGroup;
   prod = [];
   prodSend: string;
@@ -94,10 +94,10 @@ export class ProductosComponent implements OnInit {
         this.VPL = resp.response;
         this.totalVPL = this.VPL.length;
 
-        if(this.totalVPL > 0){
+        if (this.totalVPL > 0) {
           Swal.fire('Error', '¡Este producto no puede ser eliminado debido a que se encuentra vinculado a una línea de producción!', 'error');
-          
-        } else{
+
+        } else {
           this.delete(producto);
         }
       }
@@ -125,27 +125,29 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  async getprodAct(idmaquina,serialrmt) {
+  async getprodAct(idmaquina, serialrmt) {
     try {
-      let resp = await this.skumaquinaService.getProductosMaquina(idmaquina,this.auth.token).toPromise();
+      let resp = await this.skumaquinaService.getProductosMaquina(idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.prod = resp.response;
-        this.prodSend = JSON.stringify(this.prod);
-        this.prodSend = this.prodSend.split(/]|{|}|"|id|producto|te_|intervalo_tm|ciclo_|:|/g).join('');
-        this.prodSend = this.prodSend.split("[").join('');
-        this.prodSend = this.prodSend.split(",").join('?');
-        this.MQTT.value.topic = serialrmt;
-        this.SendUsuariosMQTT(this.prodSend)
+        for (let i = 0; i < this.prod.length; i++) {
+          this.prodSend = JSON.stringify(this.prod[i]);
+          this.prodSend = this.prodSend.split(/]|{|}|"|id|producto|te_|intervalo_tm|ciclo_|:|/g).join('');
+          this.prodSend = this.prodSend.split("[").join('');
+          this.prodSend = this.prodSend.split(",").join('?');
+          this.MQTT.value.topic = serialrmt;
+          this.SendUsuariosMQTT(this.prodSend)
+        }
       }
     } catch (e) {
     }
   }
 
   async SendUsuariosMQTT(info) {
-    this.MQTT.value.message =  'SKU:'+ info +'/Fin';
+    this.MQTT.value.message = 'SKU:' + info + '/Fin';
     try {
       let resp = await this.skumaquinaService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -156,11 +158,11 @@ export class ProductosComponent implements OnInit {
       if (resp.code == 200) {
         this.MBP = resp.response;
         this.totalMBP = this.MBP.length;
-        if(this.totalMBP > 0){
-          for(let i in this.MBP){
+        if (this.totalMBP > 0) {
+          for (let i in this.MBP) {
             this.MBP[i].idmaquina;
             this.MBP[i].serialrmt;
-            this.getprodAct(this.MBP[i].idmaquina,this.MBP[i].serialrmt)
+            this.getprodAct(this.MBP[i].idmaquina, this.MBP[i].serialrmt)
           }
         }
       }
@@ -195,7 +197,7 @@ export class ProductosComponent implements OnInit {
         this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -206,7 +208,7 @@ export class ProductosComponent implements OnInit {
         title: 'Editar producto: ' + producto.producto,
         btnText: 'Guardar',
         alertSuccesText: 'Producto modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _producto: producto
       }
@@ -220,11 +222,11 @@ export class ProductosComponent implements OnInit {
 
   verSKU(producto) {
     const dialogRef = this.dialog.open(AsignacionEquipoComponent, {
-      width: '30rem',
+      width: '40rem',
       data: {
         title: 'Asignación de equipos para producción de SKU',
         alertSuccesText: 'SKU guardado',
-        alertErrorText: "No se puedo modificar el SKU",
+        alertErrorText: "Error al modificar el SKU",
         idproducto: producto.idproducto
       }
     });
@@ -238,11 +240,12 @@ export class ProductosComponent implements OnInit {
   newDefecto() {
     const dialogRef = this.dialog.open(NuevoRegistodefectosComponent, {
       width: '50rem',
+      maxHeight: '40rem',
       data: {
         title: 'Registro de modos de fallas',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });
@@ -256,11 +259,12 @@ export class ProductosComponent implements OnInit {
   newScrap() {
     const dialogRef = this.dialog.open(NuevoRegistoscrapComponent, {
       width: '50rem',
+      maxHeight: '40rem',
       data: {
         title: 'Registro de causas de scrap',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });
@@ -277,7 +281,7 @@ export class ProductosComponent implements OnInit {
         title: 'Copia de modos de falla y/o causas de scrap',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new',
         obj: obj
       }
@@ -295,7 +299,7 @@ export class ProductosComponent implements OnInit {
         title: 'Asignar modos de falla al producto: ' + obj.producto,
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new',
         obj: obj
       }
@@ -309,11 +313,13 @@ export class ProductosComponent implements OnInit {
   AddScrap(obj) {
     const dialogRef = this.dialog.open(AsignarScrapComponent, {
       width: '50rem',
+      autoFocus: false,
+      maxHeight: '30rem',
       data: {
         title: 'Asignar causa de scrap al producto: ' + obj.producto,
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new',
         obj: obj
       }
@@ -337,7 +343,7 @@ export class ProductosComponent implements OnInit {
             this.getProductos('');
             this.MaquinaByProducto(producto.idproducto);
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }
@@ -361,7 +367,7 @@ export class ProductosComponent implements OnInit {
         title: 'Nuevo unidad de medida',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });

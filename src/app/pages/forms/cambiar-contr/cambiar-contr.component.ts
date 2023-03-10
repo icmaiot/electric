@@ -70,7 +70,7 @@ export class CambiarContrComponent extends Dialog implements OnInit {
         this.closeModal();
       }
     } catch (error) {
-      Swal.fire('Error', 'No se pudo guardar el registro', error.error);
+      Swal.fire('Error', 'Error al guardar el registro', error.error);
     }
   }
 

@@ -71,7 +71,7 @@ export class NuevoEventoCausaComponent extends Dialog implements OnInit {
       let resp = await this.evento_registroService.getEventoEquipo(this.number, this.idequipo,  this.auth.token).toPromise();
       if (resp.code == 200) {
         this.listaevento = resp.resp;
-      //  console.log(this.listaevento)
+       console.log(this.listaevento)
       }
     } catch (e) {
     }
@@ -83,7 +83,7 @@ export class NuevoEventoCausaComponent extends Dialog implements OnInit {
       let resp = await this.evento_registroService.getEventoCatalago(this.number, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.litafalla = resp.resp;
-       // console.log(this.listafalla)
+       console.log(this.listafalla)
       }
     } catch (e){
     }
@@ -97,7 +97,7 @@ export class NuevoEventoCausaComponent extends Dialog implements OnInit {
           Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
         }
         else {
-          Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+          Swal.fire('Error', 'Error al borrar el registro!', 'error');
         }
       });
     } catch (error) {
@@ -143,7 +143,7 @@ export class NuevoEventoCausaComponent extends Dialog implements OnInit {
         
       }
       else {
-        Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+        Swal.fire('Error', 'Error al borrar el registro!', 'error');
       } 
     });*/
   }
@@ -176,7 +176,7 @@ export class NuevoEventoCausaComponent extends Dialog implements OnInit {
         this.showAlert(this.alertErrorText, false);
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar la falla!, codigo o descripcion ya existen', 'error');
+      Swal.fire('Error', 'Error al guardar la falla!, codigo o descripcion ya existen', 'error');
     }
   }
  /* Guardar */

@@ -9,7 +9,7 @@
                            <th>
                                 <label class="select-filter">Fecha Final: </label>
                            </th>
-                           <th><label class="select-filter">Maquina: </label></th>
+                           <th><label class="select-filter">Máquina: </label></th>
                            <th></th>
                            <th></th>
                        </tr>
@@ -28,11 +28,11 @@
                            </td>
                            <td>
                                 <select name="maquina" id="maquina" formControlName="maquina" class="form-control select-filter" [ngClass]="{ 'is-invalid': submitted && f.maquina.errors }">
-                                    <option [selected]="true">Seleccionar maquina</option>
+                                    <option [selected]="true">Seleccionar máquina</option>
                                     <option *ngFor="let o of opt" [value]="o.maquina"> {{ o.maquina }} </option>
                                 </select>
                                 <div *ngIf="submitted && f.maquina.errors" class="invalid-feedback">
-                                    <div *ngIf="f.maquina.errors.required">Seleccione la maquina a graficar</div>
+                                    <div *ngIf="f.maquina.errors.required">Seleccione la máquina a graficar</div>
                                 </div>
                            </td>
                            <td></td>
@@ -55,7 +55,7 @@
                                     <option *ngFor="let o of mycall" [value]="o.folio"> {{ o.descripcion }} </option>
                                 </select>
                                 <div *ngIf="submitted2 && efe.causa.errors" class="invalid-feedback">
-                                    <div *ngIf="efe.causa.errors.required">Error seleccione un opcion </div>
+                                    <div *ngIf="efe.causa.errors.required">Error seleccione un opción </div>
                                 </div>
                             </th>
                             <th><button type="submit" class="btn btn-primary">Consultar</button></th>
@@ -81,7 +81,7 @@
                     <th>Codigo</th>
                     <th>Descripcion</th>
                     <th>Fecha</th>
-                    <th>Duracion</th>
+                    <th>Duración</th>
                 </tr>
                 <tr *ngFor="let res of inft">
                     <td>{{res.codigo}}</td>

@@ -89,7 +89,7 @@ export class MateriaPrimaComponent implements OnInit {
         this.form.reset({});
       }
     } catch (e) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -101,7 +101,7 @@ export class MateriaPrimaComponent implements OnInit {
         title: 'Editar producto: ' + obj.desc_raw,
         btnText: 'Guardar',
         alertSuccesText: 'Producto modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _materia: obj
       }
@@ -124,7 +124,7 @@ export class MateriaPrimaComponent implements OnInit {
             Swal.fire('Eliminado', 'El registro ha sido borrado!', 'success');
             this.getProductos('');
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }
@@ -148,7 +148,7 @@ export class MateriaPrimaComponent implements OnInit {
         title: 'Nuevo unidad de medida',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });

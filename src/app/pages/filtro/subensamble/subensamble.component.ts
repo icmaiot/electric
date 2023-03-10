@@ -25,7 +25,7 @@ export class SubensambleComponent implements OnInit {
   submitted = false;
   form: FormGroup
 
-  MBP: any [];
+  MBP: any[];
   MQTT: FormGroup;
   prod = [];
   prodSend: string;
@@ -83,29 +83,31 @@ export class SubensambleComponent implements OnInit {
     }
   }
 
-  async getprodAct(idmaquina,serialrmt) {
+  async getprodAct(idmaquina, serialrmt) {
     try {
-      let resp = await this.submaquinaService.getSubensambleMaquina(idmaquina,this.auth.token).toPromise();
+      let resp = await this.submaquinaService.getSubensambleMaquina(idmaquina, this.auth.token).toPromise();
       if (resp.code == 200) {
         this.prod = resp.response;
-        this.prodSend = JSON.stringify(this.prod);
-        this.prodSend = this.prodSend.split(/]|{|}|"|idsubens:|subensamble:|/g).join('');
-        this.prodSend = this.prodSend.split("idsubens:").join('');
-        this.prodSend = this.prodSend.split("subensamble:").join('');
-        this.prodSend = this.prodSend.split("[").join('');
-        this.prodSend = this.prodSend.split(",").join('?');
-        this.MQTT.value.topic = serialrmt;
-        this.SendUsuariosMQTT(this.prodSend)
+        for (let i = 0; i < this.prod.length; i++) {
+          this.prodSend = JSON.stringify(this.prod[i]);
+          this.prodSend = this.prodSend.split(/]|{|}|"|idsubens:|subensamble:|/g).join('');
+          this.prodSend = this.prodSend.split("idsubens:").join('');
+          this.prodSend = this.prodSend.split("subensamble:").join('');
+          this.prodSend = this.prodSend.split("[").join('');
+          this.prodSend = this.prodSend.split(",").join('?');
+          this.MQTT.value.topic = serialrmt;
+          this.SendUsuariosMQTT(this.prodSend);
+        }
       }
     } catch (e) {
     }
   }
 
   async SendUsuariosMQTT(info) {
-    this.MQTT.value.message =  'SUB:'+ info +'/Fin';
+    this.MQTT.value.message = 'SUB:' + info + '/Fin';
     try {
       let resp = await this.submaquinaService.MQTTEncoder(this.MQTT.value).toPromise();
-      
+
     } catch (e) {
     }
   }
@@ -116,11 +118,11 @@ export class SubensambleComponent implements OnInit {
       if (resp.code == 200) {
         this.MBP = resp.response;
         this.totalMBP = this.MBP.length;
-        if(this.totalMBP > 0){
-          for(let i in this.MBP){
+        if (this.totalMBP > 0) {
+          for (let i in this.MBP) {
             this.MBP[i].id_maquina;
             this.MBP[i].serialrmt;
-            this.getprodAct(this.MBP[i].id_maquina,this.MBP[i].serialrmt)
+            this.getprodAct(this.MBP[i].id_maquina, this.MBP[i].serialrmt)
           }
         }
       }
@@ -154,7 +156,7 @@ export class SubensambleComponent implements OnInit {
         this.form.reset({});
       }
     } catch (error) {
-      Swal.fire('Error', 'No fue posible guardar el registro!', 'error');
+      Swal.fire('Error', 'Error al guardar el registro!', 'error');
     }
   }
 
@@ -165,7 +167,7 @@ export class SubensambleComponent implements OnInit {
         title: 'Editar producto: ' + obj.subensamble,
         btnText: 'Guardar',
         alertSuccesText: 'Sunensamble modificado correctamente',
-        alertErrorText: "No se puedo modificar el registro",
+        alertErrorText: "Error al modificar el registro",
         modalMode: 'edit',
         _subensamble: obj
       }
@@ -190,7 +192,7 @@ export class SubensambleComponent implements OnInit {
             this.getSubensamble('');
             this.MaquinaBySubensamble(modulo.idsubens);
           } else {
-            Swal.fire('Error', 'No fue posible borrar el registro!', 'error');
+            Swal.fire('Error', 'Error al borrar el registro!', 'error');
           }
         });
       }
@@ -213,7 +215,7 @@ export class SubensambleComponent implements OnInit {
       data: {
         title: 'Asignación de maquina para: ' + subensamble.subensamble,
         alertSuccesText: 'Asignación guardada',
-        alertErrorText: "No se puedo modificar la asignación",
+        alertErrorText: "Error al modificar la asignación",
         idsubens: subensamble.idsubens
       }
     });
@@ -230,7 +232,7 @@ export class SubensambleComponent implements OnInit {
         title: 'Nuevo unidad de medida',
         btnText: 'Guardar',
         alertSuccesText: 'Agregado correctamente!',
-        alertErrorText: "No se puedo guardar el registro!",
+        alertErrorText: "Error al guardar el registro!",
         modalMode: 'new'
       }
     });
