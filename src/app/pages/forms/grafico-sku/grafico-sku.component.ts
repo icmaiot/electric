@@ -81,7 +81,6 @@ export class GraficoSkuComponent implements OnInit {
     this.formF.controls['fechaprep'].setValue(this.minDate);
     this.formF.controls['fechaprep2'].setValue(this.maxDate);
 
-    this.getMaquina();
     this.getProductos();
     this.getGraficaSkuProducido();
   }
@@ -102,23 +101,11 @@ export class GraficoSkuComponent implements OnInit {
     this.formF.controls['fechaprep2'].setValue(this.maxDate);
     this.formF.controls['idskunow'].setValue('-1');
     this.formF.controls['linea'].setValue('-1');
-    this.getMaquina();
+
     this.getGraficaSkuProducido();
   }
 
   //Graficas
-
-  async getMaquina() {
-    try {
-      let resp = await this.maquinaService.PGraficaLinea(this.formF.value, this.token).toPromise();
-      if (resp.code == 200) {
-        this.dataGauge = resp.response;
-        this.getTurnos(this.dataGauge)
-
-      }
-    } catch (e) {
-    }
-  }
 
   async getGraficaSkuProducido() {
     try {
