@@ -34,9 +34,21 @@
         </div>
       </div>
       <div class="col-md-6">
-        <label for="idmodulo1" class="form-label">Módulo Interfaz </label>
-        <select class="form-control" id="idmodulo1" nombre="idmodulo1" formControlName="idmodulo"
-          >
+        <label for="progprod1" class="form-label">Programa</label>
+        <select class="form-control" id="progprod1" nombre="progprod1" formControlName="progprod"
+          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
+          <option *ngFor="let prog of programa" [value]="prog.nombrep">
+            {{prog.nombrep}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
+          <div *ngIf="f.progprod.errors.required">El Turno es requerido</div>
+        </div>
+      </div>
+      <div *ngIf="!modulo" class="col-md-6">
+        <label for="idmodulo1" class="form-label">Módulo Interfaz </label> 
+        <a class="btn-add btn add" data-toggle="tooltip" data-placement="top" title="Agregar " (click)="setIDM()"><i class="btn-add material-icons">restore</i></a>
+        <select class="form-control" id="idmodulo1" nombre="idmodulo1" formControlName="idmodulo">
           <option *ngFor="let mi of MIlista" [value]="mi.idmodulo">
             {{mi.serial}}
           </option>
@@ -45,8 +57,9 @@
           <div *ngIf="f.idmodulo.errors.required">El Módulo Interfaz es requerido</div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div *ngIf="modulo" class="col-md-6">
         <label for="idrmt1" class="form-label">Modulo RMT  </label>
+        <a class="btn-add btn add" data-toggle="tooltip" data-placement="top" title="Agregar " (click)="setIDRMT()"><i class="btn-add material-icons">restore</i></a>
         <select class="form-control" id="idrmt1" nombre="idrmt1" formControlName="idrmt">
           <option *ngFor="let mrl of MRMTlista" [value]="mrl.idrmt">
             {{mrl.serialrmt}}
@@ -54,17 +67,6 @@
         </select>
         <div *ngIf="submitted && f.idrmt.errors" class="invalid-feedback">
           <div *ngIf="f.idrmt.errors.required">El Turno es requerido</div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <label for="progprod" class="form-label">Programa</label>
-        <select class="form-control" id="progprod" nombre="progprod" formControlName="progprod"
-          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
-          <option *ngFor="let prog of programa" [value]="prog.id">{{prog.progprod}}
-          </option>
-        </select>
-        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
-          <div *ngIf="f.progprod.errors.required">El Turno es requerido</div>
         </div>
       </div>
       <div class="form-group col-md-12">

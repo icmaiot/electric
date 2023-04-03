@@ -16,8 +16,6 @@
         <tr *ngFor="let d of areas">
           <td>{{d.area |titlecase}}</td>
           <td>
-            <a class="btn" data-toggle="tooltip" data-placement="top" title="Agregar equipo "
-              (click)="addMaquina(d.idarea)"><i class="material-icons">build</i></a>
             <a class="btn" data-toggle="tooltip" data-placement="top" title="Editar" (click)="updateArea(d)"><i
                 class="material-icons">create</i></a>
             <a class="btn" data-toggle="tooltip" data-placement="top" title="Eliminar " (click)="delete(d.idarea)"><i

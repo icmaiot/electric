@@ -106,4 +106,22 @@ export class GraficaService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
     return this.http.get(this.url + '/PGraficaTiempomuertoPorDiayTurno', { headers, params: params });
   }
+
+  PTablaCostos1(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PTablaCostos1', { headers, params: params });
+  }  
+
+  PTablaCostos2(form, token): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idskunow', form.idskunow);
+    params = params.append('fechaprep', form.fechaprep);
+    params = params.append('fechaprep2', form.fechaprep2);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': token });
+    return this.http.get(this.url + '/PTablaCostos2', { headers, params: params });
+  } 
 }

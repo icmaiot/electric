@@ -8,6 +8,7 @@ import { Dialog } from '@app/classes/Dialog';
 import { AuthService } from '@app/services/auth.service';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-asignar-defectos',
@@ -102,6 +103,7 @@ export class AsignarDefectosComponent extends Dialog implements OnInit {
       let response;
       response = await this.asignardefectosService.create(this.form.value, this.token).toPromise();
       if (response.code == 200) {
+        console.log(this.form.value)
         this.showAlert(this.alertSuccesText, true);
         this.getdefecto();
         this.submitteds = false;

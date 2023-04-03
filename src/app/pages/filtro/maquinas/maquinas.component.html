@@ -44,7 +44,18 @@
           <div *ngIf="f.tipoequipo.errors.required">Tipo de equipo es requerido</div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
+        <label for="progprod" class="form-label">Programa</label>
+        <select class="form-control" id="progprod" nombre="progprod" formControlName="progprod"   [(ngModel)]="selectedOption" (change)="toggleComponent()"
+          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
+          <option *ngFor="let pp of programa" [value]="pp.progprod">{{pp.progprod}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
+          <div *ngIf="f.progprod.errors.required">Programa es requerido</div>
+        </div>
+      </div>
+      <div *ngIf="showComponent" class="col-md-2">
         <label for="idmodulo" class="form-label">Módulo Interfaz</label>
         <select class="form-control" id="idmodulo1" nombre="idmodulo1" formControlName="idmodulo"
           [ngClass]="{ 'is-invalid': submitted && f.idmodulo.errors }">
@@ -56,7 +67,7 @@
           <div *ngIf="f.idmodulo.errors.required">Módulo Interfaz es requerido</div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div *ngIf="!showComponent" class="col-md-2">
         <label for="idrmt" class="form-label">Módulo RMT</label>
         <select class="form-control" id="idrmt1" nombre="idrmt1" formControlName="idrmt"
           [ngClass]="{ 'is-invalid': submitted && f.idrmt.errors }">
@@ -66,17 +77,6 @@
         </select>
         <div *ngIf="submitted && f.idrmt.errors" class="invalid-feedback">
           <div *ngIf="f.idrmt.errors.required">Módulo RMT es requerido</div>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <label for="progprod" class="form-label">Programa</label>
-        <select class="form-control" id="progprod" nombre="progprod" formControlName="progprod"
-          [ngClass]="{ 'is-invalid': submitted && f.progprod.errors }">
-          <option *ngFor="let pp of programa" [value]="pp.progprod">{{pp.progprod}}
-          </option>
-        </select>
-        <div *ngIf="submitted && f.progprod.errors" class="invalid-feedback">
-          <div *ngIf="f.progprod.errors.required">Programa es requerido</div>
         </div>
       </div>
       <div class="col-md-1 mt-4">

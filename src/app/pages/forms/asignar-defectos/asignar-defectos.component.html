@@ -5,7 +5,16 @@
                 <thead>
                     <tr class="col-md-12">
                         <th class="col-md-9">
-                            <div class=" ">
+                                <label>Agregar defectos</label>
+                                <mat-select class="form-control" formControlName="iddefreg" multiple>
+                                  <mat-option *ngFor="let d of defectos" [value]="d.iddefreg">
+                                    {{ d.descripcion_defecto }}
+                                  </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="submitteds && f.iddefreg.errors">
+                                  <div *ngIf="f.iddefreg.errors.required">El defecto es requerido</div>
+                                </mat-error>
+                            <!-- <div class=" ">
                                 <label>Agregar defecto</label>
                                 <select class="form-control" id="iddefreg" nombre="iddefreg" formControlName="iddefreg"
                                     [ngClass]="{ 'is-invalid': submitteds && f.iddefreg.errors }">
@@ -17,7 +26,7 @@
                                 <div *ngIf="submitteds && f.iddefreg.errors" class="invalid-feedback">
                                     <div *ngIf="f.iddefreg.errors.required">El defecto es requerido</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </th>
                         <th class="col-md-1">
                             <div class="">

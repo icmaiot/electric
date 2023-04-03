@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { MaquinaService } from '@app/services/maquina.service';
 import { AreaService } from '@app/services/area.service';
 import { TipoEquipoService } from '@app/services/tipo-equipo.service';
@@ -21,11 +21,12 @@ import { AuthService } from '@app/services/auth.service';
   styleUrls: ['./nuevo-maquina.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NuevoMaquinaComponent extends Dialog implements OnInit {
+export class NuevoMaquinaComponent extends Dialog implements OnInit{
 
   maquina = [];
   maquinaForm: FormGroup;
   submitted = false;
+  modulo = true;
   AS = [];
   TP = [];
   MIlista = [];
@@ -36,11 +37,6 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
   token;
   serial;
   serialrmt;
-
-  programa: any[] = [
-    { id: 1, progprod: 'Línea' },
-    { id: 2, progprod: 'Equipo' },
-  ];
 
   constructor(private maquinaService: MaquinaService,
     private areaService: AreaService,
@@ -57,6 +53,11 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     super();
   }
 
+  programa = [
+    { id: 1, nombrep: 'Línea' },
+    { id: 2, nombrep: 'Equipo' },
+  ];
+
   ngOnInit() {
     this.maquinaForm = this.formBuilder.group({
       idmaquina: [],
@@ -66,7 +67,7 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
       idmodulo: [''],
       Descripcion: ['', Validators.required],
       idrmt: ['', Validators.required],
-       progprod: ['', Validators.required],
+      progprod: ['', Validators.required],
     });
     this.token = this.auth.token;
     this.loadModalTexts();
@@ -77,7 +78,7 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     this.getUsuario();
   }
 
-
+  
   loadModalTexts() {
     const { title, btnText, alertErrorText, alertSuccesText, modalMode, _maquina } = this.data;
     this.title = title;
@@ -87,13 +88,28 @@ export class NuevoMaquinaComponent extends Dialog implements OnInit {
     this.modalMode = modalMode;
     this.serial = _maquina.serial;
     this.serialrmt = _maquina.serialrmt;
-    _maquina.tipoequipo = _maquina.idtipo;
-
+    console.log(_maquina)
     if (_maquina) {
       //this.maquina = _maquina;
       const { idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, idrmt, serial, progprod  } = _maquina;
-      this.maquinaForm.patchValue({ idmaquina, Descripcion, idarea, tipoequipo, idmodulo, maquina, serial, idrmt, progprod  });
-    }
+      this.maquinaForm.patchValue({ idmaquina, Descripcion, idarea, tipoequipo , idmodulo, maquina, serial, idrmt, progprod  });
+  }
+
+  this.maquinaForm.controls['tipoequipo'].setValue(_maquina.idtipo);
+  if(_maquina.progprod=="Equipo"){ 
+    this.modulo = false;
+    this.maquinaForm.value.progprod = '2' 
+  } else {
+    this.maquinaForm.value.progprod = '1' }
+  }
+
+
+  setIDM(){
+    this.maquinaForm.controls['idmodulo'].setValue('0');
+  }
+
+  setIDRMT(){
+    this.maquinaForm.controls['idrmt'].setValue('0');
   }
 
   async getAreas() {

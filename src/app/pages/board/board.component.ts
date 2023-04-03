@@ -276,59 +276,91 @@ export class BoardComponent implements OnInit {
     }
 
     async getBoard(lote) {
-        //this.formb.value.tmaquina = this.idmaquina;
         try {
-            let resp = await this.produccionService.getBoard(this.formb.value, this.auth.token).toPromise();
-            if (resp.code == 200) {
-                this.board = resp.response;
-                this.estado_email = this.board[0].estado_email;
-                this.estado_desc = this.board[0].estado_desc;
-                this.idmaquina = this.board[0].idmaquina;
-                this.paro = this.board[0].duracion_ult_paro.substring(0, this.board[0].duracion_ult_paro.length - 3);
-                if (this.board[0].distan <= this.board[0].prodesp) {
-                    this.verde = true;
-                    this.rojo = false;
-                    this.cdRef.detectChanges();
-                } else if (this.board[0].distan > this.board[0].prodesp) {
-                    this.verde = false;
-                    this.rojo = true;
-                    this.cdRef.detectChanges();
-                } else {
-                    this.verde = true;
-                    this.rojo = false;
-                }
-                if (lote == 0) {
-                    this.vel = false;
+            const resp = await this.produccionService.getBoard(this.formb.value, this.auth.token).toPromise();
+            if (resp.code !== 200) return;
+            
+            this.board = resp.response;
+            this.estado_email = this.board[0].estado_email;
+            this.estado_desc = this.board[0].estado_desc;
+            this.idmaquina = this.board[0].idmaquina;
+            this.paro = this.board[0].duracion_ult_paro.substring(0, this.board[0].duracion_ult_paro.length - 3);
+            this.verde = this.board[0].distan <= this.board[0].prodesp;
+            this.rojo = !this.verde;
+            if (lote) {
+                this.velocidad = this.board[0].veloc;
+                this.getCorreos();
+                this.actv = this.board[0].statprodlinea === 1;
+                if (this.actv) {
                     this.desc = false;
+                    this.vel = false;
                 } else {
-                    this.velocidad = this.board[0].veloc;
-                    //this.SE(); 
-                    this.getCorreos();
-                    this.activo = this.board[0].statprodlinea;
-                    if (this.activo == 1) {
-                        this.actv = true;
-                    } else if (this.activo < 1 || this.activo > 1) {
-                        this.actv = false;
-                        this.Desc();
-                        if (this.tid > 0) {
-                            this.desc = true
-                            if (this.desc == true) {
-                                this.vel = false
-                            }
-                        } else {
-                            this.desc = false;
-                            if (this.velocidad == 0) {
-                                this.vel = true;
-                            } else {
-                                this.vel = false;
-                            }
-                        }
-                    }
+                    this.Desc();
+                    this.desc = this.tid > 0;
+                    this.vel = !this.desc && this.velocidad === 0;
                 }
-                this.cdRef.detectChanges();
+            } else {
+                this.vel = false;
+                this.desc = false;
             }
-        } catch (e) { }
+            this.cdRef.detectChanges();
+        } catch (e) {}
     }
+
+    // async getBoard(lote) {
+    //     //this.formb.value.tmaquina = this.idmaquina;
+    //     try {
+    //         let resp = await this.produccionService.getBoard(this.formb.value, this.auth.token).toPromise();
+    //         if (resp.code == 200) {
+    //             this.board = resp.response;
+    //             this.estado_email = this.board[0].estado_email;
+    //             this.estado_desc = this.board[0].estado_desc;
+    //             this.idmaquina = this.board[0].idmaquina;
+    //             this.paro = this.board[0].duracion_ult_paro.substring(0, this.board[0].duracion_ult_paro.length - 3);
+    //             if (this.board[0].distan <= this.board[0].prodesp) {
+    //                 this.verde = true;
+    //                 this.rojo = false;
+    //                 this.cdRef.detectChanges();
+    //             } else if (this.board[0].distan > this.board[0].prodesp) {
+    //                 this.verde = false;
+    //                 this.rojo = true;
+    //                 this.cdRef.detectChanges();
+    //             } else {
+    //                 this.verde = true;
+    //                 this.rojo = false;
+    //             }
+    //             if (lote == 0) {
+    //                 this.vel = false;
+    //                 this.desc = false;
+    //             } else {
+    //                 this.velocidad = this.board[0].veloc;
+    //                 //this.SE(); 
+    //                 this.getCorreos();
+    //                 this.activo = this.board[0].statprodlinea;
+    //                 if (this.activo == 1) {
+    //                     this.actv = true;
+    //                 } else if (this.activo < 1 || this.activo > 1) {
+    //                     this.actv = false;
+    //                     this.Desc();
+    //                     if (this.tid > 0) {
+    //                         this.desc = true
+    //                         if (this.desc == true) {
+    //                             this.vel = false
+    //                         }
+    //                     } else {
+    //                         this.desc = false;
+    //                         if (this.velocidad == 0) {
+    //                             this.vel = true;
+    //                         } else {
+    //                             this.vel = false;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             this.cdRef.detectChanges();
+    //         }
+    //     } catch (e) { }
+    // }
 
 
     async getBoard2() {

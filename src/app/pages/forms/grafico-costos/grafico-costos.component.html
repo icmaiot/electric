@@ -1,0 +1,84 @@
+<div class="modulo mb-3 mx-4">
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="formF">
+        <div class="mx-4 div-flex">
+          <div class="c row">
+            <a class="label">Desde: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep" (change)="getTablaLinea()" (change)="getTabla1()" (change)="getTabla2()" />
+          </div>
+          <div class="c row">
+            <a class="label">Hasta: </a> <input class="form-control select-filter" type="date"
+              formControlName="fechaprep2" (change)="getTablaLinea()" (change)="getTabla1()" (change)="getTabla2()" [(max)]="maxDate" />
+          </div>
+          <a class="btn" data-toggle="tooltip" data-placement="top" title="Limpiar filtros" (click)="limpiarFiltro()"><i
+              class="material-icons">filter_list</i></a>
+        </div>
+
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card-hover-shadow-2x card">
+                <div class="widget-chart-content">
+                  <div class="widget-numbers">
+                    Perdida Finaciera
+                    <div class="col-md-2 select-fil">
+                      <select class="form-control " id="linea" nombre="linea" formControlName="linea"
+                        (change)="getTablaLinea()" >
+                        <option value="-1" hidden selected>Lineas</option>
+                        <option *ngFor="let linea of lineas" [value]="linea.idmaquina">{{linea.maquina}}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2 select-fil">
+                      <select class="form-control " id="sku" nombre="sku" formControlName="idproducto"
+                        (change)="getTablaLinea()" (change)="getTabla1()" (change)="getTabla2()">
+                        <option value="-1" hidden selected>SKU</option>
+                        <option *ngFor="let producto of productos " [value]="producto.idproducto">{{producto.producto}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="widget-subheading">
+                    <div id="costos" class="chart"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons
+    aria-label="Select page of periodic elements">
+  </mat-paginator>
+  <div class="mb-3">
+    <div class="card-hover-shadow-2x card">
+      <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+        <ng-container *ngFor="let disCol of columnas2; let colIndex = index" matColumnDef="{{disCol}}">
+          <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+          <td mat-cell *matCellDef="let element "> {{element[disCol]}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas2"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas2;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div class="card-hover-shadow-2x card">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container *ngFor="let disCol of columnas; let colIndex = index" matColumnDef="{{disCol}}">
+          <th mat-header-cell *matHeaderCellDef>{{disCol}} </th>
+          <td mat-cell *matCellDef="let element "> {{element[disCol]}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+      </table>
+    </div>
+  </div>
+
+
+</div>

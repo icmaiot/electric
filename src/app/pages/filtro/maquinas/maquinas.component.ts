@@ -47,7 +47,8 @@ export class MaquinasComponent implements OnInit {
   areas: Area[];
   selectedArea: string = '';
   total: number = 0;
-
+  selectedOption: string;
+  showComponent: boolean = false;
   idmaquina;
   MBP: any[];
   MQTT: FormGroup;
@@ -140,6 +141,11 @@ export class MaquinasComponent implements OnInit {
     this.getMaquinaLista2();
     this.getModuloIn();
     this.getModuloRMT();
+  }
+
+  toggleComponent() {
+    console.log(this.selectedOption)
+    this.showComponent = this.selectedOption === 'Línea'; // cambia a true si la opción 1 está seleccionada
   }
 
   //EMPIEZA ENVIAR A MQTT

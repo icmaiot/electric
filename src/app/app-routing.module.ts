@@ -14,7 +14,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { TipoEquipoComponent } from './pages/filtro/tipo-equipo/tipo-equipo.component';
 import { ModuloInterfazComponent } from './pages/filtro/modulo-interfaz/modulo-interfaz.component'
-import { PerfilConfigComponent } from './pages/filtro/perfil-config/perfil-config.component'
 import { NuevoConfiguracionModuloComponent } from './pages/forms/nuevo-configuracion-modulo/nuevo-configuracion-modulo.component'
 import { ProductosComponent } from './pages/filtro/productos/productos.component'
 import { SubensambleComponent } from './pages/filtro/subensamble/subensamble.component'
@@ -45,6 +44,7 @@ import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.co
 import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
 import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
 import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomuerto/grafico-tiempomuerto.component';
+import { GraficoCostosComponent } from '@app/pages/forms/grafico-costos/grafico-costos.component';
 import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
 import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
 import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
@@ -65,7 +65,6 @@ const routes: Routes = [
   { path: 'usuario', component: UsuariosComponent, canActivate: [AuthGuard] },
   { path: 'tablaEstado/:idMaquina', component: GraficaSensorComponent, canActivate: [AuthGuard] },
   { path: 'tipoEquipo', component: TipoEquipoComponent, canActivate: [AuthGuard] },
-  { path: 'perfilConfig', component: PerfilConfigComponent, canActivate: [AuthGuard] },
   { path: 'configuracionModulo/:idPerfil', component: NuevoConfiguracionModuloComponent, canActivate: [AuthGuard] },
   { path: 'producto', component: ProductosComponent, canActivate: [AuthGuard] },
   { path: 'subensamble', component: SubensambleComponent, canActivate: [AuthGuard] },
@@ -95,6 +94,7 @@ const routes: Routes = [
   { path: 'estadisticas-equipos/:/produccion', component: GraficoProdComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas-equipos/:/calidad', component: GraficoCalidadComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas-lineas/:/tiempo-muerto', component: GraficoTiempomuertoComponent, canActivate: [AuthGuard] },
+  { path: 'estadisticas-lineas/:/perdida-financiera', component: GraficoCostosComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas-lineas/:/eficiencia', component: GraficoEficienciaComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas-lineas/:/sku', component: GraficoSkuComponent, canActivate: [AuthGuard] },
   { path: 'estadisticas-lineas/:/oee', component: GraficoOEEComponent, canActivate: [AuthGuard] },
@@ -111,6 +111,7 @@ const routes: Routes = [
     ),
     CommonModule,
     FormsModule,
+    
   ],
   exports: [
     RouterModule

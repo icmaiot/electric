@@ -25,6 +25,7 @@ export class EstadisticasLineaComponent implements OnInit {
   URLDisponibilidad = "../../../../assets/img/sin_fondo/DISPONIBILIDAD.png";
   URLRendimiento = "../../../../assets/img/sin_fondo/RENDIMIENTO.png";
   URLPcalidad = "../../../../assets/img/sin_fondo/PCALIDAD.png";
+  URLPerdida = "../../../../assets/img/sin_fondo/PERDIDAFINANCIERA.png";
   
   private url2: string = environment.environment.urlEndPoint;
   constructor(private router: Router, private auth: AuthService) { }
@@ -35,6 +36,12 @@ export class EstadisticasLineaComponent implements OnInit {
         icon: this.URLTM,
         text: 'Estadísticas de Tiempo Muerto',
         function: '/tiempo-muerto',
+        class: 'salmon-bg',
+      },
+      {
+        icon: this.URLPerdida,
+        text: 'Perdida Financiera',
+        function: '/perdida-financiera',
         class: 'green-two-bg',
       },
       {

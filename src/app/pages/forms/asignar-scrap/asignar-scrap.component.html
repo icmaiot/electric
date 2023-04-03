@@ -7,7 +7,15 @@
                         <th class="col-md-9">
                             <div class=" ">
                                 <label>Agregar scrap</label>
-                                <select class="form-control" id="idscrapreg" nombre="idscrapreg"
+                                <mat-select class="form-control" formControlName="idscrapreg" multiple>
+                                    <mat-option *ngFor="let d of scraps" [value]="d.idscrapreg">
+                                        {{d.descripcion_scrap}}
+                                    </mat-option>
+                                  </mat-select>
+                                  <mat-error *ngIf="submitteds && f.idscrapreg.errors">
+                                    <div *ngIf="f.idscrapreg.errors.required">El defecto es requerido</div>
+                                  </mat-error>
+                                <!-- <select class="form-control" id="idscrapreg" nombre="idscrapreg"
                                     formControlName="idscrapreg"
                                     [ngClass]="{ 'is-invalid': submitteds && f.idscrapreg.errors }">
                                     <option disabled hidden value="-1" [selected]="true">Seleccionar scrap</option>
@@ -17,7 +25,7 @@
                                 </select>
                                 <div *ngIf="submitteds && f.idscrapreg.errors" class="invalid-feedback">
                                     <div *ngIf="f.idscrapreg.errors.required">El scrap es requerido</div>
-                                </div>
+                                </div> -->
                             </div>
                         </th>
                         <th class="col-md-1">

@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
 import { StatusPipePipe } from './pipes/status-pipe.pipe';
 
 //**********************************************************************COMPONENTES********************************************************************************** */
@@ -52,6 +53,7 @@ import { GraficoIngComponent } from '@app/pages/forms/grafico-ing/grafico-ing.co
 import { GraficoProdComponent } from '@app/pages/forms/grafico-prod/grafico-prod.component';
 import { GraficoCalidadComponent } from '@app/pages/forms/grafico-calidad/grafico-calidad.component';
 import { GraficoTiempomuertoComponent } from '@app/pages/forms/grafico-tiempomuerto/grafico-tiempomuerto.component';
+import { GraficoCostosComponent } from '@app/pages/forms/grafico-costos/grafico-costos.component';
 import { GraficoOEEComponent } from '@app/pages/forms/grafico-oee/grafico-oee.component';
 import { GraficoEficienciaComponent } from '@app/pages/forms/grafico-eficiencia/grafico-eficiencia.component';
 import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.component';
@@ -80,7 +82,6 @@ import { DepartamentosComponent } from './pages/filtro/departamentos/departament
 import { FuncionUsuComponent } from './pages/filtro/funcion-usu/funcion-usu.component';
 import { CatalogoFuncionesComponent } from './pages/filtro/catalogo-funciones/catalogo-funciones.component';
 import { ModuloInterfazComponent } from './pages/filtro/modulo-interfaz/modulo-interfaz.component';
-import { PerfilConfigComponent } from './pages/filtro/perfil-config/perfil-config.component';
 import { ProductosComponent } from './pages/filtro/productos/productos.component';
 import { SubensambleComponent } from './pages/filtro/subensamble/subensamble.component';
 import { MateriaPrimaComponent } from './pages/filtro/materia-prima/materia-prima.component';
@@ -145,7 +146,6 @@ import { NuevoUsuarioComponent } from './pages/forms/nuevo-usuario/nuevo-usuario
 import { NuevoMaquinaComponent } from './pages/forms/nuevo-maquina/nuevo-maquina.component';
 import { NuevoSensorComponent } from './pages/forms/nuevo-sensor/nuevo-sensor.component';
 import { NuevoModuloComponent } from './pages/forms/nuevo-modulo/nuevo-modulo.component';
-import { NuevoPerfilconfigComponent } from './pages/forms/nuevo-perfilconfig/nuevo-perfilconfig.component';
 import { NuevoConfiguracionModuloComponent } from './pages/forms/nuevo-configuracion-modulo/nuevo-configuracion-modulo.component';
 import { NuevoProductoComponent } from './pages/forms/nuevo-producto/nuevo-producto.component';
 import { NuevoSubensambleComponent } from './pages/forms/nuevo-subensamble/nuevo-subensamble.component';
@@ -174,6 +174,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
     MatButtonModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
+    MatSelectModule
   ],
   declarations: [
     AppComponent,
@@ -217,8 +218,6 @@ registerLocaleData(localeEsMX, 'es-Mx');
     DialogComponent,
     ModuloInterfazComponent,
     NuevoModuloComponent,
-    NuevoPerfilconfigComponent,
-    PerfilConfigComponent,
     NuevoConfiguracionModuloComponent,
     ProductosComponent,
     NuevoProductoComponent,
@@ -279,6 +278,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
     GraficoProdComponent,
     GraficoCalidadComponent,
     GraficoTiempomuertoComponent,
+    GraficoCostosComponent,
     GraficoSkuComponent,
     GraficoOEEComponent,
     GraficoEficienciaComponent,
@@ -291,7 +291,7 @@ registerLocaleData(localeEsMX, 'es-Mx');
   bootstrap: [AppComponent],
   entryComponents: [
     NuevoDepartamentoComponent, NuevoAreaComponent, NuevoMaquinaComponent, NuevoSensorComponent, NuevoUsuarioComponent,
-    NuevoTipoEquipoComponent, NuevoModuloComponent, NuevoPerfilconfigComponent, NuevoProductoComponent, NuevoMateriapComponent, NuevoSubensambleComponent,
+    NuevoTipoEquipoComponent, NuevoModuloComponent,  NuevoProductoComponent, NuevoMateriapComponent, NuevoSubensambleComponent,
     NuevoUmComponent, NuevoContempComponent, NuevoEmpresaComponent, NuevoRelcompComponent, NuevoCondpagoComponent, NuevoStatuswoComponent, AsignacionEquipoComponent,
     IngresaNipComponent, CatalogoFuncionesComponent, NuevoWoComponent, NuevoStatuswosubComponent, NuevoWosubComponent, EditarProgprodComponent, NuevoTurnosComponent,
     NuevoDiaTurnoComponent, FuncionUsuComponent, EditarUsuarioComponent, CambiarContrComponent, CambiarNipComponent, NuevoEventoCausaComponent,

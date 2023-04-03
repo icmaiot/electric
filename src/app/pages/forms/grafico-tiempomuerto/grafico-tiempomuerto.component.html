@@ -30,45 +30,27 @@
               <div class="card-hover-shadow-2x mb-3 card">
                 <div class="widget-chart-content">
                   <div class="widget-numbers">
-                    {{Titulo}}
+                    Tiempo Muerto
                     <div class="col-md-2 select-fil">
                       <select class="form-control " id="linea" nombre="linea" formControlName="linea"
-                        (change)="getMaquina()" (change)="getTablaLinea()" >
+                        (change)="getMaquina()" (change)="getTablaLinea()">
                         <option value="-1" hidden selected>Lineas</option>
                         <option *ngFor="let linea of lineas" [value]="linea.idmaquina">{{linea.maquina}}</option>
                       </select>
                     </div>
                     <div class="col-md-2 select-fil">
                       <select class="form-control " id="sku" nombre="sku" formControlName="idproducto"
-                      (change)="getMaquina()" (change)="getTablaLinea()">
+                        (change)="getMaquina()" (change)="getTablaLinea()">
                         <option value="-1" hidden selected>SKU</option>
-                        <option *ngFor="let producto of productos " [value]="producto.idproducto">{{producto.producto}}</option>
+                        <option *ngFor="let producto of productos " [value]="producto.idproducto">{{producto.producto}}
+                        </option>
                       </select>
-                    </div>
-                    <div class="col-md-1.5 select-fil">
-                      <button class="btn btn-info" (click)="toggleEvent()">
-                        {{addToMemoryFlag ? 'Tiempo Muerto' : 'Costos'}}
-                      </button>
                     </div>
                   </div>
                   <div class="widget-subheading">
-                    <div id="{{addToMemoryFlag ? 'tm-turno' : 'costos'}}" class="chart"></div>
-                    <div id="chartdata" class="chartdata"></div>
+                    <div id="tm-turno" class="chart"></div>
                   </div>
                 </div>
-
-          <!--     <mat-table #table [dataSource]="datasource" class="mat-elevation-z8">
-
-                  <ng-container *ngFor="let disCol of columnas; let colIndex = index" matColumnDef="{{disCol}}">
-                    <mat-header-cell *matHeaderCellDef>{{disCol}}</mat-header-cell>
-                    <mat-cell *matCellDef="let element "> {{element[disCol]}}
-                    </mat-cell>
-                  </ng-container>
-
-                  <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
-                  <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
-                </mat-table>
- --> 
               </div>
             </div>
           </div>
