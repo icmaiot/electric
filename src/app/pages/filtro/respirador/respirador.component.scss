@@ -1,0 +1,43 @@
+@import '../../../../assets/variables.scss';
+
+.card {
+  box-shadow: $shadow-card;
+}
+
+.respirador {
+  margin-top: 3rem;
+}
+
+.footer {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  text-align: center;
+  border: 1.5px solid #CCC;
+  padding: 0 !important;
+}
+
+.header-blue {
+  background-color: #78909C;
+  // background-color: #607D8B;
+  color: white;
+}
+
+
+.header-bgray {
+  // background-color: #455A64;
+  background-color: #546E7A;
+  color: white;
+}
+
+.header-gray {
+  //background-color: #757575;
+  background-color: #9E9E9E;
+  color: white;
+}

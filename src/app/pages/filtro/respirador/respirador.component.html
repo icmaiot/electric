@@ -1,0 +1,108 @@
+<div class="mt-3">
+    <app-header-table [renderButton]="false" [titleHeader]="'Departamentos'" [titleSelect]="'Buscar departamento..'"
+        (buttonOutput)="addDepto()" (searchOutput)="onSearchChange($event)" [listNav]="listNav">
+    </app-header-table>
+</div>
+<div class="respirador card mb-4 mx-5">
+    <div class="">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <!-- <ng-container matColumnDef="estatus">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2"> Estatus </th>  
+                <td mat-cell > 0 </td>             
+            </ng-container>-->
+
+            <ng-container matColumnDef="ns">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="header-bgray"> NS </th>
+                <td mat-cell *matCellDef="let element"> {{element.ns}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="error">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="header-bgray"> Error </th>
+                <td mat-cell *matCellDef="let element" class="alert alert-success"
+                    [ngClass]="{ 'alert alert-danger': element.eerror !== ''}"> {{element.eerror}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="conf">
+                <th class="header-bgray" mat-header-cell *matHeaderCellDef [attr.colspan]="6">Configuración</th>
+                <!-- This column doesn't generate <td> items, so no need to add a definition for them -->
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="flujo">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> Flujo </th>
+                <td mat-cell *matCellDef="let element"> {{element.cflujo}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="relacion">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> Relación </th>
+                <td mat-cell *matCellDef="let element"> {{element.crelacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cpresion">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> Presión </th>
+                <td mat-cell *matCellDef="let element"> {{element.cpresion}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="cbpm">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> BPM </th>
+                <td mat-cell *matCellDef="let element"> {{element.cbpm}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ctiempoI">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> Tiempo inhalación </th>
+                <td mat-cell *matCellDef="let element"> {{element.ctinalacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ctiempoE">
+                <th mat-header-cell *matHeaderCellDef class="header-blue"> Tiempo exhalación </th>
+                <td mat-cell *matCellDef="let element"> {{element.ctexalacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sensor">
+                <th class="header-bgray" mat-header-cell *matHeaderCellDef [attr.colspan]="6">Sensor</th>
+                <!-- This column doesn't generate <td> items, so no need to add a definition for them -->
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="encendido">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Encendido </th>
+                <td mat-cell *matCellDef="let element"> {{element.eencendido}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="eflujo">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Flujo </th>
+                <td mat-cell *matCellDef="let element"> {{element.eflujo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="oxigeno">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Oxígeno </th>
+                <td mat-cell *matCellDef="let element"> {{element.eoxigeno}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="oximetro">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Oxímetro </th>
+                <td mat-cell *matCellDef="let element"> {{element.eoximetro}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="presion">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Presión </th>
+                <td mat-cell *matCellDef="let element"> {{element.epresion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ritmo">
+                <th mat-header-cell *matHeaderCellDef class="header-gray"> Ritmo </th>
+                <td mat-cell *matCellDef="let element"> {{element.eritmoc}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['ns','error', 'conf', 'sensor']"></tr>
+            <tr mat-header-row *matHeaderRowDef="['flujo','relacion','cpresion','cbpm','ctiempoI','ctiempoE' ,'encendido', 'eflujo','oxigeno' , 'oximetro',
+            'presion','ritmo']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['ns', 'error','flujo','relacion','cpresion','cbpm','ctiempoI','ctiempoE','encendido', 'eflujo','oxigeno' , 'oximetro',
+            'presion','ritmo']"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>
