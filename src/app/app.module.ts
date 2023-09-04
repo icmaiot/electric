@@ -152,6 +152,17 @@ import { NuevoSubensambleComponent } from './pages/forms/nuevo-subensamble/nuevo
 import { NuevoMateriapComponent } from './pages/forms/nuevo-materiap/nuevo-materiap.component';
 import { NuevoUmComponent } from './pages/forms/nuevo-um/nuevo-um.component';
 import { NuevoTipoEquipoComponent } from './pages/forms/nuevo-tipo-equipo/nuevo-tipo-equipo.component';
+import { ControlComponent } from '@app/pages/control/control.component';
+import { ProduccionComponent } from './pages/filtro/400/400.component';
+import { OrdenManufacturaComponent } from './pages/filtro/orden-manufactura/orden-manufactura.component';
+import { RegistroProduccionComponent } from './pages/filtro/registro-produccion/registro-produccion.component';
+import { ProgramaProduccionComponent } from './pages/filtro/programa-produccion/programa-produccion.component';
+import { RespiradorComponent } from './pages/filtro/respirador/respirador.component';
+import { PBoardComponent } from './pages/pboard/pboard.component';
+import { EditarStatusComponent } from './pages/forms/editar-progprodlinea/editar-status/editar-status.component';
+import { EditarStatusComponent2 } from './pages/forms/editar-progprod/editar-status/editar-status.component';
+
+
 
 registerLocaleData(localeEsMX, 'es-Mx');
 
@@ -284,7 +295,20 @@ registerLocaleData(localeEsMX, 'es-Mx');
     GraficoEficienciaComponent,
     GraficoDisponibilidadComponent,
     GraficoRendimientoComponent,
-    GraficoPcalidadComponent
+    GraficoPcalidadComponent,
+    ControlComponent,
+    ProduccionComponent,
+    OrdenManufacturaComponent,
+    EditarStatusComponent,
+    ProgramaDeProduccionComponent,
+    RegistroProduccionComponent,
+    RespiradorComponent,
+    EditarStatusComponent,
+    PBoardComponent,
+    ProgramaProduccionComponent,
+    EditarStatusComponent2,
+
+    
   ],
   providers: [ExcelService, DatePipe, MaquinaService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
 

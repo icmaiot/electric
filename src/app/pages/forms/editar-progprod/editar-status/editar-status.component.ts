@@ -12,13 +12,13 @@ import { ProgprodService } from '@app/services/progprod.service';
   styleUrls: ['./editar-status.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditarStatusComponent extends Dialog implements OnInit {
+export class EditarStatusComponent2 extends Dialog implements OnInit {
 
   token;
   form: FormGroup;
   submitted = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data, private formBuilder: FormBuilder, private auth: AuthService,
-    public dialogRef: MatDialogRef<EditarStatusComponent>, private progprodService: ProgprodService) {
+    public dialogRef: MatDialogRef<EditarStatusComponent2>, private progprodService: ProgprodService) {
     super();
   }
 

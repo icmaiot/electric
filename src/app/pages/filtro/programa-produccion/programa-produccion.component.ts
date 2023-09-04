@@ -10,7 +10,7 @@ import { MaquinaService } from '@app/services/maquina.service'
 import { EmpresaService } from '@app/services/empresa.service'
 import { ProductoService } from '@app/services/producto.service'
 import { EditarProgprodComponent } from '@app/pages/forms/editar-progprod/editar-progprod.component'
-import { EditarStatusComponent } from '@app/pages/forms/editar-progprod/editar-status/editar-status.component'
+import { EditarStatusComponent2 } from '@app/pages/forms/editar-progprod/editar-status/editar-status.component'
 
 @Component({
   selector: 'app-programa-produccion',
@@ -227,7 +227,7 @@ export class ProgramaProduccionComponent implements OnInit {
   }
 
   editStatus(obj) {
-    const dialogRef = this.dialog.open(EditarStatusComponent, {
+    const dialogRef = this.dialog.open(EditarStatusComponent2, {
       width: '20rem',
       data: {
         title: 'Editar status',

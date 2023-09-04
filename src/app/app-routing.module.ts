@@ -51,6 +51,7 @@ import { GraficoSkuComponent } from '@app/pages/forms/grafico-sku/grafico-sku.co
 import { GraficoDisponibilidadComponent } from '@app/pages/forms/grafico-disponibilidad/grafico-disponibilidad.component';
 import { GraficoRendimientoComponent } from '@app/pages/forms/grafico-rendimiento/grafico-rendimiento.component';
 import { GraficoPcalidadComponent } from '@app/pages/forms/grafico-pcalidad/grafico-pcalidad.component';
+import { ControlComponent } from '@app/pages/control/control.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
